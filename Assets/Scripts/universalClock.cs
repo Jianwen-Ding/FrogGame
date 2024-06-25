@@ -107,8 +107,5 @@ public class universalClock : MonoBehaviour
         realSeconds = Time.timeSinceLevelLoad - initialTime;
         int minutes = Mathf.FloorToInt(realSeconds / timePerGameMin);
         mainGameTime.setTime(minutes + startTotalMinutes);
-        DebugDisplay.updateDisplay("Minutes ", minutes + "");
-        DebugDisplay.updateDisplay("Game Time", mainGameTime + "");
-        DebugDisplay.updateDisplay("Real Time", realSeconds + " Seconds");
     }
 }
