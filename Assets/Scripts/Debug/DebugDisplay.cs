@@ -63,6 +63,7 @@ public class DebugDisplay : MonoBehaviour
         {
             retString += key + ": " + displays[key];
             retString += "<br>";
+            retString += "<br>";
         }
         text.text = retString;
     }
