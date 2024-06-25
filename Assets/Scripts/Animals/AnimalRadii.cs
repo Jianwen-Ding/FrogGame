@@ -56,6 +56,9 @@ public class AnimalRadii : MonoBehaviour
     // Speed that the radii moves
     [SerializeField]
     float radiiSpeed;
+    // Distance until radii snaps onto the object of intrest
+    [SerializeField]
+    float radiiSnap;
     // Size of radius, that triggers spawn upon entering
     [SerializeField]
     float radiusSize;
@@ -65,20 +68,28 @@ public class AnimalRadii : MonoBehaviour
     // Chance out of 100 that the animal will leave a marking on a window
     [SerializeField]
     float markerWindowChance;
+    // Amount of animals in radii
+    [SerializeField]
+    bool animalsPerRadii;
 
     // >> STATE VARS <<
     // Variables that change constantly to record state
     // of animal in trying to change it
 
-    // Whether animal is awake
-    [SerializeField]
-    bool awake;
+    public enum state
+    {
+        MorSleep,
+        Locked,
+        Moving,
+        NighSleep
+    }
+    state currentState = state.MorSleep;
     // Whether the animal is locked in a position
     [SerializeField]
-    bool lockedPosition;
+    bool lockedPosition = true;
     // The object the animal is locked into
     [SerializeField]
-    GameObject lockedObject;
+    GameObject lockedObject = null;
     // Time left until animal moves onto next object
     [SerializeField]
     float timeUntilMove;
@@ -91,10 +102,70 @@ public class AnimalRadii : MonoBehaviour
         
     }
 
+    // Uses objects of intrest to find nearby object.
+    // Automatically exculdes object already locked onto
+    GameObject findNearbyObject()
+    {
+        return null;
+    }
+
+    // Finds where the animal should sleep
+    GameObject findSleepingSpot()
+    {
+        return null;
+    }
+    
     // Update is called once per frame
     void Update()
     {
+        // Handles behavior of radii based on state
+        if (currentState == state.MorSleep)
+        {
+            if(!universalClock.mainGameTime.greater(wakeHour, wakeMinute))
+            {
+                currentState = state.Moving;
+                lockedObject = findNearbyObject();
+            }
+        }
+        else if (currentState == state.Locked)
+        {
+            timeUntilMove -= Time.deltaTime;
+            if(timeUntilMove < 0) {
+                currentState = state.Moving;
+                if (universalClock.mainGameTime.greater(sleepHour, sleepMinute))
+                {
+                    lockedObject = findSleepingSpot();
+                }
+                else
+                {
+                    lockedObject = findNearbyObject();
+                }
+            }
+
+        }
+        else if (currentState == state.Moving)
+        {
+            Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
+            if(diffrence.magnitude <= radiiSnap)
+            {
+                if (universalClock.mainGameTime.greater(sleepHour, sleepMinute))
+                {
+                    currentState = state.NighSleep;
+                }
+                else
+                {
+                    currentState = state.Locked;
+                }
+                gameObject.transform.position = lockedObject.transform.position;
+            }
+            Vector3 movementVec = Vector3.Normalize(diffrence) * radiiSpeed * Time.deltaTime;
+            gameObject.transform.position += movementVec;
         
+        }
+        else if (currentState == state.NighSleep)
+        {
+
+        }
     }
     #endregion
 } 
