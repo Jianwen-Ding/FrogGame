@@ -29,6 +29,10 @@ public class AnimalRadii : MonoBehaviour
     [SerializeField]
     int wakeMinute;
     [SerializeField]
+    int sleepHour;
+    [SerializeField]
+    int sleepMinute;
+    [SerializeField]
     string[] objectsOfIntrest;
     [SerializeField]
     float radiiSpeed;
