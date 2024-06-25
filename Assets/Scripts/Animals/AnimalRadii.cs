@@ -24,9 +24,14 @@ public class AnimalRadii : MonoBehaviour
     // Stays in constant position over the course of days
     [SerializeField]
     bool Permanent;
-    // Controls how far the animal can see to be alarmed
     [SerializeField]
-    float sightSensitvity;
+    int wakeHour;
+    [SerializeField]
+    int wakeMinute;
+    [SerializeField]
+    string[] objectsOfIntrest;
+    [SerializeField]
+    float radiiSpeed;
     #endregion
     // Start is called before the first frame update
     void Start()
