@@ -104,6 +104,8 @@ public class AnimalRadii : MonoBehaviour
     [SerializeField]
     float timeUntilMarkChanceLeft = 0;
     // Base of chance
+    [SerializeField]
+    float objectMarkingBase;
     #endregion
 
     #region functions
@@ -117,7 +119,21 @@ public class AnimalRadii : MonoBehaviour
     // Automatically exculdes object already locked onto
     GameObject findNearbyObjectOfIntrest()
     {
-        return null;
+        // List of floats recording distance from current animalRaddii
+        ArrayList magnitudeList = new ArrayList();
+        // List of gameobjects with tag
+        ArrayList objectList = new ArrayList();
+        for(int i = 0; i < objectsOfIntrest.Length; i++)
+        {
+            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(objectsOfIntrest[i]);
+            for(int z = 0; z < objectsWithTag.Length; z++)
+            {
+                Vector3 difference = objectsWithTag[z].transform.position - gameObject.transform.position;
+                float magnitude = difference.magnitude;
+                magnitudeList.Add(magnitude);
+                objectList.Add(objectsWithTag[z]);
+            }
+        }
     }
 
     // Finds where the animal should sleep
