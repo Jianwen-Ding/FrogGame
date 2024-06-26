@@ -4,7 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - TestTag1
+  - Stone
+  - Wood
+  - Dirt
+  - Grass
+  - Leaves
   layers:
   - Default
   - TransparentFX
@@ -12,7 +16,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Ground
   - 
   - 
   - 
