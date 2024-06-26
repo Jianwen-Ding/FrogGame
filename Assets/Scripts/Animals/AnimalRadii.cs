@@ -24,8 +24,10 @@ public class AnimalRadii : MonoBehaviour
 
     // Periodically, the animal has a chance to drop a marker
 
-    // >>>Object of Intrest Algo<<<
-    //
+    // >>>Object of Intrest Algorithm<<<
+    // Searches for all objects (excluding current object of intrest) with tags of intrest
+    // Finds magnitudes of all tags of intrest
+    // Weighs
     #endregion
     #region vars
     // >> CACHE PARAMETERS<<
@@ -79,6 +81,7 @@ public class AnimalRadii : MonoBehaviour
     // Variables that change constantly to record state
     // of animal in trying to change it
 
+    // Current state of the animal radii
     public enum state
     {
         MorSleep,
@@ -87,6 +90,7 @@ public class AnimalRadii : MonoBehaviour
         NighSleep
     }
     state currentState = state.MorSleep;
+    // Whether the animal has spawned in
     bool manifested = false;
     // Whether the animal is locked in a position
     [SerializeField]
@@ -99,6 +103,7 @@ public class AnimalRadii : MonoBehaviour
     float timeUntilMove;
     [SerializeField]
     float timeUntilMarkChanceLeft = 0;
+    // Base of chance
     #endregion
 
     #region functions
@@ -110,7 +115,7 @@ public class AnimalRadii : MonoBehaviour
 
     // Uses objects of intrest to find nearby object.
     // Automatically exculdes object already locked onto
-    GameObject findNearbyObject()
+    GameObject findNearbyObjectOfIntrest()
     {
         return null;
     }
@@ -121,10 +126,34 @@ public class AnimalRadii : MonoBehaviour
         return null;
     }
 
-    // Spawns an 
-    GameObject spawnAnimal()
+    // Raycasts down to find how steep the position at a spot is
+    float findAngleSteepness(Vector2 refrencePoint)
     {
-        return null;
+        return 0;
+    }
+    // Searches for nearest avaliable position for creature to spawn
+    Vector3 findNearestAvaliablePos()
+    {
+        return transform.position;
+    }
+
+    // Searches for nearest avaliable position on Gameobject
+    Vector3 findLockedSpot()
+    {
+        return transform.position;
+    }
+
+    // Spawns animal at position
+    void spawnAnimal(Vector3 position)
+    {
+        if (lockedPosition)
+        {
+
+        }
+        else
+        {
+
+        }
     }
 
 
@@ -137,68 +166,78 @@ public class AnimalRadii : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // Handles behavior of radii based on state
-        if (currentState == state.MorSleep)
+        // If animal has not manifested and player has not come into view
+        if (!manifested)
         {
-            // Waits until clock past waking hour
-            if(!universalClock.mainGameTime.greater(wakeHour, wakeMinute))
+            // Handles behavior of radii based on state
+            if (currentState == state.MorSleep)
             {
-                currentState = state.Moving;
-                lockedObject = findNearbyObject();
+                // Waits until clock past waking hour
+                if (!universalClock.mainGameTime.greater(wakeHour, wakeMinute))
+                {
+                    currentState = state.Moving;
+                    lockedObject = findNearbyObjectOfIntrest();
+                }
+            }
+            else if (currentState == state.Locked)
+            {
+                // Waits a while at the object of intrest
+                timeUntilMove -= Time.deltaTime;
+                if (timeUntilMove < 0)
+                {
+                    currentState = state.Moving;
+                    if (universalClock.mainGameTime.greater(sleepHour, sleepMinute))
+                    {
+                        lockedObject = findSleepingSpot();
+                    }
+                    else
+                    {
+                        lockedObject = findNearbyObjectOfIntrest();
+                    }
+                }
+
+            }
+            else if (currentState == state.Moving)
+            {
+                // Moves towards object of intrest until a certain radius away
+                Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
+                if (diffrence.magnitude <= radiiSnap)
+                {
+                    if (universalClock.mainGameTime.greater(sleepHour, sleepMinute))
+                    {
+                        currentState = state.NighSleep;
+                    }
+                    else
+                    {
+                        currentState = state.Locked;
+                        timeUntilMove = timeAtIntrest;
+                    }
+                    gameObject.transform.position = lockedObject.transform.position;
+                }
+                Vector3 movementVec = Vector3.Normalize(diffrence) * radiiSpeed * Time.deltaTime;
+                gameObject.transform.position += movementVec;
+
+                // Occasionally the animal will drop markers
+                timeUntilMarkChanceLeft -= Time.deltaTime;
+                if (timeUntilMarkChanceLeft < 0)
+                {
+                    timeUntilMarkChanceLeft = markerWindowTime;
+                    // Generates a number between 1-100
+                    // Determines if marker gets spawned
+                    float randomInt = Random.Range(0, 100);
+                    if (randomInt < markerWindowChance)
+                    {
+                        spawnMarker();
+                    }
+                }
+            }
+            else if (currentState == state.NighSleep)
+            {
+
             }
         }
-        else if (currentState == state.Locked)
-        {
-            // Waits a while at the object of intrest
-            timeUntilMove -= Time.deltaTime;
-            if(timeUntilMove < 0) {
-                currentState = state.Moving;
-                if (universalClock.mainGameTime.greater(sleepHour, sleepMinute))
-                {
-                    lockedObject = findSleepingSpot();
-                }
-                else
-                {
-                    lockedObject = findNearbyObject();
-                }
-            }
-
-        }
-        else if (currentState == state.Moving)
-        {
-            // Moves towards object of intrest until a certain radius away
-            Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
-            if(diffrence.magnitude <= radiiSnap)
-            {
-                if (universalClock.mainGameTime.greater(sleepHour, sleepMinute))
-                {
-                    currentState = state.NighSleep;
-                }
-                else
-                {
-                    currentState = state.Locked;
-                    timeUntilMove = timeAtIntrest;
-                }
-                gameObject.transform.position = lockedObject.transform.position;
-            }
-            Vector3 movementVec = Vector3.Normalize(diffrence) * radiiSpeed * Time.deltaTime;
-            gameObject.transform.position += movementVec;
-
-            // Occasionally the animal will drop markers
-            timeUntilMarkChanceLeft -= Time.deltaTime;
-            if(timeUntilMarkChanceLeft < 0)
-            {
-                timeUntilMarkChanceLeft = markerWindowTime;
-                // Generates a number between 1-100
-                // Determines if marker gets spawned
-                float randomInt = Random.Range(0, 100);
-                if(randomInt < markerWindowChance)
-                {
-
-                }
-            }
-        }
-        else if (currentState == state.NighSleep)
+        // If animal has manifested
+        else
         {
 
         }
