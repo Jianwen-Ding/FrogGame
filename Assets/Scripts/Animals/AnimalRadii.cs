@@ -134,6 +134,8 @@ public class AnimalRadii : MonoBehaviour
                 objectList.Add(objectsWithTag[z]);
             }
         }
+        // Mergesorts the nearby objects
+
     }
 
     // Finds where the animal should sleep
