@@ -55,6 +55,9 @@ public class AnimalRadii : MonoBehaviour
     // What tags does the animal graviate towards
     [SerializeField]
     string[] objectsOfIntrest;
+    // What tags does the animal graviate towards
+    [SerializeField]
+    string[] sleepObjects;
     // The amount of time the animal spends at a single point of intrest
     [SerializeField]
     float timeAtIntrest;
@@ -76,6 +79,12 @@ public class AnimalRadii : MonoBehaviour
     // Amount of animals in radii
     [SerializeField]
     bool animalsPerRadii;
+    // Base of chance of object being pathfinded towards
+    [SerializeField]
+    float objectIntrestBase;
+    // Base of chance of object being pathfinded towards when trying to sleep
+    [SerializeField]
+    float objectSleepBase;
 
     // >> STATE VARS <<
     // Variables that change constantly to record state
@@ -103,9 +112,8 @@ public class AnimalRadii : MonoBehaviour
     float timeUntilMove;
     [SerializeField]
     float timeUntilMarkChanceLeft = 0;
-    // Base of chance
-    [SerializeField]
-    float objectMarkingBase;
+    // Whether animal has began to try to night sleep
+    bool nightSleepMove = false;
     #endregion
 
     #region functions
@@ -115,33 +123,49 @@ public class AnimalRadii : MonoBehaviour
         
     }
 
-    // Uses objects of intrest to find nearby object.
+    // Uses list of tags to find nearby object.
     // Automatically exculdes object already locked onto
-    GameObject findNearbyObjectOfIntrest()
+    GameObject findNearbyObjectsWithTags(string[] tagList, float baseModifier)
     {
         // List of floats recording distance from current animalRaddii
-        ArrayList magnitudeList = new ArrayList();
-        // List of gameobjects with tag
-        ArrayList objectList = new ArrayList();
-        for(int i = 0; i < objectsOfIntrest.Length; i++)
+        List<customMathf.SortContainer<GameObject>> magObjectList = new List<customMathf.SortContainer<GameObject>>();
+        for (int i = 0; i < tagList.Length; i++)
         {
-            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(objectsOfIntrest[i]);
-            for(int z = 0; z < objectsWithTag.Length; z++)
+            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(tagList[i]);
+            for (int z = 0; z < objectsWithTag.Length; z++)
             {
-                Vector3 difference = objectsWithTag[z].transform.position - gameObject.transform.position;
-                float magnitude = difference.magnitude;
-                magnitudeList.Add(magnitude);
-                objectList.Add(objectsWithTag[z]);
+                if(objectsWithTag[z] != lockedObject)
+                {
+                    Vector3 difference = objectsWithTag[z].transform.position - gameObject.transform.position;
+                    float magnitude = difference.magnitude;
+                    magObjectList.Add(new customMathf.SortContainer<GameObject>(objectsWithTag[z], -magnitude));
+                }
             }
         }
-        // Mergesorts the nearby objects
+        // Sorts list
+        customMathf.SortContainer<GameObject>[] sortedList = magObjectList.ToArray();
+        customMathf.mergeSort(sortedList);
+        // Creates weights based off of list sorted
+        float[] weightsList = new float[sortedList.Length];
+        for(int i = 0; i < sortedList.Length; i++)
+        {
+            weightsList[i] = i + Mathf.Pow(baseModifier, i);
+        }
+        // Picks random object based on weights
+        return sortedList[customMathf.weightedRandomRange(weightsList)].contained;
+    }
 
+    // Finds objects of intrest list to find nearby objects.
+    // Plugs into object finding algo
+    GameObject findNearbyObjectOfIntrest()
+    {
+        return findNearbyObjectsWithTags(objectsOfIntrest, objectIntrestBase);
     }
 
     // Finds where the animal should sleep
     GameObject findSleepingSpot()
     {
-        return null;
+        return findNearbyObjectsWithTags(sleepObjects, objectSleepBase);
     }
 
     // Raycasts down to find how steep the position at a spot is
@@ -191,7 +215,7 @@ public class AnimalRadii : MonoBehaviour
             if (currentState == state.MorSleep)
             {
                 // Waits until clock past waking hour
-                if (!universalClock.mainGameTime.greater(wakeHour, wakeMinute))
+                if (universalClock.mainGameTime.greater(wakeHour, wakeMinute))
                 {
                     currentState = state.Moving;
                     lockedObject = findNearbyObjectOfIntrest();
@@ -206,6 +230,7 @@ public class AnimalRadii : MonoBehaviour
                     currentState = state.Moving;
                     if (universalClock.mainGameTime.greater(sleepHour, sleepMinute))
                     {
+                        nightSleepMove = true;
                         lockedObject = findSleepingSpot();
                     }
                     else
@@ -221,7 +246,7 @@ public class AnimalRadii : MonoBehaviour
                 Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
                 if (diffrence.magnitude <= radiiSnap)
                 {
-                    if (universalClock.mainGameTime.greater(sleepHour, sleepMinute))
+                    if (nightSleepMove)
                     {
                         currentState = state.NighSleep;
                     }
@@ -251,7 +276,6 @@ public class AnimalRadii : MonoBehaviour
             }
             else if (currentState == state.NighSleep)
             {
-
             }
         }
         // If animal has manifested

@@ -35,9 +35,14 @@ public class customMathf : MonoBehaviour
             contained = setContainer;
             value = setValue;
         }
+        public SortContainer(float setValue)
+        {
+            value = setValue;
+        }
     }
 
     // Merge sort, modifies inputted container list
+    // Goes from least to greatest
     public static void mergeSort<T>(SortContainer<T>[] containerList)
     {
         SortContainer<T>[] tempList = new SortContainer<T>[containerList.Length];
@@ -45,8 +50,9 @@ public class customMathf : MonoBehaviour
         {
             for(int i = 0; i < containerList.Length; i += width * 2)
             {
-                
+                merge<T>(containerList, i, width, tempList);
             }
+            importContainerList(containerList, tempList);
         }
 
     }
@@ -59,12 +65,25 @@ public class customMathf : MonoBehaviour
         int orgEnd = startOfIndex + 2 * width;
         if(orgRight > containerList.Length)
         {
-            orgRight = containerList.Length - 1;
+            orgRight = containerList.Length;
         }
         int tempRight = orgRight;
         if(orgEnd > containerList.Length)
         {
-
+            orgEnd = containerList.Length;
+        }
+        for (int i = orgLeft; i < orgEnd; i++)
+        {
+            if(tempLeft < orgRight && (tempRight >= orgEnd || containerList[tempLeft].value <= containerList[tempRight].value))
+            {
+                tempList[i] = containerList[tempLeft];
+                tempLeft += 1;
+            }
+            else
+            {
+                tempList[i] = containerList[tempRight];
+                tempRight += 1;
+            }
         }
     }
     // Copies a list over one list
