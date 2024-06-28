@@ -27,6 +27,12 @@ public class customMathf : MonoBehaviour
     }
     #endregion
     #region vector math
+    // Finds distance between two points
+    public static float distanceBetweenPoints(Vector3 point1, Vector3 point2)
+    {
+        Vector3 diff = point1 - point2;
+        return diff.magnitude;
+    }
     #endregion
     #region sorting
     // (Partially this entire thing is for me to practice doing sorts lol)

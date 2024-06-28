@@ -42,12 +42,16 @@ public class AnimalRadii : MonoBehaviour
     // If none can be found, send raycast down at same x-z coords. Spawns animal directly on resulting location.
     #endregion
     #region vars
+    // >>> CACHE PARAMETERS <<<
+    // Stores objects to be used throughout lifetime of object
+
     [Header("Cache Parameters")]
     [SerializeField]
     GameObject animalPrefab;
     [SerializeField]
     GameObject markerPrefab;
-
+    [SerializeField]
+    GameObject playerObject;
     // >>> BEHAVIOR PARAMETERS <<<
     // Behaviors set to differential overall behavior between species
 
@@ -140,10 +144,12 @@ public class AnimalRadii : MonoBehaviour
     }
     [Header("State Vars")]
     // Variables that change constantly to record state
-    // of animal in trying to change it
+    // of animal
 
+    // Animals actually spawned
+    // Implement swarm animals later
+    ArrayList manifestedAnimals = new ArrayList();
     // Current state of the animal radii
-
     [SerializeField]
     state currentState = state.MorSleep;
     // Whether the animal has spawned in
@@ -167,7 +173,17 @@ public class AnimalRadii : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerObject = GameObject.FindGameObjectWithTag("Player");
+    }
+
+    // Removes a manifested animal
+    public void removeManifestedAnimal(AnimalPresent animal)
+    {
+        if(manifestedAnimals.Count == 1)
+        {
+            gameObject.transform.position = animal.transform.position;
+        }
+        manifestedAnimals.Remove(animal);
     }
 
     // Uses list of tags to find nearby object.
@@ -187,6 +203,7 @@ public class AnimalRadii : MonoBehaviour
                 {
                     Vector3 difference = objectsWithTag[z].transform.position - gameObject.transform.position;
                     float magnitude = difference.magnitude;
+                    DebugDisplay.updateDisplay(objectsWithTag[z].name + " distance", magnitude + "");
                     // Does not consider object if object is outside of radius
                     if(cutoff == -1 || cutoff > magnitude)
                     {
@@ -247,21 +264,40 @@ public class AnimalRadii : MonoBehaviour
     Vector3 findSurface(LayerMask givenLayerMask, float yAdjust, float raycastLength)
     {
         RaycastHit hit;
-        Physics.Raycast(gameObject.transform.position + Vector3.up * yAdjust, Vector3.down, out hit, raycastLength, givenLayerMask);
+        if(!Physics.Raycast(gameObject.transform.position + Vector3.up * yAdjust, Vector3.down, out hit, raycastLength, givenLayerMask))
+        {
+            print("ERROR- suitable surface not found");
+        }
         return hit.point;
     }
 
     // Spawns animal at position
-    void spawnAnimal(Vector3 position)
+    // Current has not implemented crowd spawn
+    void spawnAnimal()
     {
+        Vector3 foundSurface;
         if (lockedPosition)
         {
-
+            foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength);
         }
         else
         {
-
+            GameObject foundSpawn = findNearestAvaliableSpawnArea();
+            if(foundSpawn == null)
+            {
+                foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength);
+            }
+            else
+            {
+                foundSurface = foundSpawn.transform.position;
+            }
         }
+        print(foundSurface);
+        GameObject prefab = Instantiate(animalPrefab, foundSurface, Quaternion.identity.normalized);
+        AnimalPresent present = prefab.GetComponent<AnimalPresent>();
+        present.init(false, 0, this);
+        manifestedAnimals.Add(present);
+        manifested = true;
     }
 
 
@@ -283,6 +319,7 @@ public class AnimalRadii : MonoBehaviour
                 // Waits until clock past waking hour
                 if (universalClock.mainGameTime.greater(wakeHour, wakeMinute))
                 {
+                    lockedPosition = false;
                     currentState = state.Moving;
                     lockedObject = findNearbyObjectOfIntrest();
                 }
@@ -293,6 +330,7 @@ public class AnimalRadii : MonoBehaviour
                 timeUntilMove -= Time.deltaTime;
                 if (timeUntilMove < 0)
                 {
+                    lockedPosition = false;
                     currentState = state.Moving;
                     if (universalClock.mainGameTime.greater(sleepHour, sleepMinute))
                     {
@@ -312,6 +350,7 @@ public class AnimalRadii : MonoBehaviour
                 Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
                 if (diffrence.magnitude <= radiiSnap)
                 {
+                    lockedPosition = true;
                     if (nightSleepMove)
                     {
                         currentState = state.NighSleep;
@@ -343,11 +382,22 @@ public class AnimalRadii : MonoBehaviour
             else if (currentState == state.NighSleep)
             {
             }
+
+            // Checks if player is within radii
+            Vector3 diff = transform.position - playerObject.gameObject.transform.position;
+            DebugDisplay.updateDisplay("distance from player" ,diff.magnitude + "");
+            if (diff.magnitude < radiusPlayerTriggerSize)
+            {
+                spawnAnimal();
+            }
         }
         // If animal has manifested
         else
         {
-
+            if(manifestedAnimals.Count == 0)
+            {
+                manifested = false;
+            }
         }
     }
     #endregion
