@@ -24,21 +24,34 @@ public class AnimalRadii : MonoBehaviour
 
     // Periodically, the animal has a chance to drop a marker
 
+
     // >>>Object of Intrest Algorithm<<<
     // Searches for all objects (excluding current object of intrest) with tags of intrest
     // Finds magnitudes of all tags of intrest
-    // Weighs
+    // Sorts magnitudes and randomly picks a object based on distance order
+
+    // >>>Surface finding algortihm<<<
+    // Sends raycast down from x-z coordinates from a high place.
+    // Ignore certain objects.
+
+    // >>>Spawning Animal Algorithm<<<
+    // Locked in:
+    // Sends raycast down at same x-z coords. Spawn animal directly on resulting location
+    // Moving:
+    // Searches for nearby appropiate hiding area in radius and spawns animal directly in object
+    // If none can be found, send raycast down at same x-z coords. Spawns animal directly on resulting location.
     #endregion
     #region vars
-    // >> CACHE PARAMETERS<<
+    [Header("Cache Parameters")]
     [SerializeField]
     GameObject animalPrefab;
     [SerializeField]
     GameObject markerPrefab;
 
-    // >> BEHAVIOR PARAMETERS<<
+    // >>> BEHAVIOR PARAMETERS <<<
     // Behaviors set to differential overall behavior between species
 
+    [Header("Overall Movement Behavior Parameters")]
     // Stays in constant position over the course of days
     [SerializeField]
     bool Permanent;
@@ -67,18 +80,6 @@ public class AnimalRadii : MonoBehaviour
     // Distance until radii snaps onto the object of intrest
     [SerializeField]
     float radiiSnap;
-    // Size of radius, that triggers spawn upon entering
-    [SerializeField]
-    float radiusSize;
-    // Time between each chance that the animal will leave a marking
-    [SerializeField]
-    float markerWindowTime;
-    // Chance out of 100 that the animal will leave a marking on a window
-    [SerializeField]
-    float markerWindowChance;
-    // Amount of animals in radii
-    [SerializeField]
-    bool animalsPerRadii;
     // Base of chance of object being pathfinded towards
     [SerializeField]
     float objectIntrestBase;
@@ -86,11 +87,50 @@ public class AnimalRadii : MonoBehaviour
     [SerializeField]
     float objectSleepBase;
 
-    // >> STATE VARS <<
-    // Variables that change constantly to record state
-    // of animal in trying to change it
+    [Header("Animal Spawn Parameters")]
 
-    // Current state of the animal radii
+    // Size of radius that triggers spawn upon entering
+    [SerializeField]
+    float radiusPlayerTriggerSize;
+    // Size of radius in which the animal spawns
+    [SerializeField]
+    float radiusAnimalSpawnSize;
+    // What tags should the appropiate surface have
+    [SerializeField]
+    string[] appropiateSpawnObjects;
+    // Layermask of raycast, what layers the raycast ignores
+    [SerializeField]
+    LayerMask spawnRaycastLayerMask;
+    // How far out the raycast goes up
+    [SerializeField]
+    float spawnRaycastYAdjust;
+    // How far the raycast hits
+    [SerializeField]
+    float spawnRaycastLength;
+    // Amount of animals in radii
+    [SerializeField]
+    bool animalsPerRadii;
+
+    [Header("Marker Spawn Parameters")]
+    // Time between each chance that the animal will leave a marking
+    [SerializeField]
+    float markerWindowTime;
+    // Chance out of 100 that the animal will leave a marking on a window
+    [SerializeField]
+    float markerWindowChance;
+    // Layermask of raycast, what layers the raycast ignores
+    [SerializeField]
+    LayerMask markerRaycastLayerMask;
+    // How far out the raycast goes up
+    [SerializeField]
+    float markerRaycastYAdjust;
+    // How far the raycast hits
+    [SerializeField]
+    float markerRaycastLength;
+    // Base of chance of object spawning an animal
+    [SerializeField]
+    float objectSpawnBase;
+
     public enum state
     {
         MorSleep,
@@ -98,6 +138,13 @@ public class AnimalRadii : MonoBehaviour
         Moving,
         NighSleep
     }
+    [Header("State Vars")]
+    // Variables that change constantly to record state
+    // of animal in trying to change it
+
+    // Current state of the animal radii
+
+    [SerializeField]
     state currentState = state.MorSleep;
     // Whether the animal has spawned in
     bool manifested = false;
@@ -125,7 +172,9 @@ public class AnimalRadii : MonoBehaviour
 
     // Uses list of tags to find nearby object.
     // Automatically exculdes object already locked onto
-    GameObject findNearbyObjectsWithTags(string[] tagList, float baseModifier)
+    // If cutoff is -1, search for all objects
+    // Returns null if no object with tag or in radius are found
+    GameObject findNearbyObjectsWithTags(string[] tagList, float baseModifier, float cutoff)
     {
         // List of floats recording distance from current animalRaddii
         List<customMathf.SortContainer<GameObject>> magObjectList = new List<customMathf.SortContainer<GameObject>>();
@@ -138,9 +187,17 @@ public class AnimalRadii : MonoBehaviour
                 {
                     Vector3 difference = objectsWithTag[z].transform.position - gameObject.transform.position;
                     float magnitude = difference.magnitude;
-                    magObjectList.Add(new customMathf.SortContainer<GameObject>(objectsWithTag[z], -magnitude));
+                    // Does not consider object if object is outside of radius
+                    if(cutoff == -1 || cutoff > magnitude)
+                    {
+                        magObjectList.Add(new customMathf.SortContainer<GameObject>(objectsWithTag[z], -magnitude));
+                    }
                 }
             }
+        }
+        if(magObjectList.Count == 0)
+        {
+            return null;
         }
         // Sorts list
         customMathf.SortContainer<GameObject>[] sortedList = magObjectList.ToArray();
@@ -159,30 +216,39 @@ public class AnimalRadii : MonoBehaviour
     // Plugs into object finding algo
     GameObject findNearbyObjectOfIntrest()
     {
-        return findNearbyObjectsWithTags(objectsOfIntrest, objectIntrestBase);
+        GameObject retObject = findNearbyObjectsWithTags(objectsOfIntrest, objectIntrestBase, -1);
+        if(retObject == null)
+        {
+            print("ERROR- There are no objects that corresponds to -" + gameObject.name + "-'s objects of intrest tags");
+        }
+        return retObject;
     }
 
     // Finds where the animal should sleep
+    // Plugs into object finding algo
     GameObject findSleepingSpot()
     {
-        return findNearbyObjectsWithTags(sleepObjects, objectSleepBase);
+        GameObject retObject = findNearbyObjectsWithTags(sleepObjects, objectSleepBase, -1);
+        if (retObject == null)
+        {
+            print("ERROR- There are no objects that corresponds to -" + gameObject.name + "-'s sleep objects tags");
+        }
+        return retObject;
     }
 
-    // Raycasts down to find how steep the position at a spot is
-    float findAngleSteepness(Vector2 refrencePoint)
+    // Searches for nearest avaliable gameobject for creature to spawn in
+    // Plugs into object finding algo
+    GameObject findNearestAvaliableSpawnArea()
     {
-        return 0;
-    }
-    // Searches for nearest avaliable position for creature to spawn
-    Vector3 findNearestAvaliablePos()
-    {
-        return transform.position;
+        return findNearbyObjectsWithTags(appropiateSpawnObjects, objectSpawnBase, radiusAnimalSpawnSize); 
     }
 
     // Searches for nearest avaliable position on Gameobject
-    Vector3 findLockedSpot()
+    Vector3 findSurface(LayerMask givenLayerMask, float yAdjust, float raycastLength)
     {
-        return transform.position;
+        RaycastHit hit;
+        Physics.Raycast(gameObject.transform.position + Vector3.up * yAdjust, Vector3.down, out hit, raycastLength, givenLayerMask);
+        return hit.point;
     }
 
     // Spawns animal at position

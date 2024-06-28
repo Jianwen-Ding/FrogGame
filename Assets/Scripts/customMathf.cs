@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class customMathf : MonoBehaviour
 {
+    #region randomization
     // This class covers custom math functions that might be useful
     public static int weightedRandomRange(float[] weights)
     {
@@ -24,7 +25,10 @@ public class customMathf : MonoBehaviour
         }
         return weights.Length - 1;
     }
-    // For sorting
+    #endregion
+    #region vector math
+    #endregion
+    #region sorting
     // (Partially this entire thing is for me to practice doing sorts lol)
     public class SortContainer<T>
     {
@@ -94,4 +98,5 @@ public class customMathf : MonoBehaviour
             importedToList[i] = exportingList[i];
         }
     }
+    #endregion
 }
