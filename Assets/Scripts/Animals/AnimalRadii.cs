@@ -270,7 +270,7 @@ public class AnimalRadii : MonoBehaviour
         {
             print("ERROR- suitable surface not found");
         }
-        return hit.point;
+        return hit.point + Vector3.up * spawnYDisplacement;
     }
 
     // Spawns animal at position

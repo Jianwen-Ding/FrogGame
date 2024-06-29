@@ -49,6 +49,7 @@ public class customMathf : MonoBehaviour
     #endregion
     #region sorting
     // (Partially this entire thing is for me to practice doing sorts lol)
+    // Container for values to be sorted
     public class SortContainer<T>
     {
         public T contained;
@@ -116,6 +117,13 @@ public class customMathf : MonoBehaviour
         {
             importedToList[i] = exportingList[i];
         }
+    }
+    #endregion
+    #region Containers
+    public struct duo<T, Z>
+    {
+        T val1;
+        Z val2;
     }
     #endregion
 }

@@ -79,8 +79,30 @@ public class AnimalPresent : MonoBehaviour
     // Variables that change constantly to record state
     // of animal
 
+    // Panic- Aware of predator
+    // Panic- No predators and aware of prey
+    // Wander- No predators or prey and radii was not moving before
+    // Move- No predators or prey and radii was moving before
+    public enum animalState
+    {
+        Panic,
+        Hunt,
+        Wander,
+        Move
+    }
+    [Header("State Variables")]
+    // Current state of animal
+    [SerializeField]
+    animalState currentState;
+    // Whether the object has been initialized yet
+    [SerializeField]
     bool initialized = false;
-    ArrayList objectsOfIntrestSighted; 
+    // Predators that the animal is aware of
+    [SerializeField]
+    List<GameObject> predatorsAwareOf;
+    // Prey that the animal is aware of
+    [SerializeField]
+    List<GameObject> preyAwareOf;
 
     #endregion
     #region functions
@@ -110,11 +132,11 @@ public class AnimalPresent : MonoBehaviour
         Destroy(gameObject);
     }
 
-    // Scans all objects within view
-    /*
-    public virtual void view()
+    // Scans all object if they are within view
+    // currently TBD
+    public virtual bool withinView(GameObject objectCheck)
     {
-        ArrayList objectsOfIntrest = new ArrayList();
+        /*ArrayList objectsOfIntrest = new ArrayList();
         for(int i = 0; i < predatorTags.Length; i++)
         {
             GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(predatorTags[i]);
@@ -136,8 +158,16 @@ public class AnimalPresent : MonoBehaviour
 
                 }
             }
-        }
-    }*/
+        }*/
+        return true;
+    }
+    // Scans object if they are making sound
+    public virtual bool withinHearingRange(GameObject objectCheck)
+    {
+        return true;
+    }
+
+    // Checks a
     // Start is called before the first frame update
     void Start()
     {
@@ -154,6 +184,7 @@ public class AnimalPresent : MonoBehaviour
             {
                 rejoinRadii();
             }
+            if()
         }
     }
     #endregion
