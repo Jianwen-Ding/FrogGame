@@ -13,7 +13,7 @@ public class TestAnimalBase : AnimalPresent
     float timeLeft = 0;
     public override void movementUpdate()
     {
-        if (detector.predatorWithinField.Count >= 0)
+        if (detector.predatorWithinField.Count > 0)
         {
             timeLeft -= Time.deltaTime;
             if (timeLeft <= 0){
@@ -24,6 +24,12 @@ public class TestAnimalBase : AnimalPresent
                 animalRigid.MoveRotation(Quaternion.Euler(new Vector3(0, 90 - Mathf.Atan2(diff.z, diff.x) * Mathf.Rad2Deg, 0)));
                 animalRigid.AddForce(diff);
             }
+        }
+        else
+        {
+            Vector3 diff = gameObject.transform.position - playerObject.transform.position;
+            diff = diff.normalized;
+            animalRigid.MoveRotation(Quaternion.Euler(new Vector3(0, -90 - Mathf.Atan2(diff.z, diff.x) * Mathf.Rad2Deg, 0)));
         }
     }
 }

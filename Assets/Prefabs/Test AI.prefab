@@ -113,8 +113,8 @@ MonoBehaviour:
   radiiSnap: 0.2
   objectIntrestBase: 1.1
   objectSleepBase: 2
-  radiusPlayerTriggerSize: 20
-  radiusAnimalSpawnSize: 20
+  radiusPlayerTriggerSize: 50
+  radiusAnimalSpawnSize: 50
   appropiateSpawnObjects:
   - Leaves
   spawnRaycastLayerMask:

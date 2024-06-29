@@ -31,7 +31,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -27.720842, y: 1.0000038, z: -31.75533}
-  m_LocalScale: {x: 50, y: 50, z: 50}
+  m_LocalScale: {x: 40, y: 40, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6291764307924683445}
@@ -107,7 +107,7 @@ MonoBehaviour:
   preyTags: []
   predatorTags:
   - Player
-  detectorSize: 5
+  detectorSize: 0.2
   fovAngle: 0
   detectDistance: 0
   sightLayerMask: 0
@@ -200,7 +200,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5791892809171685358}
