@@ -30,10 +30,11 @@ public class AnimalDistantDetector : MonoBehaviour
         col = gameObject.GetComponent<Collider>();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        GameObject collidedWith = collision.gameObject;
-        if (customMathf.contains(preyTags, collidedWith.tag) && !preyWithinField.Contains(collidedWith)) {
+        GameObject collidedWith = other.gameObject;
+        if (customMathf.contains(preyTags, collidedWith.tag) && !preyWithinField.Contains(collidedWith))
+        {
             preyWithinField.Add(collidedWith);
             DebugDisplay.updateDisplay(collidedWith.name, "prey");
         }
@@ -43,9 +44,10 @@ public class AnimalDistantDetector : MonoBehaviour
             DebugDisplay.updateDisplay(collidedWith.name, "predator");
         }
     }
-    private void OnCollisionExit(Collision collision)
+
+    private void OnTriggerExit(Collider other)
     {
-        GameObject collidedWith = collision.gameObject;
+        GameObject collidedWith = other.gameObject;
         if (preyWithinField.Contains(collidedWith))
         {
             preyWithinField.Remove(collidedWith);

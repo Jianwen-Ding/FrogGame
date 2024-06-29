@@ -111,6 +111,9 @@ public class AnimalRadii : MonoBehaviour
     // How far the raycast hits
     [SerializeField]
     float spawnRaycastLength;
+    // How much the animal is shifted up on spawn
+    [SerializeField]
+    float spawnYDisplacement;
     // Amount of animals in radii
     [SerializeField]
     bool animalsPerRadii;
