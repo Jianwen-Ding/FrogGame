@@ -26,6 +26,19 @@ public class customMathf : MonoBehaviour
         return weights.Length - 1;
     }
     #endregion
+    #region list functions
+    public static bool contains<T>(T[] array, T value)
+    {
+        for(int i = 0; i < array.Length; i++)
+        {
+            if (array[i].Equals(value))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    #endregion
     #region vector math
     // Finds distance between two points
     public static float distanceBetweenPoints(Vector3 point1, Vector3 point2)

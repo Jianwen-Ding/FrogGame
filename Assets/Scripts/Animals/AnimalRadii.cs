@@ -203,7 +203,6 @@ public class AnimalRadii : MonoBehaviour
                 {
                     Vector3 difference = objectsWithTag[z].transform.position - gameObject.transform.position;
                     float magnitude = difference.magnitude;
-                    DebugDisplay.updateDisplay(objectsWithTag[z].name + " distance", magnitude + "");
                     // Does not consider object if object is outside of radius
                     if(cutoff == -1 || cutoff > magnitude)
                     {

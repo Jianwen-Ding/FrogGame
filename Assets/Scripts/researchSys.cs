@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class researchSys : MonoBehaviour
 {
+    // Draft of how 
+
     #region psuedocode
     // The research is comprised of three parts
     // 1 - Clues - Clues activate information, certain clues are locked by other information
@@ -18,6 +20,23 @@ public class researchSys : MonoBehaviour
     Dictionary<string, bool> information = new Dictionary<string, bool>();
     [SerializeField]
     string[] requiredInformation;
+    #endregion
+    #region functions
+    public void activateInfo(string infoKey)
+    {
+        information[infoKey] = true; 
+    }
+    public bool checkFinished()
+    {
+        for(int i = 0; i < requiredInformation.Length; i++)
+        {
+            if (!information[requiredInformation[i]])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
     #endregion
     // Start is called before the first frame update
     void Start()
