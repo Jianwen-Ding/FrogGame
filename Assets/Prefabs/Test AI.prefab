@@ -96,8 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c48f188999c54e5989d3ddee217974e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animalPrefab: {fileID: 0}
+  animalPrefab: {fileID: 2485116015055499387, guid: 28ed60060153640bb87010c90b5175da, type: 3}
   markerPrefab: {fileID: 0}
+  playerObject: {fileID: 0}
   Permanent: 0
   wakeHour: 7
   wakeMinute: 0
@@ -107,19 +108,21 @@ MonoBehaviour:
   - Grass
   sleepObjects:
   - Dirt
-  timeAtIntrest: 2.5
-  radiiSpeed: 20
+  timeAtIntrest: 3
+  radiiSpeed: 10
   radiiSnap: 0.2
   objectIntrestBase: 1.1
   objectSleepBase: 2
-  radiusPlayerTriggerSize: 0
-  radiusAnimalSpawnSize: 0
-  appropiateSpawnObjects: []
+  radiusPlayerTriggerSize: 20
+  radiusAnimalSpawnSize: 20
+  appropiateSpawnObjects:
+  - Leaves
   spawnRaycastLayerMask:
     serializedVersion: 2
-    m_Bits: 0
-  spawnRaycastYAdjust: 0
-  spawnRaycastLength: 0
+    m_Bits: 4294967295
+  spawnRaycastYAdjust: 20
+  spawnRaycastLength: 30
+  spawnYDisplacement: 3
   animalsPerRadii: 0
   markerWindowTime: 0
   markerWindowChance: 0

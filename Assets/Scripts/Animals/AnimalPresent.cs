@@ -24,10 +24,10 @@ public class AnimalPresent : MonoBehaviour
     [Header("Cache Parameters")]
     public AnimalDistantDetector detector;
     public AnimalRadii animalController;
+    public GameObject playerObject;
+    public Rigidbody animalRigid;
     [SerializeField]
     Renderer animalRender;
-    [SerializeField]
-    GameObject playerObject;
 
 
     // >>> BEHAVIOR PARAMETERS <<<
@@ -117,6 +117,7 @@ public class AnimalPresent : MonoBehaviour
         playerObject = GameObject.FindGameObjectWithTag("Player");
         detector = transform.GetChild(0).GetComponent<AnimalDistantDetector>();
         detector.init(preyTags, predatorTags, detectorSize);
+        animalRigid = gameObject.GetComponent<Rigidbody>();
 
     }
 
@@ -161,30 +162,52 @@ public class AnimalPresent : MonoBehaviour
         }*/
         return true;
     }
+
     // Scans object if they are making sound
     public virtual bool withinHearingRange(GameObject objectCheck)
     {
         return true;
     }
 
+    // RESTRUCTURE LATER, kinda inefficent,
+    public virtual void movementUpdate()
+    {
+        
+    }
     // Checks a
     // Start is called before the first frame update
-    void Start()
+    public virtual void Start()
     {
         
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         if (initialized)
         {
+            movementUpdate();
             float distance = customMathf.distanceBetweenPoints(gameObject.transform.position, playerObject.transform.position);
             if (distance > distanceUntilDeload && !inView())
             {
                 rejoinRadii();
             }
-            if()
+            if(currentState == animalState.Panic)
+            {
+
+            }
+            else if (currentState == animalState.Hunt)
+            {
+
+            }
+            else if (currentState == animalState.Wander)
+            {
+
+            }
+            else if (currentState == animalState.Move)
+            {
+
+            }
         }
     }
     #endregion

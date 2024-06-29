@@ -401,6 +401,7 @@ public class AnimalRadii : MonoBehaviour
                 manifested = false;
             }
         }
+        DebugDisplay.updateDisplay("has manifested", manifested + "");
     }
     #endregion
 } 
