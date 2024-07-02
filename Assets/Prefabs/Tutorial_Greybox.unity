@@ -21543,6 +21543,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: cat_model_v1
       objectReference: {fileID: 0}
+    - target: {fileID: 6227242173265202726, guid: dc4f68d1dc11348d3b5457fe2c02579e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b6d40acb276b34349b2c3f46c3c38d7a, type: 2}
     - target: {fileID: 6972544762573355509, guid: dc4f68d1dc11348d3b5457fe2c02579e, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
