@@ -152,7 +152,15 @@ public class OdeionPlayer : MonoBehaviour
         dashing,
         air
     }
-    
+
+    [Header("Sound Modifiers")]
+    // This controls how other animals hear the player in its different states
+    // Order from standing, walking, sprinting, wallrunning, sliding, crouching, dashing, air
+    [SerializeField]
+    float[] soundMultipliers;
+    [SerializeField]
+    float standingVelMag;
+
     public void Start()
     {
 
@@ -237,6 +245,36 @@ public class OdeionPlayer : MonoBehaviour
             Cursor.lockState = CursorLockMode.None; //unlock
         }
         
+    }
+
+    // Gives sound multiplier of the character
+    public float getCurrentSoundMultiplier()
+    {
+        switch (state)
+        {
+            case MovementState.walking:
+                if(rb.velocity.magnitude < standingVelMag)
+                {
+                    return soundMultipliers[0];
+                }
+                else
+                {
+                    return soundMultipliers[1];
+                }
+            case MovementState.sprinting:
+                return soundMultipliers[2];
+            case MovementState.wallrunning:
+                return soundMultipliers[3];
+            case MovementState.sliding:
+                return soundMultipliers[4];
+            case MovementState.crouching:
+                return soundMultipliers[5];
+            case MovementState.dashing:
+                return soundMultipliers[6];
+            case MovementState.air:
+                return soundMultipliers[7];
+        }
+        return 0;
     }
 
     void ThrowUtility()
@@ -325,8 +363,8 @@ public class OdeionPlayer : MonoBehaviour
 
         }*/
 
-        //Falling
-        anim.SetFloat(zVelHash, rb.velocity.y);
+    //Falling
+    anim.SetFloat(zVelHash, rb.velocity.y);
         
         SetAnimationGrounding();
 

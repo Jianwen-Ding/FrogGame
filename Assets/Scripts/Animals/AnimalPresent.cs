@@ -13,9 +13,22 @@ public class AnimalPresent : MonoBehaviour
     // By more specialized movement
 
     #region psuedocode
+
+    // >>> Detection Procedure <<<
     // After detecting predator/prey object through sight or sound
-    // The animal becomes aware of the object for a set amount of time
-    // Each animal 
+    // Animal needs to be in detector collider object to be detected by sight or sound
+
+    // Sight needs other object to have sightline betwen animal and object to occur
+    // Hear distance = object multiplier * base hear distance
+
+    // The animal becomes aware of the object for a set amount of time or is disconnected early if it exits the detector for whatever reason
+
+    // >>> Behavior State Procedure <<<
+    // Panic- Animal runs away on detection on any predator
+    // Hunt- If no predator detected and prey has been detected
+    // Wander- No initial command to move from radii
+    // Move- Has initial command to move from radii, moves in a specific direction
+    // while no other objects of intrest come into view
     #endregion
     #region vars
     // >>> CACHE PARAMETERS <<<
@@ -34,15 +47,22 @@ public class AnimalPresent : MonoBehaviour
     // Behaviors set to differential overall behavior between species
 
     [Header("Predator prey Parameters")]
-    // Tags of animals that this animal considers prey
+    // Tags of animals that this animal considers of prey
+    // Tags of prey
     public string[] preyTags;
     // Tags of animals that this animal considers predator
+    // Tags of predators
     public string[] predatorTags;
 
     [Header("Detection Parameters")]
     // Scale of the detector
     [SerializeField]
     float detectorSize;
+    // How long an animal stays aware of a object
+    [SerializeField]
+    float detectionTimePrey;
+    [SerializeField]
+    float detectionTimePred;
 
     [Header("Sight Parameters")]
     // How wide the animal's field of view is 
@@ -50,10 +70,10 @@ public class AnimalPresent : MonoBehaviour
     float fovAngle;
     // How far the animal will be able to see
     [SerializeField]
-    float detectDistance;
+    float sightDistance;
     // What the animal can see through
     [SerializeField]
-    float sightLayerMask;
+    LayerMask sightLayerMask;
 
     [Header("Hearing Parameters")]
     // How far the animal is able to hear
@@ -98,11 +118,14 @@ public class AnimalPresent : MonoBehaviour
     [SerializeField]
     bool initialized = false;
     // Predators that the animal is aware of
-    [SerializeField]
-    List<GameObject> predatorsAwareOf;
+    // Stores predators and time left aware of
+    public Dictionary<GameObject, float> predatorsAwareOf;
     // Prey that the animal is aware of
-    [SerializeField]
-    List<GameObject> preyAwareOf;
+    // Stores predator and time left aware of
+    public Dictionary<GameObject, float> preyAwareOf;
+    // Angle the animal is looking at
+    // USE THIS FOR ALL MOVEMENT PLEASE
+    public float faceAngle;
 
     #endregion
     #region functions
@@ -134,45 +157,74 @@ public class AnimalPresent : MonoBehaviour
     }
 
     // Scans all object if they are within view
-    // currently TBD
+    // Uses angle
     public virtual bool withinView(GameObject objectCheck)
     {
-        /*ArrayList objectsOfIntrest = new ArrayList();
-        for(int i = 0; i < predatorTags.Length; i++)
+        // Checks if object is within FOV range before sending raycast
+        Vector3 diff = objectCheck.transform.position - gameObject.transform.position;
+        if(diff.magnitude < sightDistance)
         {
-            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(predatorTags[i]);
-            for(int ob = 0; ob < objectsWithTag.Length; ob++)
+            float angle = Mathf.Abs(customMathf.angleBetweenTwoVecs(diff, customMathf.angleToPoint(faceAngle, 1)));
+            if(angle < fovAngle)
             {
-                if (objectsOfIntrestDetected.Contains(objectsWithTag[ob]))
+                RaycastHit[] hits = Physics.RaycastAll(gameObject.transform.position, diff, diff.magnitude, sightLayerMask);
+                // Checks if only two objects were hit, gameobject and object 
+                if(hits.Length == 2 && (hits[0].transform.gameObject == objectCheck || hits[1].transform.gameObject == objectCheck))
                 {
-                    obj
+                    return true;
                 }
             }
         }
-        for(int i = 0; i < preyTags.Length; i++)
-        {
-            GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(predatorTags[i]);
-            for (int ob = 0; ob < objectsWithTag.Length; ob++)
-            {
-                if (objectsOfIntrestDetected.Contains(objectsWithTag[ob]))
-                {
-
-                }
-            }
-        }*/
-        return true;
+        return false;
     }
 
     // Scans object if they are making sound
+    // TBD
     public virtual bool withinHearingRange(GameObject objectCheck)
     {
-        return true;
+        Vector3 diff = objectCheck.transform.position - transform.position;
+        if(objectCheck.tag == "Player")
+        {
+            OdeionPlayer player = objectCheck.GetComponent<OdeionPlayer>();
+            if (player != null && diff.magnitude < player.getCurrentSoundMultiplier() * hearDistance)
+            {
+                return true;
+            }
+        }
+        AnimalPresent animalScript = objectCheck.GetComponent<AnimalPresent>();
+        if(animalScript != null && diff.magnitude < animalScript.soundMultiplier * hearDistance)
+        {
+            return true;
+        }
+        return false;
     }
 
-    // RESTRUCTURE LATER, kinda inefficent,
-    public virtual void movementUpdate()
+    // When a object moves the rigid collider
+    // To be used by detection radius
+    public void removeObject(GameObject start)
+    {
+
+    }
+    // Following functions to be used by inherity objects
+    // Movement on panic
+    public virtual void panicMovementUpdate()
     {
         
+    }
+    // Movement on hunt
+    public virtual void huntMovementUpdate()
+    {
+
+    }
+    // Movement on wander
+    public virtual void wanderMovementUpdate()
+    {
+
+    }
+    // Movement on move
+    public virtual void moveMovementUpdate()
+    {
+
     }
     // Checks a
     // Start is called before the first frame update
@@ -186,28 +238,87 @@ public class AnimalPresent : MonoBehaviour
     {
         if (initialized)
         {
-            movementUpdate();
+            // Checks all detected objects if they are seen or heard
+            // Refreshes time if detected again
+            for (int i = 0; i < detector.predatorWithinField.Count; i++)
+            {
+                if (withinView(detector.predatorWithinField[i]) || withinHearingRange(detector.predatorWithinField[i]))
+                {
+                    if (predatorsAwareOf.ContainsKey(detector.predatorWithinField[i]))
+                    {
+                        predatorsAwareOf[detector.predatorWithinField[i]] = detectionTimePred;
+                    }
+                    else
+                    {
+                        predatorsAwareOf.Add(detector.predatorWithinField[i], detectionTimePred);
+                    }
+                }
+            }
+            for (int i = 0; i < detector.preyWithinField.Count; i++)
+            {
+                if (withinView(detector.preyWithinField[i]) || withinHearingRange(detector.preyWithinField[i]))
+                {
+                    if (preyAwareOf.ContainsKey(detector.preyWithinField[i]))
+                    {
+                        preyAwareOf[detector.preyWithinField[i]] = detectionTimePrey;
+                    }
+                    else
+                    {
+                        preyAwareOf.Add(detector.preyWithinField[i], detectionTimePrey);
+                    }
+                }
+            }
+            // Checks if objecs of intrest have not been scanned for a set amount of time
+            ArrayList predsToRemove = new ArrayList();
+            foreach (GameObject pred in predatorsAwareOf.Keys)
+            {
+                predatorsAwareOf[pred] -= Time.deltaTime;
+                if (predatorsAwareOf[pred] < 0)
+                {
+                    predsToRemove.Add(pred);
+                }
+            }
+            ArrayList preysToRemove = new ArrayList();
+            foreach (GameObject prey in preyAwareOf.Keys)
+            {
+                predatorsAwareOf[prey] -= Time.deltaTime;
+                if (predatorsAwareOf[prey] < 0)
+                {
+                    preysToRemove.Add(prey);
+                }
+            }
+            foreach (GameObject ob in predsToRemove)
+            {
+                predatorsAwareOf.Remove(ob);
+            }
+            foreach (GameObject ob in preysToRemove)
+            {
+                preyAwareOf.Remove(ob);
+            }
+            // Rejoins radii if animal gets too far and leaves view
             float distance = customMathf.distanceBetweenPoints(gameObject.transform.position, playerObject.transform.position);
             if (distance > distanceUntilDeload && !inView())
             {
                 rejoinRadii();
             }
+            // Controls movement based on state
             if(currentState == animalState.Panic)
             {
-
+                panicMovementUpdate();
             }
             else if (currentState == animalState.Hunt)
             {
-
+                huntMovementUpdate();
             }
             else if (currentState == animalState.Wander)
             {
-
+                wanderMovementUpdate();
             }
             else if (currentState == animalState.Move)
             {
-
+                moveMovementUpdate();
             }
+            
         }
     }
     #endregion

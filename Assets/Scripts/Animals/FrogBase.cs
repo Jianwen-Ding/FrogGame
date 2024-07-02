@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestAnimalBase : AnimalPresent
+public class FrogBase : AnimalPresent
 {
     [SerializeField]
     float speed;
@@ -11,7 +11,7 @@ public class TestAnimalBase : AnimalPresent
     [SerializeField]
     float hopTime;
     float timeLeft = 0;
-    public override void movementUpdate()
+    public override void panicMovementUpdate()
     {
         if (detector.predatorWithinField.Count > 0)
         {
@@ -32,4 +32,9 @@ public class TestAnimalBase : AnimalPresent
             animalRigid.MoveRotation(Quaternion.Euler(new Vector3(0, -90 - Mathf.Atan2(diff.z, diff.x) * Mathf.Rad2Deg, 0)));
         }
     }
+    public override void huntMovementUpdate()
+    {
+
+    }
+
 }
