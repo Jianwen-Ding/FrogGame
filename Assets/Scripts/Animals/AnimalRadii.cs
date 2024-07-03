@@ -278,6 +278,7 @@ public class AnimalRadii : MonoBehaviour
     void spawnAnimal()
     {
         Vector3 foundSurface;
+        float angleTowardsLocked = -1;
         if (lockedPosition)
         {
             foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength);
@@ -293,11 +294,13 @@ public class AnimalRadii : MonoBehaviour
             {
                 foundSurface = foundSpawn.transform.position;
             }
+            Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
+            angleTowardsLocked = customMathf.pointToAngle(diffrence.x, diffrence.z);
         }
         print(foundSurface);
         GameObject prefab = Instantiate(animalPrefab, foundSurface, Quaternion.identity.normalized);
         AnimalPresent present = prefab.GetComponent<AnimalPresent>();
-        present.init(false, 0, this);
+        present.init(!lockedPosition, angleTowardsLocked, this);
         manifestedAnimals.Add(present);
         manifested = true;
     }

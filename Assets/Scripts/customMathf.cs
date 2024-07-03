@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -209,7 +208,7 @@ public class customMathf : MonoBehaviour
     // >>> FIND GREATEST <<<
     // Returns the object in the list with the greatest value
     // Assumes list is not empty
-    public static T findGreated<T>(T[] list, valueFinder<T> valueUsed)
+    public static T findGreatest<T>(T[] list, valueFinder<T> valueUsed)
     {
         if(list.Length == 0)
         {
@@ -231,7 +230,36 @@ public class customMathf : MonoBehaviour
             }
             return greatest;
         }
-  
+    }
+    // Placeholder is what returns if dictionary is empty
+    public static T findGreatestKeys<T,Z>(Dictionary<T,Z> dict, valueFinder<T> valueUsed, T placeholder)
+    {
+        if (dict.Count == 0)
+        {
+            print("ERROR- Nothing in list to find");
+        }
+        bool hasStarted = false;
+        T greatest = placeholder;
+        // Could cause error if value is somehow lesser
+        float greatestValue = -9999999;
+        foreach(T ob in dict.Keys)
+        {
+            float getVal = valueUsed(ob);
+            if (!hasStarted)
+            {
+                if (greatestValue < getVal)
+                {
+                    greatest = ob;
+                    greatestValue = getVal;
+                }
+            }
+            else
+            {
+                greatestValue = getVal;
+                greatest = ob;
+            }
+        }
+        return greatest;
     }
     #endregion
     #region Containers

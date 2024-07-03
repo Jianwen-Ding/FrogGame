@@ -85,12 +85,10 @@ public class AnimalPresent : MonoBehaviour
 
     [Header("Overarching")]
     // Whether the Animal Radii was moving before
-    [SerializeField]
-    bool preManifestMoving;
+    public bool preManifestMoving;
     // Direction that the radii was going pre
     // manifestation on the x,z plane
-    [SerializeField]
-    float preManifestDirection;
+    public float preManifestDirection;
     // Distance until animal attempts reconnection with radii
     [SerializeField]
     float distanceUntilDeload;
@@ -116,13 +114,14 @@ public class AnimalPresent : MonoBehaviour
     animalState currentState;
     // Whether the object has been initialized yet
     [SerializeField]
+
     bool initialized = false;
     // Predators that the animal is aware of
     // Stores predators and time left aware of
-    public Dictionary<GameObject, float> predatorsAwareOf;
+    public Dictionary<GameObject, float> predatorsAwareOf = new Dictionary<GameObject, float>();
     // Prey that the animal is aware of
-    // Stores predator and time left aware of
-    public Dictionary<GameObject, float> preyAwareOf;
+    // Stores prey and time left aware of
+    public Dictionary<GameObject, float> preyAwareOf = new Dictionary<GameObject, float>();
     // Angle the animal is looking at
     // USE THIS FOR ALL MOVEMENT PLEASE
     public float faceAngle;
@@ -139,7 +138,7 @@ public class AnimalPresent : MonoBehaviour
         animalRender = gameObject.GetComponent<Renderer>();
         playerObject = GameObject.FindGameObjectWithTag("Player");
         detector = transform.GetChild(0).GetComponent<AnimalDistantDetector>();
-        detector.init(preyTags, predatorTags, detectorSize);
+        detector.init(preyTags, predatorTags, detectorSize, this);
         animalRigid = gameObject.GetComponent<Rigidbody>();
 
     }
@@ -162,24 +161,29 @@ public class AnimalPresent : MonoBehaviour
     {
         // Checks if object is within FOV range before sending raycast
         Vector3 diff = objectCheck.transform.position - gameObject.transform.position;
+        Debug.DrawRay(gameObject.transform.position, diff, Color.cyan);
         if(diff.magnitude < sightDistance)
         {
+            Debug.DrawRay(gameObject.transform.position, customMathf.angleToPoint(faceAngle, 1) * 5, Color.red);
             float angle = Mathf.Abs(customMathf.angleBetweenTwoVecs(diff, customMathf.angleToPoint(faceAngle, 1)));
+            DebugDisplay.updateDisplay("Sight angle on " + objectCheck.name, angle + " degrees");
             if(angle < fovAngle)
             {
                 RaycastHit[] hits = Physics.RaycastAll(gameObject.transform.position, diff, diff.magnitude, sightLayerMask);
+                DebugDisplay.updateDisplay(objectCheck.name + " raycasted", DebugDisplay.arrayToString(hits, (hit) => hit.transform.gameObject.name));
+                print(DebugDisplay.arrayToString(hits, (hit) => hit.transform.gameObject.name));
                 // Checks if only two objects were hit, gameobject and object 
-                if(hits.Length == 2 && (hits[0].transform.gameObject == objectCheck || hits[1].transform.gameObject == objectCheck))
+                if(hits.Length == 1 && (hits[0].transform.gameObject == objectCheck))
                 {
                     return true;
                 }
             }
         }
+        //DebugDisplay.deleteDisplay(objectCheck.name + " raycasted");
         return false;
     }
 
     // Scans object if they are making sound
-    // TBD
     public virtual bool withinHearingRange(GameObject objectCheck)
     {
         Vector3 diff = objectCheck.transform.position - transform.position;
@@ -242,58 +246,77 @@ public class AnimalPresent : MonoBehaviour
             // Refreshes time if detected again
             for (int i = 0; i < detector.predatorWithinField.Count; i++)
             {
-                if (withinView(detector.predatorWithinField[i]) || withinHearingRange(detector.predatorWithinField[i]))
+                if (detector.predatorWithinField[i] != null)
                 {
-                    if (predatorsAwareOf.ContainsKey(detector.predatorWithinField[i]))
+                    if (withinView(detector.predatorWithinField[i]) || withinHearingRange(detector.predatorWithinField[i]))
                     {
-                        predatorsAwareOf[detector.predatorWithinField[i]] = detectionTimePred;
-                    }
-                    else
-                    {
-                        predatorsAwareOf.Add(detector.predatorWithinField[i], detectionTimePred);
+                        print("" + detector.predatorWithinField[i].name);
+                        if (predatorsAwareOf.ContainsKey(detector.predatorWithinField[i]))
+                        {
+                            predatorsAwareOf[detector.predatorWithinField[i]] = detectionTimePred;
+                        }
+                        else
+                        {
+                            predatorsAwareOf.Add(detector.predatorWithinField[i], detectionTimePred);
+                        }
                     }
                 }
             }
             for (int i = 0; i < detector.preyWithinField.Count; i++)
             {
-                if (withinView(detector.preyWithinField[i]) || withinHearingRange(detector.preyWithinField[i]))
+                if(detector.preyWithinField[i] != null)
                 {
-                    if (preyAwareOf.ContainsKey(detector.preyWithinField[i]))
+                    if (withinView(detector.preyWithinField[i]) || withinHearingRange(detector.preyWithinField[i]))
                     {
-                        preyAwareOf[detector.preyWithinField[i]] = detectionTimePrey;
-                    }
-                    else
-                    {
-                        preyAwareOf.Add(detector.preyWithinField[i], detectionTimePrey);
+                        if (preyAwareOf.ContainsKey(detector.preyWithinField[i]))
+                        {
+                            preyAwareOf[detector.preyWithinField[i]] = detectionTimePrey;
+                        }
+                        else
+                        {
+                            preyAwareOf.Add(detector.preyWithinField[i], detectionTimePrey);
+                        }
                     }
                 }
             }
             // Checks if objecs of intrest have not been scanned for a set amount of time
-            ArrayList predsToRemove = new ArrayList();
-            foreach (GameObject pred in predatorsAwareOf.Keys)
+            GameObject[] predsToRemove = new GameObject[predatorsAwareOf.Keys.Count];
+            int predIter = 0;
+            foreach(GameObject pred in predatorsAwareOf.Keys)
             {
-                predatorsAwareOf[pred] -= Time.deltaTime;
-                if (predatorsAwareOf[pred] < 0)
-                {
-                    predsToRemove.Add(pred);
-                }
+                predsToRemove[predIter] = pred;
+                predIter += 1;
             }
-            ArrayList preysToRemove = new ArrayList();
+            int preyIter = 0;
+            GameObject[] preyToRemove = new GameObject[preyAwareOf.Keys.Count];
             foreach (GameObject prey in preyAwareOf.Keys)
             {
-                predatorsAwareOf[prey] -= Time.deltaTime;
-                if (predatorsAwareOf[prey] < 0)
+                preyToRemove[preyIter] = prey;
+                preyIter += 1;
+            }
+            if (predsToRemove != null)
+            {
+                DebugDisplay.updateDisplay(gameObject.name + " predators", DebugDisplay.arrayToString(predsToRemove, (ob) => ob.name + " has " + Mathf.Round(predatorsAwareOf[ob]) + " seconds left"));
+            }
+            for (int i = predsToRemove.Length - 1; i >= 0; i--)
+            {
+                predatorsAwareOf[predsToRemove[i]] -= Time.deltaTime;
+                if (predatorsAwareOf[predsToRemove[i]] < 0)
                 {
-                    preysToRemove.Add(prey);
+                    predatorsAwareOf.Remove(predsToRemove[i]);
                 }
             }
-            foreach (GameObject ob in predsToRemove)
+            if (preyToRemove != null)
             {
-                predatorsAwareOf.Remove(ob);
+                DebugDisplay.updateDisplay(gameObject.name + " prey", DebugDisplay.arrayToString(preyToRemove, (ob) => ob.name + " has " + Mathf.Round(preyAwareOf[ob]) + " seconds left"));
             }
-            foreach (GameObject ob in preysToRemove)
+            for (int i = preyToRemove.Length - 1; i >= 0; i--)
             {
-                preyAwareOf.Remove(ob);
+                preyAwareOf[preyToRemove[i]] -= Time.deltaTime;
+                if (preyAwareOf[preyToRemove[i]] < 0)
+                {
+                    preyAwareOf.Remove(preyToRemove[i]);
+                }
             }
             // Rejoins radii if animal gets too far and leaves view
             float distance = customMathf.distanceBetweenPoints(gameObject.transform.position, playerObject.transform.position);

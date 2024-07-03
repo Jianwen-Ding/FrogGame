@@ -22,7 +22,22 @@ public class DebugDisplay : MonoBehaviour
         }
         mainDisplay = this;
     }
-
+    #region raycast checks
+    #endregion
+    #region data conversion
+    public delegate string objectToString<T>(T foundObject);
+    // Turns a array of objects into a string
+    public static string arrayToString<T>(T[] array, objectToString<T> objectConverter)
+    {
+        string retString = "|";
+        for(int i = 0; i < array.Length; i++)
+        {
+            retString += " " + objectConverter(array[i]) + " |";
+        }
+        return retString;
+    }
+    #endregion
+    #region UI display
     // Creates a new display if key has already been repeated
     public static void updateDisplay(string key, string text)
     {
@@ -48,7 +63,10 @@ public class DebugDisplay : MonoBehaviour
     {
         if(mainDisplay != null)
         {
-            mainDisplay.displays.Remove(key);
+            if (mainDisplay.displays.ContainsKey(key))
+            {
+                mainDisplay.displays.Remove(key);
+            }
         }
         else
         {
@@ -67,4 +85,5 @@ public class DebugDisplay : MonoBehaviour
         }
         text.text = retString;
     }
+    #endregion
 }

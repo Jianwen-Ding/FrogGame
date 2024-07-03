@@ -2174,7 +2174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 11a7ccdf331a45f49b268a3ddbd91329, type: 2}
+  sharedProfile: {fileID: 0}
   isGlobal: 0
   blendDistance: 100000
   weight: 0.0001
@@ -4360,7 +4360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: b0cc3dbe610c6a3429df58d67c0fb2ad, type: 2}
+  sharedProfile: {fileID: 0}
   isGlobal: 0
   blendDistance: 10000
   weight: 0
@@ -5064,7 +5064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: 3604d2d0e15d1e5448ed414f4f302e64, type: 2}
+  sharedProfile: {fileID: 0}
   isGlobal: 0
   blendDistance: 0
   weight: 0
@@ -11455,6 +11455,16 @@ MonoBehaviour:
   wallRunRightHash: 0
   crouchingHash: 0
   state: 0
+  soundMultipliers:
+  - 0
+  - 0.5
+  - 1
+  - 1
+  - 0.75
+  - 0
+  - 1.5
+  - 0
+  standingVelMag: 0.1
 --- !u!114 &7075578393931782191
 MonoBehaviour:
   m_ObjectHideFlags: 0

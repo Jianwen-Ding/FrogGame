@@ -157,7 +157,7 @@ public class OdeionPlayer : MonoBehaviour
     // This controls how other animals hear the player in its different states
     // Order from standing, walking, sprinting, wallrunning, sliding, crouching, dashing, air
     [SerializeField]
-    float[] soundMultipliers;
+    float[] soundMultipliers = new float[8];
     [SerializeField]
     float standingVelMag;
 

@@ -9,32 +9,68 @@ public class FrogBase : AnimalPresent
     [SerializeField]
     float hopForce;
     [SerializeField]
-    float hopTime;
-    float timeLeft = 0;
+    float panicHopTime;
+    [SerializeField]
+    float huntHopTime;
+    [SerializeField]
+    float wanderHopTime;
+    [SerializeField]
+    float moveHopTime;
+    float hopTimeLeft = 0;
+    private void hop(float angle)
+    {
+        Vector3 force = customMathf.angleToPoint(angle, speed);
+        force.y = hopForce;
+        animalRigid.MoveRotation(Quaternion.Euler(new Vector3(0, 90 - angle, 0)));
+        animalRigid.AddForce(force);
+        faceAngle = angle;
+    }
+    // Moves away from predator
     public override void panicMovementUpdate()
     {
-        if (detector.predatorWithinField.Count > 0)
+        hopTimeLeft -= Time.deltaTime;
+        if (hopTimeLeft <= 0)
         {
-            timeLeft -= Time.deltaTime;
-            if (timeLeft <= 0){
-                timeLeft = hopTime;
-                Vector3 diff = gameObject.transform.position - playerObject.transform.position;
-                diff = diff.normalized;
-                diff = new Vector3(diff.x * speed, hopForce, diff.z* speed);
-                animalRigid.MoveRotation(Quaternion.Euler(new Vector3(0, 90 - Mathf.Atan2(diff.z, diff.x) * Mathf.Rad2Deg, 0)));
-                animalRigid.AddForce(diff);
-            }
-        }
-        else
-        {
-            Vector3 diff = gameObject.transform.position - playerObject.transform.position;
-            diff = diff.normalized;
-            animalRigid.MoveRotation(Quaternion.Euler(new Vector3(0, -90 - Mathf.Atan2(diff.z, diff.x) * Mathf.Rad2Deg, 0)));
+            GameObject closestPred = customMathf.findGreatestKeys(predatorsAwareOf, (pred) => -(pred.transform.position - gameObject.transform.position).magnitude, null);
+            hopTimeLeft = panicHopTime;
+            Vector3 diff = gameObject.transform.position - closestPred.transform.position;
+            float getAngle = customMathf.pointToAngle(diff.x, diff.z);
+            hop(getAngle);
         }
     }
+    // Moves towards prey
     public override void huntMovementUpdate()
     {
-
+        hopTimeLeft -= Time.deltaTime;
+        if (hopTimeLeft <= 0)
+        {
+            GameObject closestPrey = customMathf.findGreatestKeys(preyAwareOf, (prey) => -(prey.transform.position - gameObject.transform.position).magnitude, null);
+            hopTimeLeft = huntHopTime;
+            Vector3 diff = closestPrey.transform.position - gameObject.transform.position;
+            float getAngle = customMathf.pointToAngle(diff.x, diff.z);
+            hop(getAngle);
+        }
+    }
+    // Randomly hops when no directive
+    public override void wanderMovementUpdate()
+    {
+        hopTimeLeft -= Time.deltaTime;
+        if (hopTimeLeft <= 0)
+        {
+            hopTimeLeft = wanderHopTime;
+            float getAngle = Random.Range(0, 360);
+            hop(getAngle);
+        }
+    }
+    // Moves in a specific direction following player radii
+    public override void moveMovementUpdate()
+    {
+        hopTimeLeft -= Time.deltaTime;
+        if (hopTimeLeft <= 0)
+        {
+            hopTimeLeft = moveHopTime;
+            hop(preManifestDirection);
+        }
     }
 
 }
