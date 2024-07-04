@@ -117,8 +117,17 @@ public class AnimalRadii : MonoBehaviour
     // Amount of animals in radii
     [SerializeField]
     bool animalsPerRadii;
+    // Base of chance of object spawning an animal
+    [SerializeField]
+    float objectSpawnBase;
 
     [Header("Marker Spawn Parameters")]
+    // The distance the marker is displaced up on spawn
+    [SerializeField]
+    float markerYDisplace;
+    // The degrees the marker is angled
+    [SerializeField]
+    float markerAngleDisplace;
     // Time between each chance that the animal will leave a marking
     [SerializeField]
     float markerWindowTime;
@@ -134,9 +143,9 @@ public class AnimalRadii : MonoBehaviour
     // How far the raycast hits
     [SerializeField]
     float markerRaycastLength;
-    // Base of chance of object spawning an animal
+    // How steep the angle of the surface needs to be to work for a marker
     [SerializeField]
-    float objectSpawnBase;
+    float markerSteepness;
 
     public enum state
     {
@@ -270,7 +279,21 @@ public class AnimalRadii : MonoBehaviour
         {
             print("ERROR- suitable surface not found");
         }
-        return hit.point + Vector3.up * spawnYDisplacement;
+        return hit.point;
+    }
+
+    // Find steepness of surface
+    float findSurfaceSteepness(LayerMask givenLayerMask, float yAdjust, float raycastLength)
+    {
+        RaycastHit hit;
+        if (!Physics.Raycast(gameObject.transform.position + Vector3.up * yAdjust, Vector3.down, out hit, raycastLength, givenLayerMask))
+        {
+            print("ERROR- suitable surface not found");
+        }
+        DebugDisplay.updateDisplay(" " + gameObject.name + " marker steepness", customMathf.angleBetweenTwoVecs(hit.normal, Vector3.up) + "");
+        Debug.DrawRay(hit.point, hit.normal * 5, Color.yellow, 4);
+        Debug.DrawRay(hit.point, Vector3.up * 5, Color.cyan, 4);
+        return customMathf.angleBetweenTwoVecs(hit.normal, Vector3.up);
     }
 
     // Spawns animal at position
@@ -281,14 +304,14 @@ public class AnimalRadii : MonoBehaviour
         float angleTowardsLocked = -1;
         if (lockedPosition)
         {
-            foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength);
+            foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength) + Vector3.up * spawnYDisplacement;
         }
         else
         {
             GameObject foundSpawn = findNearestAvaliableSpawnArea();
             if(foundSpawn == null)
             {
-                foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength);
+                foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength) + Vector3.up * spawnYDisplacement;
             }
             else
             {
@@ -306,10 +329,16 @@ public class AnimalRadii : MonoBehaviour
     }
 
 
-    // Finds where the animal should sleep
-    GameObject spawnMarker()
+    // Spawns a marker
+    void spawnMarker()
     {
-        return null;
+        if(findSurfaceSteepness(markerRaycastLayerMask, markerRaycastYAdjust, markerRaycastLength) < markerSteepness)
+        {
+            Vector3 foundPos = findSurface(markerRaycastLayerMask, markerRaycastYAdjust, markerRaycastLength);
+            Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
+            float angleTowardsLocked = customMathf.pointToAngle(diffrence.x, diffrence.z);
+            Instantiate(markerPrefab, foundPos + Vector3.up * markerYDisplace, Quaternion.Euler(0, markerAngleDisplace + angleTowardsLocked, 0));
+        }
     }
 
     // Update is called once per frame
@@ -371,6 +400,7 @@ public class AnimalRadii : MonoBehaviour
                 gameObject.transform.position += movementVec;
 
                 // Occasionally the animal will drop markers
+                DebugDisplay.updateDisplay(" " + gameObject.name + " time until mark", timeUntilMarkChanceLeft + "");
                 timeUntilMarkChanceLeft -= Time.deltaTime;
                 if (timeUntilMarkChanceLeft < 0)
                 {
@@ -378,6 +408,7 @@ public class AnimalRadii : MonoBehaviour
                     // Generates a number between 1-100
                     // Determines if marker gets spawned
                     float randomInt = Random.Range(0, 100);
+                    DebugDisplay.updateDisplay(" " + gameObject.name + " mark chance pulled", randomInt + "");
                     if (randomInt < markerWindowChance)
                     {
                         spawnMarker();

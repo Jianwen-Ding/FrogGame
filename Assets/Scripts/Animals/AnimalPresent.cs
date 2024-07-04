@@ -155,6 +155,38 @@ public class AnimalPresent : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // Refactors angle of movement based on collisions with raycasts
+    public static float refactorDirection(float orgAngle, Vector3 orgPoint, float checkDistance, float angleOffset, int attempts, float dividePerAttempt, LayerMask mask, float objectRad)
+    {
+        DebugDisplay.updateDisplay(" Col Detect ", "No Col Found");
+        Debug.DrawLine(orgPoint, orgPoint + customMathf.angleToPoint(orgAngle, checkDistance), Color.black);
+        RaycastHit hit;
+        if(!Physics.SphereCast(orgPoint, objectRad, customMathf.angleToPoint(orgAngle, checkDistance), out hit, checkDistance, mask))
+        {
+            return orgAngle;
+        }
+        for (int i = 1; i < attempts; i++)
+        {
+            float newDist = checkDistance / (dividePerAttempt * attempts);
+            DebugDisplay.updateDisplay(" Col Detect ", "Opening in " + i + " attempts");
+            float newAngle = orgAngle + angleOffset * i;
+            Debug.DrawLine(orgPoint, orgPoint + customMathf.angleToPoint(newAngle, newDist), Color.black);
+            RaycastHit hitNew;
+            if (!Physics.SphereCast(orgPoint, objectRad, customMathf.angleToPoint(newAngle, newDist), out hitNew, newDist, mask))
+            {
+                return newAngle;
+            }
+            float newAngleInverse = orgAngle - angleOffset * i;
+            Debug.DrawLine(orgPoint, orgPoint +  customMathf.angleToPoint(newAngleInverse, newDist), Color.black);
+            RaycastHit hitNewInverse;
+            if (!Physics.SphereCast(orgPoint, objectRad, customMathf.angleToPoint(newAngleInverse, newDist), out hitNew, newDist, mask))
+            {
+                return newAngleInverse;
+            }
+        }
+        return orgAngle;
+    }
+
     // Scans all object if they are within view
     // Uses angle
     public virtual bool withinView(GameObject objectCheck)
@@ -227,6 +259,11 @@ public class AnimalPresent : MonoBehaviour
     }
     // Movement on move
     public virtual void moveMovementUpdate()
+    {
+
+    }
+    // Movement on transition
+    public virtual void transitionMovementUpdate()
     {
 
     }
@@ -324,7 +361,48 @@ public class AnimalPresent : MonoBehaviour
             {
                 rejoinRadii();
             }
+            // Controls state
+            if(predatorsAwareOf.Count != 0)
+            {
+                if(currentState != animalState.Panic)
+                {
+                    transitionMovementUpdate();
+                }
+                currentState = animalState.Panic;
+            }
+            else
+            {
+                if(preyAwareOf.Count != 0)
+                {
+                    if (currentState != animalState.Hunt)
+                    {
+                        transitionMovementUpdate();
+                    }
+                    currentState = animalState.Hunt;
+                }
+                else
+                {
+                    if (preManifestMoving)
+                    {
+                        if (currentState != animalState.Move)
+                        {
+                            transitionMovementUpdate();
+                        }
+                        currentState = animalState.Move;
+                    }
+                    else
+                    {
+                        if (currentState != animalState.Wander)
+                        {
+                            transitionMovementUpdate();
+                        }
+                        currentState = animalState.Wander;
+                    }
+                }
+            }
+            
             // Controls movement based on state
+            DebugDisplay.updateDisplay(" state of " + gameObject.name, currentState + "");
             if(currentState == animalState.Panic)
             {
                 panicMovementUpdate();

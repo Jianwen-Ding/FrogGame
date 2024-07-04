@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class FrogBase : AnimalPresent
 {
+    #region variables
+    // >>> Behavior Variables <<<
+    [Header("Behavioral Parameters")]
     [SerializeField]
     float speed;
     [SerializeField]
     float hopForce;
+    [SerializeField]
+    float transitionHopTime;
     [SerializeField]
     float panicHopTime;
     [SerializeField]
@@ -17,6 +23,25 @@ public class FrogBase : AnimalPresent
     [SerializeField]
     float moveHopTime;
     float hopTimeLeft = 0;
+    // Variables for adjusting hop angle
+    [Header("Collision Avoidance Parameters")]
+    [SerializeField]
+    LayerMask collisionLayerMask;
+    [SerializeField]
+    float colDetectDistance;
+    [SerializeField]
+    float colDetectRad;
+    [SerializeField]
+    int colDetectAttempts;
+    [SerializeField]
+    float colDetectAttemptAngleOffset;
+    [SerializeField]
+    float colDetectFalloff;
+
+    #endregion
+
+    #region functions
+    // A single hop that comprises most of the movement
     private void hop(float angle)
     {
         Vector3 force = customMathf.angleToPoint(angle, speed);
@@ -35,6 +60,7 @@ public class FrogBase : AnimalPresent
             hopTimeLeft = panicHopTime;
             Vector3 diff = gameObject.transform.position - closestPred.transform.position;
             float getAngle = customMathf.pointToAngle(diff.x, diff.z);
+            getAngle = refactorDirection(getAngle, gameObject.transform.position, colDetectDistance, colDetectAttemptAngleOffset, colDetectAttempts, colDetectFalloff, collisionLayerMask, colDetectRad);
             hop(getAngle);
         }
     }
@@ -48,6 +74,7 @@ public class FrogBase : AnimalPresent
             hopTimeLeft = huntHopTime;
             Vector3 diff = closestPrey.transform.position - gameObject.transform.position;
             float getAngle = customMathf.pointToAngle(diff.x, diff.z);
+            getAngle = refactorDirection(getAngle, gameObject.transform.position, colDetectDistance, colDetectAttemptAngleOffset, colDetectAttempts, colDetectFalloff, collisionLayerMask, colDetectRad);
             hop(getAngle);
         }
     }
@@ -59,6 +86,7 @@ public class FrogBase : AnimalPresent
         {
             hopTimeLeft = wanderHopTime;
             float getAngle = Random.Range(0, 360);
+            getAngle = refactorDirection(getAngle, gameObject.transform.position, colDetectDistance, colDetectAttemptAngleOffset, colDetectAttempts, colDetectFalloff, collisionLayerMask, colDetectRad);
             hop(getAngle);
         }
     }
@@ -69,8 +97,22 @@ public class FrogBase : AnimalPresent
         if (hopTimeLeft <= 0)
         {
             hopTimeLeft = moveHopTime;
-            hop(preManifestDirection);
+            float getAngle = refactorDirection(preManifestDirection, gameObject.transform.position, colDetectDistance, colDetectAttemptAngleOffset, colDetectAttempts, colDetectFalloff, collisionLayerMask, colDetectRad);
+            hop(getAngle);
         }
     }
 
+    // Completely resets hop time on state transition
+    public override void transitionMovementUpdate()
+    {
+        hopTimeLeft = transitionHopTime;
+    }
+
+    // Solely for debug
+    public override void Update()
+    {
+        base.Update();
+        refactorDirection(faceAngle, gameObject.transform.position, colDetectDistance, colDetectAttemptAngleOffset, colDetectAttempts, colDetectFalloff, collisionLayerMask, colDetectRad);
+    }
+    #endregion
 }

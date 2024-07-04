@@ -126,10 +126,19 @@ MonoBehaviour:
   faceAngle: 0
   speed: 2000
   hopForce: 2000
+  transitionHopTime: 0.25
   panicHopTime: 1
   huntHopTime: 1
   wanderHopTime: 5
   moveHopTime: 4
+  collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  colDetectDistance: 5
+  colDetectRad: 0.1
+  colDetectAttempts: 3
+  colDetectAttemptAngleOffset: 45
+  colDetectFalloff: 0.5
 --- !u!65 &4545214163792452768
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -50,7 +50,7 @@ public class customMathf : MonoBehaviour
     public static float angleBetweenTwoVecs(Vector3 vec1, Vector3 vec2)
     {
         float dotProd = vec1.x * vec2.x + vec1.y * vec2.y + vec1.z * vec2.z;
-        float cosAng = dotProd / (Mathf.Abs(vec1.magnitude) + Mathf.Abs(vec2.magnitude));
+        float cosAng = dotProd / ((Mathf.Abs(vec1.magnitude) * Mathf.Abs(vec2.magnitude)));
         return Mathf.Acos(cosAng) * Mathf.Rad2Deg;
     }
     // Finds x,z vector using angle
