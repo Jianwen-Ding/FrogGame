@@ -11431,8 +11431,8 @@ MonoBehaviour:
   isSliding: 0
   doubleTime: 0
   allegro: 1
-  UtilityItemOne: {fileID: 0}
-  UtilityItemTwo: {fileID: 0}
+  UtilityItemOne: {fileID: 7012276121618331076, guid: 9194b3b17bd2d4cb79eb701cd518af5a, type: 3}
+  UtilityItemTwo: {fileID: 7012276121618331076, guid: 9194b3b17bd2d4cb79eb701cd518af5a, type: 3}
   isForkussed: 0
   throwForce: 20
   tEffectDuration: 0
