@@ -331,7 +331,7 @@ public class AnimalPresent : MonoBehaviour
                 preyToRemove[preyIter] = prey;
                 preyIter += 1;
             }
-            if (predsToRemove != null)
+            if (!customMathf.contains<GameObject>(predsToRemove, null))
             {
                 DebugDisplay.updateDisplay(gameObject.name + " predators", DebugDisplay.arrayToString(predsToRemove, (ob) => ob.name + " has " + Mathf.Round(predatorsAwareOf[ob]) + " seconds left"));
             }
@@ -343,7 +343,7 @@ public class AnimalPresent : MonoBehaviour
                     predatorsAwareOf.Remove(predsToRemove[i]);
                 }
             }
-            if (preyToRemove != null)
+            if (!customMathf.contains<GameObject>(preyToRemove, null))
             {
                 DebugDisplay.updateDisplay(gameObject.name + " prey", DebugDisplay.arrayToString(preyToRemove, (ob) => ob.name + " has " + Mathf.Round(preyAwareOf[ob]) + " seconds left"));
             }

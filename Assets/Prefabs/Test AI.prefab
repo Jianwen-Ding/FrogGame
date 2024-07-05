@@ -124,15 +124,16 @@ MonoBehaviour:
   spawnRaycastLength: 50
   spawnYDisplacement: 3
   animalsPerRadii: 0
+  objectSpawnBase: 0
   markerYDisplace: 1
-  markerWindowTime: 2
-  markerWindowChance: 100
+  markerAngleDisplace: 0
+  markerWindowTime: 5
+  markerWindowChance: 0.25
   markerRaycastLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
   markerRaycastYAdjust: 40
   markerRaycastLength: 50
-  objectSpawnBase: 0
   markerSteepness: 70
   currentState: 0
   lockedPosition: 1
