@@ -284,7 +284,7 @@ public class AnimalRadii : MonoBehaviour
     {
         customMathf.SortContainer<GameObject>[] list =  findObjectsWithTag(appropiateSpawnObjects, objectSpawnBase, radiusAnimalSpawnSize);
         int totalAmount;
-        if(cutoff > list.Length)
+        if(list != null && cutoff > list.Length)
         {
             totalAmount = list.Length;
         }
