@@ -86,6 +86,12 @@ public class OdeionPlayer : MonoBehaviour
     //public LayerMask Wall;
     public bool isSliding;
 
+    [Header("Climbing")]
+    //public LayerMask Wall;
+    public Climbing climbScript;
+    public bool isClimbing;
+    public float climbSpeed;
+
     [Header("Equipment Items")]
     //Double Dash ability
     public bool doubleTime;
@@ -108,6 +114,7 @@ public class OdeionPlayer : MonoBehaviour
     public Rigidbody rb;
     public OdeionPlayerCam cam;
     public Camera PlayerViewCam;
+
 
     [Header("Post Processing")]
     public PostProcessVolume fk;
@@ -150,6 +157,7 @@ public class OdeionPlayer : MonoBehaviour
         sliding,
         crouching,
         dashing,
+        climbing,
         air
     }
 
@@ -422,6 +430,7 @@ public class OdeionPlayer : MonoBehaviour
 
     private void StateHandler()
     {
+
         //Sets slide
         if (isSliding)
         {
@@ -437,6 +446,15 @@ public class OdeionPlayer : MonoBehaviour
                 desiredSpeed = sprintSpeed;
             }
 
+            
+        }
+
+         //Sets climbing
+        else if (isClimbing)
+        {
+            state = MovementState.climbing;
+            desiredSpeed = climbSpeed;
+            isGrounded = false;
             
         }
 
@@ -545,6 +563,8 @@ public class OdeionPlayer : MonoBehaviour
             return;
         if (state == MovementState.sliding)
             return;
+        /*if (climbScript.isExitingWall)
+            return;*/
         
         //Set movement
         direction = orientation.forward * vInput + orientation.right * hInput;

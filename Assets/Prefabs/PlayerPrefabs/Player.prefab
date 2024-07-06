@@ -11346,9 +11346,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2150809505646767013}
   - component: {fileID: 8391164842191490553}
-  - component: {fileID: 7075578393931782191}
   - component: {fileID: 4726561689368215263}
-  - component: {fileID: 690443624430463276}
+  - component: {fileID: 3307863226550698309}
   - component: {fileID: 8859589891805702742}
   - component: {fileID: 3032068696447769357}
   m_Layer: 0
@@ -11410,9 +11409,9 @@ MonoBehaviour:
   isMoving: 0
   speed: 0
   desiredSpeed: 0
-  walkSpeed: 10
-  sprintSpeed: 12
-  slideSpeed: 30
+  walkSpeed: 6
+  sprintSpeed: 9
+  slideSpeed: 25
   wallrunSpeed: 12
   dashSpeed: 300
   maxYSpeed: 60
@@ -11429,6 +11428,9 @@ MonoBehaviour:
   dashSpeedChangeFactor: 50
   isWallRunning: 0
   isSliding: 0
+  climbScript: {fileID: 3307863226550698309}
+  isClimbing: 0
+  climbSpeed: 5
   doubleTime: 0
   allegro: 1
   UtilityItemOne: {fileID: 323513185056509923, guid: deb3f56a8cbe84d1d94612649c5dbd6d, type: 3}
@@ -11465,38 +11467,6 @@ MonoBehaviour:
   - 1.5
   - 0
   standingVelMag: 0.1
---- !u!114 &7075578393931782191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5982628791113871319}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35cb4c834fd8d5a42ba6f1fe28d5a8da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dashForce: 25
-  dashUpwardForce: 0
-  dashDuration: 0.25
-  maxDashYSpeed: 15
-  hInput: 0
-  vInput: 0
-  useCameraForward: 1
-  allowAllDirections: 1
-  disableGravity: 1
-  resetVel: 1
-  dashKey: 304
-  dashCooldown: 2
-  dashCooldownTimer: 0
-  airDashCount: 0
-  maxAirDashCount: 1
-  dashCount: 0
-  maxDashCount: 0
-  orientation: {fileID: 1827455433776913565}
-  cam: {fileID: 7338308642752683497}
-  W: {fileID: 690443624430463276}
 --- !u!114 &4726561689368215263
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11520,7 +11490,7 @@ MonoBehaviour:
   orientation: {fileID: 1827455433776913565}
   playerObj: {fileID: 2150809505646767013}
   cam: {fileID: 7338308642752683497}
---- !u!114 &690443624430463276
+--- !u!114 &3307863226550698309
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -11529,38 +11499,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 5982628791113871319}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f58744b45b0f04b44a9360177df7937e, type: 3}
+  m_Script: {fileID: 11500000, guid: 3fd653f6bdf61874e8bb16cf4870765b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  climbSpeed: 3
+  detectionLength: 0.7
+  sphereCastRadius: 0.25
+  maxWallLookAngle: 90
+  maxClimbTimer: 4
+  orientation: {fileID: 1827455433776913565}
+  rb: {fileID: 8859589891805702742}
+  P: {fileID: 8391164842191490553}
   Wall:
     serializedVersion: 2
     m_Bits: 64
-  Ground:
-    serializedVersion: 2
-    m_Bits: 64
-  wallRunForce: 200
-  wallJumpUpForce: 140
-  wallJumpSideForce: 20
-  wallJumpFrontForce: 14
-  wallJumpBackForce: 12
-  maxWallRunTime: 0.7
-  wallRunTimer: 0.7
-  wallNormal: {x: 0, y: 0, z: 0}
-  wallForward: {x: 0, y: 0, z: 0}
-  currentWall: {x: 0, y: 0, z: 0}
-  jumpKey: 32
-  wallJumpKey: 32
-  wallCheckDistance: 0.7
-  minJumpHeight: 2
-  isWallLeft: 0
-  isWallRight: 0
-  isWallFront: 0
-  didFrontWallJump: 0
-  exitWallTime: 0.2
-  useGravity: 0
-  gravityCounterForce: 1
-  anim: {fileID: 8134070182791806264}
-  orientation: {fileID: 1827455433776913565}
   cam: {fileID: 7338308642752683497}
 --- !u!54 &8859589891805702742
 Rigidbody:
