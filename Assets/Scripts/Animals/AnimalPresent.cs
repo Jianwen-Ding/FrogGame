@@ -83,6 +83,12 @@ public class AnimalPresent : MonoBehaviour
     [SerializeField]
     float soundMultiplier;
 
+    [Header("Stun Parameters")]
+    // The time an animal is stunned
+    [SerializeField]
+    float stunMultiplier;
+    float stunTimeLeft = 0;
+
     [Header("Overarching")]
     // Whether the Animal Radii was moving before
     public bool preManifestMoving;
@@ -104,6 +110,7 @@ public class AnimalPresent : MonoBehaviour
     public enum animalState
     {
         Panic,
+        Stun,
         Hunt,
         Wander,
         Move
@@ -128,6 +135,8 @@ public class AnimalPresent : MonoBehaviour
 
     #endregion
     #region functions
+
+    // >>> INIT AND DELOAD FUNCTIONS <<<
     // Initializes the class
     public virtual void init(bool moving ,float previousDirection, AnimalRadii setController)
     {
@@ -155,6 +164,7 @@ public class AnimalPresent : MonoBehaviour
         Destroy(gameObject);
     }
 
+    // >>> DETECTION FUNCTIONS <<<
     // Refactors angle of movement based on collisions with raycasts
     public static float refactorDirection(float orgAngle, Vector3 orgPoint, float checkDistance, float angleOffset, int attempts, float dividePerAttempt, LayerMask mask, float objectRad)
     {
@@ -235,12 +245,69 @@ public class AnimalPresent : MonoBehaviour
         return false;
     }
 
-    // When a object moves the rigid collider
-    // To be used by detection radius
-    public void removeObject(GameObject start)
+    // Updates current state based on surroundings
+    private void updateState()
     {
-
+        // Controls state
+        if (predatorsAwareOf.Count != 0)
+        {
+            if (currentState != animalState.Panic)
+            {
+                transitionMovementUpdate();
+            }
+            currentState = animalState.Panic;
+        }
+        else
+        {
+            if (preyAwareOf.Count != 0)
+            {
+                if (currentState != animalState.Hunt)
+                {
+                    transitionMovementUpdate();
+                }
+                currentState = animalState.Hunt;
+            }
+            else
+            {
+                if (preManifestMoving)
+                {
+                    if (currentState != animalState.Move)
+                    {
+                        transitionMovementUpdate();
+                    }
+                    currentState = animalState.Move;
+                }
+                else
+                {
+                    if (currentState != animalState.Wander)
+                    {
+                        transitionMovementUpdate();
+                    }
+                    currentState = animalState.Wander;
+                }
+            }
+        }
     }
+
+    // >>> FUNCTIONS TO BE CALLLED ONTO ANIMAL BY EXTERNAL SOURCES <<<
+
+    // Stuns the animal for a set amount of time
+    public void stunAnimal(float timeAttempt, bool fixedTime)
+    {
+        float stunTime;
+        if (fixedTime)
+        {
+            stunTime = timeAttempt;
+        }
+        else
+        {
+            stunTime = timeAttempt * stunMultiplier;
+        }
+        stunTimeLeft = stunTime;
+        currentState = animalState.Stun;
+    }
+
+    // >>> TEMPLATE MOVEMENT FUNCTIONS <<<
     // Following functions to be used by inherity objects
     // Movement on panic
     public virtual void panicMovementUpdate()
@@ -249,6 +316,11 @@ public class AnimalPresent : MonoBehaviour
     }
     // Movement on hunt
     public virtual void huntMovementUpdate()
+    {
+
+    }
+    // Movement on stun
+    public virtual void stunMovementUpdate()
     {
 
     }
@@ -361,63 +433,38 @@ public class AnimalPresent : MonoBehaviour
             {
                 rejoinRadii();
             }
-            // Controls state
-            if(predatorsAwareOf.Count != 0)
+            // Locks animal into stun for set amount of time
+            if(currentState == animalState.Stun)
             {
-                if(currentState != animalState.Panic)
+                stunMovementUpdate();
+                stunTimeLeft -= Time.deltaTime;
+                if(stunTimeLeft <= 0)
                 {
-                    transitionMovementUpdate();
+                    updateState();
                 }
-                currentState = animalState.Panic;
             }
             else
             {
-                if(preyAwareOf.Count != 0)
+                // Updates state
+                updateState();
+                // Controls movement based on state
+                DebugDisplay.updateDisplay(" state of " + gameObject.name, currentState + "");
+                if (currentState == animalState.Panic)
                 {
-                    if (currentState != animalState.Hunt)
-                    {
-                        transitionMovementUpdate();
-                    }
-                    currentState = animalState.Hunt;
+                    panicMovementUpdate();
                 }
-                else
+                else if (currentState == animalState.Hunt)
                 {
-                    if (preManifestMoving)
-                    {
-                        if (currentState != animalState.Move)
-                        {
-                            transitionMovementUpdate();
-                        }
-                        currentState = animalState.Move;
-                    }
-                    else
-                    {
-                        if (currentState != animalState.Wander)
-                        {
-                            transitionMovementUpdate();
-                        }
-                        currentState = animalState.Wander;
-                    }
+                    huntMovementUpdate();
                 }
-            }
-            
-            // Controls movement based on state
-            DebugDisplay.updateDisplay(" state of " + gameObject.name, currentState + "");
-            if(currentState == animalState.Panic)
-            {
-                panicMovementUpdate();
-            }
-            else if (currentState == animalState.Hunt)
-            {
-                huntMovementUpdate();
-            }
-            else if (currentState == animalState.Wander)
-            {
-                wanderMovementUpdate();
-            }
-            else if (currentState == animalState.Move)
-            {
-                moveMovementUpdate();
+                else if (currentState == animalState.Wander)
+                {
+                    wanderMovementUpdate();
+                }
+                else if (currentState == animalState.Move)
+                {
+                    moveMovementUpdate();
+                }
             }
             
         }
