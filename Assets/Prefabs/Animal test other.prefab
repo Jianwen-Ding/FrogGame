@@ -115,9 +115,10 @@ MonoBehaviour:
   sightDistance: 10
   sightLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 115
   hearDistance: 10
   soundMultiplier: 1
+  stunMultiplier: 1
   preManifestMoving: 0
   preManifestDirection: 0
   distanceUntilDeload: 40
@@ -133,7 +134,7 @@ MonoBehaviour:
   moveHopTime: 4
   collisionLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 115
   colDetectDistance: 7.5
   colDetectRad: 0.1
   colDetectAttempts: 4
