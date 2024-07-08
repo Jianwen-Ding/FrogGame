@@ -21,8 +21,10 @@ public class QuestSys : MonoBehaviour
         #region vars
         // Whether the quest is part of the main story
         public bool mainLine;
-        // Title of the quest
-        public string QuestDescription;
+        // Description of the quest
+        public string questDescription;
+        // What will change on completion of quest
+        public string questCompletionEffect;
         // Whether components have been fufilled
         bool completed;
         // Whether the quest has been activated or not
@@ -37,15 +39,12 @@ public class QuestSys : MonoBehaviour
         // Functions that will fire off upon quest being completed
         // Meant to be inserted from the outside
         public delegate void onComponentFufill();
-        List<onComponentFufill> fufillEffects;
+        List<onComponentFufill> fufillEffects = new List<onComponentFufill>();
 
         // This stores all of the information of each component
-        public class Component
+        public class QuestComponent
         {
             // >>> VARIABLES <<<
-            // The description of the component
-            public string description;
-
             // The Quest that the component is attached to
             public Quest attachedQuest;
 
@@ -66,7 +65,7 @@ public class QuestSys : MonoBehaviour
             // Functions that will fire off upon component being fufilled
             // Meant to be inserted from the outside
             public delegate void onComponentFufill();
-            List<onComponentFufill> fufillEffects;
+            List<onComponentFufill> fufillEffects = new List<onComponentFufill>();
 
             // >>> FUNCTIONS <<<
             // Increments component
@@ -113,16 +112,20 @@ public class QuestSys : MonoBehaviour
                 return completed;
             }
 
+            // >>> CONSTRUCTOR
+            public QuestComponent(Quest attQuest, bool increm, int amountNeeded, int amount, bool complete)
+            {
+                attachedQuest = attQuest;
+                incremental = increm;
+                totalAmount = amountNeeded;
+                gatheredAmount = amount;
+                completed = complete;
+            }
         }
         [SerializeField]
-        public Dictionary<string, Component> components = new Dictionary<string, Component>();
+        public Dictionary<string, QuestComponent> components = new Dictionary<string, QuestComponent>();
         #endregion
         #region functions
-        //public void activateComponent(string infoKey)
-        //{
-        //    components[infoKey] = ;
-        //}
-
         // Checks if every single component has been completed or not
         // Updates completion status accordingly
         public void attemptComplete()
@@ -137,15 +140,17 @@ public class QuestSys : MonoBehaviour
                 }
             }
             completed = allComplete || completed;
-            // Attempts to activate next quests
-            for(int i = 0; i < nextQuests.Count; i++)
-            {
-                nextQuests[i].attemptActivate();
-            }
-            // Activates all fufill effects
-            for(int i = 0; i < fufillEffects.Count; i++)
-            {
-                fufillEffects[i]();
+            if (completed) {
+                // Attempts to activate next quests
+                for (int i = 0; i < nextQuests.Count; i++)
+                {
+                    nextQuests[i].attemptActivate();
+                }
+                // Activates all fufill effects
+                for (int i = 0; i < fufillEffects.Count; i++)
+                {
+                    fufillEffects[i]();
+                }
             }
         }
 
@@ -180,11 +185,41 @@ public class QuestSys : MonoBehaviour
         {
             fufillEffects.Add(newFunc);
         }
+        // Inserts components
+        public void insertComponents(Dictionary<string ,QuestComponent> set)
+        {
+            components = set;
+        }
+        #endregion
+        #region constructor
+        // Full construction
+        public Quest(bool main, string description, string completionEff, bool complete, bool active, List<Quest> next, List<Quest> prev, Dictionary<string, QuestComponent> comps)
+        {
+            mainLine = main;
+            questDescription = description;
+            questCompletionEffect = completionEff;
+            completed = complete;
+            activated = active;
+            nextQuests = next;
+            previousQuests = prev;
+            components = comps;
+        }
+        // Leaves out next, previous quests, and components to be added later
+        public Quest(bool main, string description, string completionEff, bool complete, bool active)
+        {
+            mainLine = main;
+            questDescription = description;
+            questCompletionEffect = completionEff;
+            completed = complete;
+            activated = active;
+            nextQuests = new List<Quest>();
+            previousQuests = new List<Quest>();
+        }
         #endregion
     }
 
     // Full list of all quests
-    public static Dictionary<string, Quest> QuestLists;
+    public static Dictionary<string, Quest> QuestLists = new Dictionary<string, Quest>();
     #endregion
 
     // Start is called before the first frame update
