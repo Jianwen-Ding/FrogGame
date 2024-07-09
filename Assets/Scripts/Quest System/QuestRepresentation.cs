@@ -166,7 +166,14 @@ public class QuestRepresentation : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        if (!activated)
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            regenerateVisual();
+        }
     }
 
     // Update is called once per frame
@@ -178,126 +185,123 @@ public class QuestRepresentation : MonoBehaviour
     // Generates visualization of quest
     public void regenerateVisual()
     {
-        if (edited)
+        // >>> CLEARING PREVIOUS CHANGES <<<
+            for (int i = transform.GetChild(0).childCount - 1; i >= 0; i--)
         {
-            // >>> CLEARING PREVIOUS CHANGES <<<
-            for(int i = transform.GetChild(0).childCount - 1; i >= 0; i--)
+            DestroyImmediate(transform.GetChild(0).GetChild(i).gameObject);
+        }
+        // >>> PAGE CREATION FUNCTION SETUP <<<
+        Vector2 currentDisplacement = startPoint * pageScale;
+        void setOb(float displacement, float xDisplace, GameObject givenObject)
+        {
+            currentDisplacement = currentDisplacement + Vector2.down * displacement;
+            givenObject.transform.position = (Vector2)gameObject.transform.position + currentDisplacement + Vector2.right * xDisplace;
+        }
+        GameObject createOb(GameObject givenPrefab)
+        {
+            GameObject madeObject = Instantiate(givenPrefab, gameObject.transform.position, Quaternion.identity.normalized);
+            madeObject.transform.localScale = madeObject.transform.localScale * pageScale;
+            madeObject.transform.SetParent(transform.GetChild(0));
+            return madeObject;
+        }
+        void setImage(float displacement, float xDisplace, GameObject givenObject, Sprite givenSprite)
+        {
+            setOb(displacement, xDisplace, givenObject);
+            Image gotImage = givenObject.GetComponent<Image>();
+            if (givenSprite != null)
             {
-                DestroyImmediate(transform.GetChild(0).GetChild(i).gameObject);
+                gotImage.color = Color.white;
+                gotImage.sprite = givenSprite;
             }
-            // >>> PAGE CREATION FUNCTION SETUP <<<
-            Vector2 currentDisplacement = startPoint * pageScale;
-            void setOb(float displacement, float xDisplace, GameObject givenObject)
+            else
             {
-                currentDisplacement = currentDisplacement + Vector2.down * displacement;
-                givenObject.transform.position = (Vector2)gameObject.transform.position + currentDisplacement + Vector2.right * xDisplace;
+                gotImage.color = Color.clear;
             }
-            GameObject createOb(GameObject givenPrefab)
+        }
+        void setText(float displacement, float xDisplace, GameObject givenObject, string text)
+        {
+            setOb(displacement, xDisplace, givenObject);
+            TextMeshProUGUI textMesh = givenObject.GetComponent<TextMeshProUGUI>();
+            textMesh.text = text;
+        }
+        // >>> PAGE CREATION <<<
+        questBackDrop.GetComponent<Image>().sprite = backDropSprite;
+        questBackDrop.transform.position = gameObject.transform.position;
+        setText(titleDisplacement * pageScale, titleXDisplacement * pageScale, titleTextbox, questTitle);
+        if (mainLine)
+        {
+            setImage(0, indicatorXDisplacement * pageScale, mainlineIndicator, mainLineIndicatorSprite);
+        }
+        else
+        {
+            setImage(0, indicatorXDisplacement * pageScale, mainlineIndicator, null);
+        }
+        if (completed)
+        {
+            setImage(0, checkMarkXDisplacement * pageScale, questCheckbox, questCheckedBoxSprite);
+        }
+        else
+        {
+            setImage(0, checkMarkXDisplacement * pageScale, questCheckbox, questNonCheckedBoxSprite);
+        }
+        setImage(imageDisplacement * pageScale, 0, relatedImage, relatedSprite);
+        setText(descriptionDisplacement * pageScale, 0, descriptionTextbox, questDescription);
+        for (int i = 0; i < components.Length; i++)
+        {
+            GameObject componentBackDrop = createOb(componentBackDropPrefab);
+            setImage(componentDisplacement * pageScale, 0, componentBackDrop, componentBackDropSprite);
+            GameObject compTitleTextBox = createOb(componentTitlePrefab);
+            GameObject compCountTextBox = createOb(componentCountPrefab);
+            GameObject compCheckbox = createOb(componentCheckboxPrefab);
+            setText(0, componentTitleXDisplace * pageScale, compTitleTextBox, components[i] + ": ");
+            if (increments[i])
             {
-                GameObject madeObject = Instantiate(givenPrefab, gameObject.transform.position, Quaternion.identity.normalized);
-                madeObject.transform.localScale = madeObject.transform.localScale * pageScale;
-                madeObject.transform.SetParent(transform.GetChild(0));
-                return madeObject;
+                setText(0, componentCountXDisplace * pageScale, compCountTextBox, gatheredAmount[i] + " / " + componentTotal[i]);
+                setImage(0, componentCheckmarkXDisplace * pageScale, compCheckbox, null);
             }
-            void setImage(float displacement, float xDisplace, GameObject givenObject, Sprite givenSprite)
+            else
             {
-                setOb(displacement, xDisplace, givenObject);
-                Image gotImage = givenObject.GetComponent<Image>();
-                if(givenSprite != null )
+                setText(0, componentCountXDisplace * pageScale, compCountTextBox, "");
+                if (componentCompletion[i])
                 {
-                    gotImage.color = Color.white;
-                    gotImage.sprite = givenSprite;
+                    setImage(0, componentCheckmarkXDisplace * pageScale, compCheckbox, componentCheckedBoxSprite);
                 }
                 else
                 {
-                    gotImage.color = Color.clear;
+                    setImage(0, componentCheckmarkXDisplace * pageScale, compCheckbox, componentNonCheckedBoxSprite);
                 }
             }
-            void setText(float displacement, float xDisplace, GameObject givenObject, string text)
-            {
-                setOb(displacement, xDisplace, givenObject);
-                TextMeshProUGUI textMesh =  givenObject.GetComponent<TextMeshProUGUI>();
-                textMesh.text = text;
-            }
-            // >>> PAGE CREATION <<<
-            questBackDrop.GetComponent<Image>().sprite = backDropSprite;
-            questBackDrop.transform.position = gameObject.transform.position;
-            setText(titleDisplacement * pageScale, titleXDisplacement * pageScale, titleTextbox, questTitle);
-            if (mainLine)
-            {
-                setImage(0, indicatorXDisplacement * pageScale, mainlineIndicator, mainLineIndicatorSprite);
-            }
-            else
-            {
-                setImage(0, indicatorXDisplacement * pageScale, mainlineIndicator, null);
-            }
-            if (completed)
-            {
-                setImage(0, checkMarkXDisplacement * pageScale, questCheckbox, questCheckedBoxSprite);
-            }
-            else
-            {
-                setImage(0, checkMarkXDisplacement * pageScale, questCheckbox, questNonCheckedBoxSprite);
-            }
-            setImage(imageDisplacement * pageScale, 0, relatedImage, relatedSprite);
-            setText(descriptionDisplacement * pageScale, 0, descriptionTextbox, questDescription);
-            for (int i = 0; i < components.Length; i++)
-            {
-                GameObject componentBackDrop = createOb(componentBackDropPrefab);
-                setImage(componentDisplacement * pageScale, 0, componentBackDrop, componentBackDropSprite);
-                GameObject compTitleTextBox = createOb(componentTitlePrefab);
-                GameObject compCountTextBox = createOb(componentCountPrefab);
-                GameObject compCheckbox = createOb(componentCheckboxPrefab);
-                setText(0, componentTitleXDisplace * pageScale, compTitleTextBox, components[i] + ": ");
-                if (increments[i])
-                {
-                    setText(0, componentCountXDisplace * pageScale, compCountTextBox, gatheredAmount[i] + " / " + componentTotal[i]);
-                    setImage(0, componentCheckmarkXDisplace * pageScale, compCheckbox, null);
-                }
-                else
-                {
-                    setText(0, componentCountXDisplace * pageScale, compCountTextBox, "");
-                    if (componentCompletion[i])
-                    {
-                        setImage(0, componentCheckmarkXDisplace * pageScale, compCheckbox, componentCheckedBoxSprite);
-                    }
-                    else
-                    {
-                        setImage(0, componentCheckmarkXDisplace * pageScale, compCheckbox, componentNonCheckedBoxSprite);
-                    }
-                }
-            }
-            if (completed)
-            {
-                setText(effectDisplacement * pageScale, 0, effectTextbox, questCompletionEffect);
-            }
-            else
-            {
-                setText(0, 0, effectTextbox, "");
-            }
-            // >>> ARROW GENERATION <<<
-            // Each quest page is responsible for generating arrows of
-            // the previous quest pages
-            for(int i = 0; i < previousQuests.Count; i++)
-            {
-                GameObject prevOb = previousQuests[i].gameObject;
-                Vector3 diff = prevOb.transform.position - gameObject.transform.position;
-                float diffAng = customMathf.pointToAngle(diff.x, diff.y);
-                Vector3 towardsPoint = gameObject.transform.position + diff.normalized * distanceFromOriginArrow;
-                Vector3 fromPoint = prevOb.transform.position + -diff.normalized * previousQuests[i].distanceFromOriginArrow;
-                Vector3 middlePoint = (towardsPoint + fromPoint) / 2;
-                float pointDist = (towardsPoint - fromPoint).magnitude;
-                GameObject tail = createOb(arrowTailPrefab);
-                tail.transform.position = fromPoint;
-                tail.transform.rotation = Quaternion.Euler(new Vector3(0, 0, diffAng));
-                GameObject head = createOb(arrowTipPrefab);
-                head.transform.position = towardsPoint;
-                head.transform.rotation = Quaternion.Euler(new Vector3(0, 0, diffAng));
-                GameObject arrowBase = createOb(arrowBasePrefab);
-                arrowBase.transform.position = middlePoint;
-                arrowBase.transform.localScale = new Vector3(pointDist * distanceToLengthConstant, head.transform.localScale.y, head.transform.localScale.z);
-                arrowBase.transform.rotation = Quaternion.Euler(new Vector3(0, 0, diffAng));
-            }
+        }
+        if (completed)
+        {
+            setText(effectDisplacement * pageScale, 0, effectTextbox, questCompletionEffect);
+        }
+        else
+        {
+            setText(0, 0, effectTextbox, "");
+        }
+        // >>> ARROW GENERATION <<<
+        // Each quest page is responsible for generating arrows of
+        // the previous quest pages
+        for (int i = 0; i < previousQuests.Count; i++)
+        {
+            GameObject prevOb = previousQuests[i].gameObject;
+            Vector3 diff = prevOb.transform.position - gameObject.transform.position;
+            float diffAng = customMathf.pointToAngle(diff.x, diff.y);
+            Vector3 towardsPoint = gameObject.transform.position + diff.normalized * distanceFromOriginArrow;
+            Vector3 fromPoint = prevOb.transform.position + -diff.normalized * previousQuests[i].distanceFromOriginArrow;
+            Vector3 middlePoint = (towardsPoint + fromPoint) / 2;
+            float pointDist = (towardsPoint - fromPoint).magnitude;
+            GameObject tail = createOb(arrowTailPrefab);
+            tail.transform.position = fromPoint;
+            tail.transform.rotation = Quaternion.Euler(new Vector3(0, 0, diffAng));
+            GameObject head = createOb(arrowTipPrefab);
+            head.transform.position = towardsPoint;
+            head.transform.rotation = Quaternion.Euler(new Vector3(0, 0, diffAng));
+            GameObject arrowBase = createOb(arrowBasePrefab);
+            arrowBase.transform.position = middlePoint;
+            arrowBase.transform.localScale = new Vector3(pointDist * distanceToLengthConstant, head.transform.localScale.y, head.transform.localScale.z);
+            arrowBase.transform.rotation = Quaternion.Euler(new Vector3(0, 0, diffAng));
         }
 
     }
@@ -340,6 +344,15 @@ public class QuestRepresentation : MonoBehaviour
             componentTotal[i] = insertQuest.components[key].totalAmount;
             componentCompletion[i] = insertQuest.components[key].getCompleted();
             i = i + 1;
+        }
+        if (activated)
+        {
+            gameObject.SetActive(true);
+            regenerateVisual();
+        }
+        else
+        {
+            gameObject.SetActive(false);
         }
     }
     #endregion

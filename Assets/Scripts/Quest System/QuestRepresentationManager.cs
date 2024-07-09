@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class RepToQuest : MonoBehaviour
+public class QuestRepresentationManager : MonoBehaviour
 {
     // ALL QUEST PAGES NEED TO BE ATTACHED TO SOMETHING FOR THIS TO WORK
+    // This class is meant to extract quest information from quest representations and
+    // to update quest representations with new save data
+
     #region variables
     [SerializeField]
     QuestRepresentation startingRepresentation;
@@ -78,5 +81,14 @@ public class RepToQuest : MonoBehaviour
         }
         updateIterate(startingRepresentation);
     }
+
+    // Updates quests with player prefs
+    public void Start()
+    {
+        Dictionary<string, QuestSys.Quest> orginalQuests = repToQuests();
+        QuestSys.updateQuestStates(orginalQuests);
+        updateRepresentation(orginalQuests);
+    }
     #endregion
+
 }

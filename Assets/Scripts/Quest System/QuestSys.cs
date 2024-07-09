@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class QuestSys : MonoBehaviour
 {
+    
     #region variables
     // Main quest system
     // Non public variables meant to only be modified specific ways
@@ -200,7 +201,10 @@ public class QuestSys : MonoBehaviour
     }
 
     // Full list of all quests
-    public static Dictionary<string, Quest> QuestLists = new Dictionary<string, Quest>();
+    private static Dictionary<string, Quest> QuestList = new Dictionary<string, Quest>();
+
+    [SerializeField]
+    GameObject questRepPrefab;
     #endregion
 
     #region functions
@@ -208,6 +212,7 @@ public class QuestSys : MonoBehaviour
     // Stores the states of quests
     // 1 equals true
     // 0 equals false
+    // Effectively saves the game
     public static void saveStateAsPrefs(Dictionary<string, Quest> questList)
     {
         PlayerPrefs.SetString("SavedState", "yes");
@@ -223,6 +228,7 @@ public class QuestSys : MonoBehaviour
         }
     }
     // Creates new quests using the states recorded in player prefs
+    // Effectively loads the game
     public static void updateQuestStates(Dictionary<string, Quest> baseQuests)
     {
         if(PlayerPrefs.GetString("SavedState", "no") == "yes")
@@ -242,20 +248,19 @@ public class QuestSys : MonoBehaviour
                 }
             }
         }
-        else {
-            print("ERROR- attempted to load save without any save data");
-        }
+    }
+    private void ChangedActiveScene(Scene current, Scene next)
+    {
+        saveStateAsPrefs(QuestList);
     }
     // Start is called before the first frame update
     void Start()
     {
-        
+        QuestRepresentationManager repManager =  questRepPrefab.GetComponent<QuestRepresentationManager>();
+        QuestList = repManager.repToQuests();
+        updateQuestStates(QuestList);
+        SceneManager.activeSceneChanged += ChangedActiveScene;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
     #endregion
 }
