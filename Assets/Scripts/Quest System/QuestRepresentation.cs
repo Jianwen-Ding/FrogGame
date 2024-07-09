@@ -316,6 +316,32 @@ public class QuestRepresentation : MonoBehaviour
         retQuest.insertComponents(compList);
         return retQuest;
     }
+
+    // Insert quest states into the representation
+    // Connections with other quest representations are seperatedly made
+    public void insertQuest(Quest insertQuest)
+    {
+        mainLine = insertQuest.mainLine;
+        questDescription = insertQuest.questDescription;
+        questCompletionEffect = insertQuest.questCompletionEffect;
+        completed = insertQuest.getCompletionState();
+        activated = insertQuest.getActivationState();
+        int i = 0;
+        components = new string[insertQuest.components.Count];
+        increments = new bool[insertQuest.components.Count];
+        gatheredAmount = new int[insertQuest.components.Count];
+        componentTotal = new int[insertQuest.components.Count];
+        componentCompletion = new bool[insertQuest.components.Count];
+        foreach(string key in insertQuest.components.Keys)
+        {
+            components[i] = key;
+            increments[i] = insertQuest.components[key].incremental;
+            gatheredAmount[i] = insertQuest.components[key].getGathered();
+            componentTotal[i] = insertQuest.components[key].totalAmount;
+            componentCompletion[i] = insertQuest.components[key].getCompleted();
+            i = i + 1;
+        }
+    }
     #endregion
 }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class QuestSys : MonoBehaviour
 {
-    #region vars
+    #region variables
     // Main quest system
     // Non public variables meant to only be modified specific ways
     public class Quest
@@ -35,12 +35,6 @@ public class QuestSys : MonoBehaviour
         // Quests that need to be activated in order to attempt activation of quest
         public List<Quest> previousQuests;
 
-        // Stores all effects of the 
-        // Functions that will fire off upon quest being completed
-        // Meant to be inserted from the outside
-        public delegate void onComponentFufill();
-        List<onComponentFufill> fufillEffects = new List<onComponentFufill>();
-
         // This stores all of the information of each component
         public class QuestComponent
         {
@@ -60,12 +54,7 @@ public class QuestSys : MonoBehaviour
             public int totalAmount;
 
             // Whether the player has fufilled this component
-            private bool completed;
-
-            // Functions that will fire off upon component being fufilled
-            // Meant to be inserted from the outside
-            public delegate void onComponentFufill();
-            List<onComponentFufill> fufillEffects = new List<onComponentFufill>();
+            bool completed;
 
             // >>> FUNCTIONS <<<
             // Increments component
@@ -88,18 +77,9 @@ public class QuestSys : MonoBehaviour
             public void fufillComponent()
             {
                 completed = true;
-                for(int i = 0; i < fufillEffects.Count; i++)
-                {
-                    fufillEffects[i]();
-                }
                 attachedQuest.attemptComplete();
             }
 
-            // Inserts effect on component completion
-            public void insertFufillEffect(onComponentFufill newFunc)
-            {
-                fufillEffects.Add(newFunc);
-            }
             // Gathered amount accessed here
             public int getGathered()
             {
@@ -111,8 +91,13 @@ public class QuestSys : MonoBehaviour
             {
                 return completed;
             }
-
-            // >>> CONSTRUCTOR
+            // Updates state of component
+            public void updateState(int amount, bool complete)
+            {
+                gatheredAmount = amount;
+                completed = complete;
+            }
+            // >>> CONSTRUCTOR <<<
             public QuestComponent(Quest attQuest, bool increm, int amountNeeded, int amount, bool complete)
             {
                 attachedQuest = attQuest;
@@ -146,11 +131,6 @@ public class QuestSys : MonoBehaviour
                 {
                     nextQuests[i].attemptActivate();
                 }
-                // Activates all fufill effects
-                for (int i = 0; i < fufillEffects.Count; i++)
-                {
-                    fufillEffects[i]();
-                }
             }
         }
 
@@ -180,15 +160,16 @@ public class QuestSys : MonoBehaviour
             return completed;
         }
 
-        // Inserts effect on component completion
-        public void insertFufillEffect(onComponentFufill newFunc)
-        {
-            fufillEffects.Add(newFunc);
-        }
         // Inserts components
         public void insertComponents(Dictionary<string ,QuestComponent> set)
         {
             components = set;
+        }
+        // Updates the state of a quest
+        public void updateState(bool complete, bool active)
+        {
+            completed = complete;
+            activated = active;
         }
         #endregion
         #region constructor
@@ -222,6 +203,49 @@ public class QuestSys : MonoBehaviour
     public static Dictionary<string, Quest> QuestLists = new Dictionary<string, Quest>();
     #endregion
 
+    #region functions
+
+    // Stores the states of quests
+    // 1 equals true
+    // 0 equals false
+    public static void saveStateAsPrefs(Dictionary<string, Quest> questList)
+    {
+        PlayerPrefs.SetString("SavedState", "yes");
+        foreach (string key in questList.Keys)
+        {
+            PlayerPrefs.SetInt(key + "completed", questList[key].getCompletionState() ? 1 : 0);
+            PlayerPrefs.SetInt(key + "activated", questList[key].getActivationState() ? 1 : 0);
+            foreach(string componentKey in questList[key].components.Keys)
+            {
+                PlayerPrefs.SetInt(key + componentKey + "gatheredAmount", questList[key].components[componentKey].getGathered());
+                PlayerPrefs.SetInt(key + componentKey + "completed", questList[key].components[componentKey].getCompleted() ? 1 : 0);
+            }
+        }
+    }
+    // Creates new quests using the states recorded in player prefs
+    public static void updateQuestStates(Dictionary<string, Quest> baseQuests)
+    {
+        if(PlayerPrefs.GetString("SavedState", "no") == "yes")
+        {
+            foreach (string key in baseQuests.Keys)
+            {
+                baseQuests[key].updateState(
+                    PlayerPrefs.GetInt(key + "completed", 0) == 1,
+                    PlayerPrefs.GetInt(key + "activated", 0) == 1
+                    );
+                foreach(string componentKey in baseQuests[key].components.Keys)
+                {
+                    baseQuests[key].components[componentKey].updateState(
+                        PlayerPrefs.GetInt(key + componentKey + "gatheredAmount", 0),
+                        PlayerPrefs.GetInt(key + componentKey + "completed", 0) == 1
+                        );
+                }
+            }
+        }
+        else {
+            print("ERROR- attempted to load save without any save data");
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -233,4 +257,5 @@ public class QuestSys : MonoBehaviour
     {
         
     }
+    #endregion
 }
