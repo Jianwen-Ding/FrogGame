@@ -57,6 +57,7 @@ public class AnimalPresent : MonoBehaviour
     // of animal
 
     bool initialized = false;
+    GameObject[] objectsOfIntrestInView; 
 
     #endregion
     #region functions
@@ -81,6 +82,20 @@ public class AnimalPresent : MonoBehaviour
     {
         animalController.removeManifestedAnimal(this);
         Destroy(gameObject);
+    }
+
+    // Scans all objects within view
+    public virtual void view()
+    {
+        ArrayList objectsOfIntrest = new ArrayList();
+        for(int i = 0; i < predatorTags.Length; i++)
+        {
+
+        }
+        for(int i = 0; i < preyTags.Length; i++)
+        {
+
+        }
     }
     // Start is called before the first frame update
     void Start()
