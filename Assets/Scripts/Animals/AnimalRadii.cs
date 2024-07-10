@@ -111,11 +111,23 @@ public class AnimalRadii : MonoBehaviour
     // How far the raycast hits
     [SerializeField]
     float spawnRaycastLength;
+    // How much the animal is shifted up on spawn
+    [SerializeField]
+    float spawnYDisplacement;
     // Amount of animals in radii
     [SerializeField]
-    bool animalsPerRadii;
+    int animalsPerRadii;
+    // Base of chance of object spawning an animal
+    [SerializeField]
+    float objectSpawnBase;
 
     [Header("Marker Spawn Parameters")]
+    // The distance the marker is displaced up on spawn
+    [SerializeField]
+    float markerYDisplace;
+    // The degrees the marker is angled
+    [SerializeField]
+    float markerAngleDisplace;
     // Time between each chance that the animal will leave a marking
     [SerializeField]
     float markerWindowTime;
@@ -131,9 +143,9 @@ public class AnimalRadii : MonoBehaviour
     // How far the raycast hits
     [SerializeField]
     float markerRaycastLength;
-    // Base of chance of object spawning an animal
+    // How steep the angle of the surface needs to be to work for a marker
     [SerializeField]
-    float objectSpawnBase;
+    float markerSteepness;
 
     public enum state
     {
@@ -186,38 +198,44 @@ public class AnimalRadii : MonoBehaviour
         manifestedAnimals.Remove(animal);
     }
 
-    // Uses list of tags to find nearby object.
-    // Automatically exculdes object already locked onto
-    // If cutoff is -1, search for all objects
-    // Returns null if no object with tag or in radius are found
-    GameObject findNearbyObjectsWithTags(string[] tagList, float baseModifier, float cutoff)
+
+    // Find sorted list of nearest objects with tag
+    public customMathf.SortContainer<GameObject>[] findObjectsWithTag(string[] tagList, float baseModifier, float cutoff)
     {
         // List of floats recording distance from current animalRaddii
-        List<customMathf.SortContainer<GameObject>> magObjectList = new List<customMathf.SortContainer<GameObject>>();
+        List < customMathf.SortContainer < GameObject >> magObjectList = new List<customMathf.SortContainer<GameObject>>();
         for (int i = 0; i < tagList.Length; i++)
         {
             GameObject[] objectsWithTag = GameObject.FindGameObjectsWithTag(tagList[i]);
             for (int z = 0; z < objectsWithTag.Length; z++)
             {
-                if(objectsWithTag[z] != lockedObject)
+                if (objectsWithTag[z] != lockedObject)
                 {
                     Vector3 difference = objectsWithTag[z].transform.position - gameObject.transform.position;
                     float magnitude = difference.magnitude;
-                    DebugDisplay.updateDisplay(objectsWithTag[z].name + " distance", magnitude + "");
                     // Does not consider object if object is outside of radius
-                    if(cutoff == -1 || cutoff > magnitude)
+                    if (cutoff == -1 || cutoff > magnitude)
                     {
                         magObjectList.Add(new customMathf.SortContainer<GameObject>(objectsWithTag[z], -magnitude));
                     }
                 }
             }
         }
-        if(magObjectList.Count == 0)
+        if (magObjectList.Count == 0)
         {
             return null;
         }
         // Sorts list
-        customMathf.SortContainer<GameObject>[] sortedList = magObjectList.ToArray();
+        return magObjectList.ToArray();
+    }
+    // Uses list of tags to find nearby object.
+    // Automatically exculdes object already locked onto
+    // If cutoff is -1, search for all objects
+    // Returns null if no object with tag or in radius are found
+    GameObject findNearbyObjectWithTags(string[] tagList, float baseModifier, float cutoff)
+    {
+        // Finds sorted list
+        customMathf.SortContainer<GameObject>[] sortedList = findObjectsWithTag(tagList, baseModifier, cutoff);
         customMathf.mergeSort(sortedList);
         // Creates weights based off of list sorted
         float[] weightsList = new float[sortedList.Length];
@@ -233,7 +251,7 @@ public class AnimalRadii : MonoBehaviour
     // Plugs into object finding algo
     GameObject findNearbyObjectOfIntrest()
     {
-        GameObject retObject = findNearbyObjectsWithTags(objectsOfIntrest, objectIntrestBase, -1);
+        GameObject retObject = findNearbyObjectWithTags(objectsOfIntrest, objectIntrestBase, -1);
         if(retObject == null)
         {
             print("ERROR- There are no objects that corresponds to -" + gameObject.name + "-'s objects of intrest tags");
@@ -245,7 +263,7 @@ public class AnimalRadii : MonoBehaviour
     // Plugs into object finding algo
     GameObject findSleepingSpot()
     {
-        GameObject retObject = findNearbyObjectsWithTags(sleepObjects, objectSleepBase, -1);
+        GameObject retObject = findNearbyObjectWithTags(sleepObjects, objectSleepBase, -1);
         if (retObject == null)
         {
             print("ERROR- There are no objects that corresponds to -" + gameObject.name + "-'s sleep objects tags");
@@ -257,7 +275,29 @@ public class AnimalRadii : MonoBehaviour
     // Plugs into object finding algo
     GameObject findNearestAvaliableSpawnArea()
     {
-        return findNearbyObjectsWithTags(appropiateSpawnObjects, objectSpawnBase, radiusAnimalSpawnSize); 
+        return findNearbyObjectWithTags(appropiateSpawnObjects, objectSpawnBase, radiusAnimalSpawnSize); 
+    }
+
+    // Searches for nearest avaliable gameobject for creature to spawn in
+    // Plugs into object finding algo
+    GameObject[] findNearestSpawnAreas(int cutoff)
+    {
+        customMathf.SortContainer<GameObject>[] list =  findObjectsWithTag(appropiateSpawnObjects, objectSpawnBase, radiusAnimalSpawnSize);
+        int totalAmount;
+        if(list != null && cutoff > list.Length)
+        {
+            totalAmount = list.Length;
+        }
+        else
+        {
+            totalAmount = cutoff;
+        }
+        GameObject[] retList = new GameObject[totalAmount];
+        for(int i = 0; i < retList.Length; i++)
+        {
+            retList[i] = list[list.Length - 1 - i].contained;
+        }
+        return retList;
     }
 
     // Searches for nearest avaliable position on Gameobject
@@ -271,40 +311,113 @@ public class AnimalRadii : MonoBehaviour
         return hit.point;
     }
 
+    // Find steepness of surface
+    float findSurfaceSteepness(LayerMask givenLayerMask, float yAdjust, float raycastLength)
+    {
+        RaycastHit hit;
+        if (!Physics.Raycast(gameObject.transform.position + Vector3.up * yAdjust, Vector3.down, out hit, raycastLength, givenLayerMask))
+        {
+            print("ERROR- suitable surface not found");
+        }
+        DebugDisplay.updateDisplay(" " + gameObject.name + " marker steepness", customMathf.angleBetweenTwoVecs(hit.normal, Vector3.up) + "");
+        Debug.DrawRay(hit.point, hit.normal * 5, Color.yellow, 4);
+        Debug.DrawRay(hit.point, Vector3.up * 5, Color.cyan, 4);
+        return customMathf.angleBetweenTwoVecs(hit.normal, Vector3.up);
+    }
+
     // Spawns animal at position
     // Current has not implemented crowd spawn
     void spawnAnimal()
     {
-        Vector3 foundSurface;
-        if (lockedPosition)
+        // If only one radii
+        if(animalsPerRadii <= 1)
         {
-            foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength);
-        }
-        else
-        {
-            GameObject foundSpawn = findNearestAvaliableSpawnArea();
-            if(foundSpawn == null)
+            Vector3 foundSurface;
+            float angleTowardsLocked = -1;
+            if (lockedPosition)
             {
-                foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength);
+                foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength) + Vector3.up * spawnYDisplacement;
             }
             else
             {
-                foundSurface = foundSpawn.transform.position;
+                GameObject foundSpawn = findNearestAvaliableSpawnArea();
+                if (foundSpawn == null)
+                {
+                    foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength) + Vector3.up * spawnYDisplacement;
+                }
+                else
+                {
+                    foundSurface = foundSpawn.transform.position;
+                }
+                Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
+                angleTowardsLocked = customMathf.pointToAngle(diffrence.x, diffrence.z);
             }
+            print(foundSurface);
+            GameObject prefab = Instantiate(animalPrefab, foundSurface, Quaternion.identity.normalized);
+            AnimalPresent present = prefab.GetComponent<AnimalPresent>();
+            present.init(!lockedPosition, angleTowardsLocked, this);
+            manifestedAnimals.Add(present);
+            manifested = true;
         }
-        print(foundSurface);
-        GameObject prefab = Instantiate(animalPrefab, foundSurface, Quaternion.identity.normalized);
-        AnimalPresent present = prefab.GetComponent<AnimalPresent>();
-        present.init(false, 0, this);
-        manifestedAnimals.Add(present);
-        manifested = true;
+        // If multiple animals per radii
+        else
+        {
+            int bushIter = 0;
+            GameObject[] spawnAreas;
+            if (lockedPosition)
+            {
+                spawnAreas = findNearestSpawnAreas(animalsPerRadii - 1);
+            }
+            else
+            {
+                spawnAreas = findNearestSpawnAreas(animalsPerRadii);
+            }
+            float angleTowardsLocked = -1;
+            if (!lockedPosition)
+            {
+                Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
+                angleTowardsLocked = customMathf.pointToAngle(diffrence.x, diffrence.z);
+            }
+            for (int i = 0; i < animalsPerRadii; i++)
+            {
+                Vector3 foundSurface;
+                if (lockedPosition && i <= 0)
+                {
+                    foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength) + Vector3.up * spawnYDisplacement;
+                }
+                else
+                {
+                    if (bushIter > spawnAreas.Length - 1)
+                    {
+                        foundSurface = findSurface(spawnRaycastLayerMask, spawnRaycastYAdjust, spawnRaycastLength) + Vector3.up * spawnYDisplacement;
+                    }
+                    else
+                    {
+                        foundSurface = spawnAreas[bushIter].transform.position;
+                        bushIter = bushIter + 1;
+                    }
+                }
+                print(foundSurface);
+                GameObject prefab = Instantiate(animalPrefab, foundSurface, Quaternion.identity.normalized);
+                AnimalPresent present = prefab.GetComponent<AnimalPresent>();
+                present.init(!lockedPosition, angleTowardsLocked, this);
+                manifestedAnimals.Add(present);
+            }
+            manifested = true;
+        }
     }
 
 
-    // Finds where the animal should sleep
-    GameObject spawnMarker()
+    // Spawns a marker
+    void spawnMarker()
     {
-        return null;
+        if(findSurfaceSteepness(markerRaycastLayerMask, markerRaycastYAdjust, markerRaycastLength) < markerSteepness)
+        {
+            Vector3 foundPos = findSurface(markerRaycastLayerMask, markerRaycastYAdjust, markerRaycastLength);
+            Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
+            float angleTowardsLocked = customMathf.pointToAngle(diffrence.x, diffrence.z);
+            Instantiate(markerPrefab, foundPos + Vector3.up * markerYDisplace, Quaternion.Euler(0, markerAngleDisplace + angleTowardsLocked, 0));
+        }
     }
 
     // Update is called once per frame
@@ -366,6 +479,7 @@ public class AnimalRadii : MonoBehaviour
                 gameObject.transform.position += movementVec;
 
                 // Occasionally the animal will drop markers
+                DebugDisplay.updateDisplay(" " + gameObject.name + " time until mark", timeUntilMarkChanceLeft + "");
                 timeUntilMarkChanceLeft -= Time.deltaTime;
                 if (timeUntilMarkChanceLeft < 0)
                 {
@@ -373,6 +487,7 @@ public class AnimalRadii : MonoBehaviour
                     // Generates a number between 1-100
                     // Determines if marker gets spawned
                     float randomInt = Random.Range(0, 100);
+                    DebugDisplay.updateDisplay(" " + gameObject.name + " mark chance pulled", randomInt + "");
                     if (randomInt < markerWindowChance)
                     {
                         spawnMarker();
@@ -399,6 +514,7 @@ public class AnimalRadii : MonoBehaviour
                 manifested = false;
             }
         }
+        DebugDisplay.updateDisplay("has manifested", manifested + "");
     }
     #endregion
 } 

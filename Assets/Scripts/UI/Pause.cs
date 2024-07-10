@@ -7,11 +7,11 @@ public class Pause : MonoBehaviour
 {
     public GameObject gameMenu;
 
-    public static bool isPaused;
+    public static bool isPaused = false;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.P))
         {
             if (isPaused)
             {
@@ -41,7 +41,7 @@ public class Pause : MonoBehaviour
     public void GoToMainMenu()
     {
         Time.timeScale = 1.0f;
-        SceneManager.LoadScene("");
+        SceneManager.LoadScene(0);
     }
 
     public void QuitGame()

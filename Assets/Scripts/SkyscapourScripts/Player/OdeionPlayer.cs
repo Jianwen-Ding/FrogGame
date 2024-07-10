@@ -86,6 +86,12 @@ public class OdeionPlayer : MonoBehaviour
     //public LayerMask Wall;
     public bool isSliding;
 
+    [Header("Climbing")]
+    //public LayerMask Wall;
+    public Climbing climbScript;
+    public bool isClimbing;
+    public float climbSpeed;
+
     [Header("Equipment Items")]
     //Double Dash ability
     public bool doubleTime;
@@ -108,6 +114,7 @@ public class OdeionPlayer : MonoBehaviour
     public Rigidbody rb;
     public OdeionPlayerCam cam;
     public Camera PlayerViewCam;
+
 
     [Header("Post Processing")]
     public PostProcessVolume fk;
@@ -150,9 +157,18 @@ public class OdeionPlayer : MonoBehaviour
         sliding,
         crouching,
         dashing,
+        climbing,
         air
     }
-    
+
+    [Header("Sound Modifiers")]
+    // This controls how other animals hear the player in its different states
+    // Order from standing, walking, sprinting, wallrunning, sliding, crouching, dashing, air
+    [SerializeField]
+    float[] soundMultipliers = new float[8];
+    [SerializeField]
+    float standingVelMag;
+
     public void Start()
     {
 
@@ -237,6 +253,36 @@ public class OdeionPlayer : MonoBehaviour
             Cursor.lockState = CursorLockMode.None; //unlock
         }
         
+    }
+
+    // Gives sound multiplier of the character
+    public float getCurrentSoundMultiplier()
+    {
+        switch (state)
+        {
+            case MovementState.walking:
+                if(rb.velocity.magnitude < standingVelMag)
+                {
+                    return soundMultipliers[0];
+                }
+                else
+                {
+                    return soundMultipliers[1];
+                }
+            case MovementState.sprinting:
+                return soundMultipliers[2];
+            case MovementState.wallrunning:
+                return soundMultipliers[3];
+            case MovementState.sliding:
+                return soundMultipliers[4];
+            case MovementState.crouching:
+                return soundMultipliers[5];
+            case MovementState.dashing:
+                return soundMultipliers[6];
+            case MovementState.air:
+                return soundMultipliers[7];
+        }
+        return 0;
     }
 
     void ThrowUtility()
@@ -325,8 +371,8 @@ public class OdeionPlayer : MonoBehaviour
 
         }*/
 
-        //Falling
-        anim.SetFloat(zVelHash, rb.velocity.y);
+    //Falling
+    anim.SetFloat(zVelHash, rb.velocity.y);
         
         SetAnimationGrounding();
 
@@ -384,6 +430,7 @@ public class OdeionPlayer : MonoBehaviour
 
     private void StateHandler()
     {
+
         //Sets slide
         if (isSliding)
         {
@@ -399,6 +446,15 @@ public class OdeionPlayer : MonoBehaviour
                 desiredSpeed = sprintSpeed;
             }
 
+            
+        }
+
+         //Sets climbing
+        else if (isClimbing)
+        {
+            state = MovementState.climbing;
+            desiredSpeed = climbSpeed;
+            isGrounded = false;
             
         }
 
@@ -507,6 +563,8 @@ public class OdeionPlayer : MonoBehaviour
             return;
         if (state == MovementState.sliding)
             return;
+        /*if (climbScript.isExitingWall)
+            return;*/
         
         //Set movement
         direction = orientation.forward * vInput + orientation.right * hInput;
