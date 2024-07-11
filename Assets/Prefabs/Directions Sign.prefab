@@ -338,7 +338,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 0e8e0b87c214f42e58da657f9609f226, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1012,7 +1012,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+  - {fileID: 2100000, guid: 5fbd3f18d991346de977d17bdd678da4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1127,7 +1127,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 734bdb3a18ed24fe79b16cd41076ed3f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+      objectReference: {fileID: 2100000, guid: 0c8975939fec84eaa83016ebff256795, type: 2}
     - target: {fileID: 919132149155446097, guid: 734bdb3a18ed24fe79b16cd41076ed3f, type: 3}
       propertyPath: m_Name
       value: bush_v1
@@ -1205,7 +1205,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 734bdb3a18ed24fe79b16cd41076ed3f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+      objectReference: {fileID: 2100000, guid: 0c8975939fec84eaa83016ebff256795, type: 2}
     - target: {fileID: 919132149155446097, guid: 734bdb3a18ed24fe79b16cd41076ed3f, type: 3}
       propertyPath: m_Name
       value: bush_v1 (1)
@@ -1283,7 +1283,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 734bdb3a18ed24fe79b16cd41076ed3f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+      objectReference: {fileID: 2100000, guid: 0c8975939fec84eaa83016ebff256795, type: 2}
     - target: {fileID: 919132149155446097, guid: 734bdb3a18ed24fe79b16cd41076ed3f, type: 3}
       propertyPath: m_Name
       value: bush_v1 (3)
@@ -1361,7 +1361,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 734bdb3a18ed24fe79b16cd41076ed3f, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: c22777d6e868e4f2fb421913386b154e, type: 2}
+      objectReference: {fileID: 2100000, guid: 0c8975939fec84eaa83016ebff256795, type: 2}
     - target: {fileID: 919132149155446097, guid: 734bdb3a18ed24fe79b16cd41076ed3f, type: 3}
       propertyPath: m_Name
       value: bush_v1 (2)
