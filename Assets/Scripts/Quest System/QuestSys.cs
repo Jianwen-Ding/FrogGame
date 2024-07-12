@@ -66,8 +66,9 @@ public class QuestSys : MonoBehaviour
                     gatheredAmount += amount;
                     if(gatheredAmount >= totalAmount)
                     {
-                        completed = true;
+                        fufillComponent();
                     }
+                    onQuestUpdate();
                 }
                 else
                 {
@@ -78,6 +79,7 @@ public class QuestSys : MonoBehaviour
             public void fufillComponent()
             {
                 completed = true;
+                onQuestUpdate();
                 attachedQuest.attemptComplete();
             }
 
@@ -201,8 +203,29 @@ public class QuestSys : MonoBehaviour
     }
 
     // Full list of all quests
-    private static Dictionary<string, Quest> QuestList = new Dictionary<string, Quest>();
+    public static Dictionary<string, Quest> QuestList = new Dictionary<string, Quest>();
 
+    // Functions to play of update of func
+    public delegate void onUpdateFunc();
+
+    private static List<onUpdateFunc> updateFunctions = new List<onUpdateFunc>();
+
+    // Inserts a function to fire on update of quest
+    public static void insertFunc(onUpdateFunc function)
+    {
+        updateFunctions.Add(function);
+    }
+
+    // Plays all functions
+    public static void onQuestUpdate()
+    {
+        for(int i = 0; i < updateFunctions.Count; i++)
+        {
+            updateFunctions[i]();
+        }
+    }
+
+    // Representations to pull quest info out of
     [SerializeField]
     GameObject questRepPrefab;
     #endregion
@@ -227,6 +250,7 @@ public class QuestSys : MonoBehaviour
             }
         }
     }
+
     // Creates new quests using the states recorded in player prefs
     // Effectively loads the game
     public static void updateQuestStates(Dictionary<string, Quest> baseQuests)
@@ -249,18 +273,21 @@ public class QuestSys : MonoBehaviour
             }
         }
     }
-    private void ChangedActiveScene(Scene current, Scene next)
+
+    // What will run on change of scences
+    private void changedActiveScene(Scene current, Scene next)
     {
         saveStateAsPrefs(QuestList);
     }
+
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
+        updateFunctions = new List<onUpdateFunc>();
         QuestRepresentationManager repManager =  questRepPrefab.GetComponent<QuestRepresentationManager>();
         QuestList = repManager.repToQuests();
         updateQuestStates(QuestList);
-        SceneManager.activeSceneChanged += ChangedActiveScene;
+        SceneManager.activeSceneChanged += changedActiveScene;
     }
-    
     #endregion
 }

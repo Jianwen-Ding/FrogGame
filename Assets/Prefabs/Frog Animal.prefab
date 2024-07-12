@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4545214163792452768}
   - component: {fileID: 7410329142915955742}
   m_Layer: 0
-  m_Name: Animal test other
+  m_Name: Frog Animal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6291764307924683445}
+  - {fileID: 5806750107665291289}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &9103522391977694587
@@ -99,13 +100,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a041aa4632c624121b4fa8d29da212d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  marked: 0
   detector: {fileID: 0}
   animalController: {fileID: 0}
   playerObject: {fileID: 0}
   animalRigid: {fileID: 0}
   animalRender: {fileID: 0}
   preyTags:
-  - Leaves
+  - Firefly
   predatorTags:
   - Player
   detectorSize: 1
@@ -125,6 +127,8 @@ MonoBehaviour:
   currentState: 0
   initialized: 0
   faceAngle: 0
+  questName: Count Frogs
+  componentName: Mark Frogs
   speed: 2000
   hopForce: 2000
   transitionHopTime: 1
@@ -300,3 +304,105 @@ MonoBehaviour:
   col: {fileID: 0}
   preyWithinField: []
   predatorWithinField: []
+--- !u!1 &3960557788701026239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5806750107665291289}
+  - component: {fileID: 1873177707243999788}
+  - component: {fileID: 4350156628928221925}
+  - component: {fileID: 6612698932311336533}
+  m_Layer: 0
+  m_Name: Plane
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5806750107665291289
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3960557788701026239}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 0.0419, z: 0}
+  m_LocalScale: {x: 0.003844708, y: 0.1, z: 0.0013892535}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5791892809171685358}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+--- !u!33 &1873177707243999788
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3960557788701026239}
+  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &4350156628928221925
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3960557788701026239}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6612698932311336533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3960557788701026239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: feacadd7aa4bf4a73bb6af121a730d97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stunMat: {fileID: 2100000, guid: d9201a4abe4e4e64d990e5f96625ed95, type: 2}
+  huntMat: {fileID: 2100000, guid: 8a298f9d7c45ced4ea9756198d37d9db, type: 2}
+  panicMat: {fileID: 2100000, guid: 0da03df1a1e752940a1a2352da0f5cc8, type: 2}
+  markedMat: {fileID: -4300042437503033927, guid: 05a7fedc26316c6418aae10b9825982a, type: 3}
+  distanceAbove: 3
+  animalScript: {fileID: 0}
