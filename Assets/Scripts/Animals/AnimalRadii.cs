@@ -42,6 +42,11 @@ public class AnimalRadii : MonoBehaviour
     // If none can be found, send raycast down at same x-z coords. Spawns animal directly on resulting location.
     #endregion
     #region vars
+    // >>> MARKER PARAMETERS <<<
+    // Stores amount of marked animals present
+    [SerializeField]
+    int markedAnimalAmount = 0;
+
     // >>> CACHE PARAMETERS <<<
     // Stores objects to be used throughout lifetime of object
 
@@ -194,6 +199,10 @@ public class AnimalRadii : MonoBehaviour
         if(manifestedAnimals.Count == 1)
         {
             gameObject.transform.position = animal.transform.position;
+        }
+        if (animal.marked)
+        {
+            markedAnimalAmount += 1;
         }
         manifestedAnimals.Remove(animal);
     }
@@ -358,6 +367,11 @@ public class AnimalRadii : MonoBehaviour
             present.init(!lockedPosition, angleTowardsLocked, this);
             manifestedAnimals.Add(present);
             manifested = true;
+            if (markedAnimalAmount > 0)
+            {
+                present.marked = true;
+                markedAnimalAmount -= 1;
+            }
         }
         // If multiple animals per radii
         else
@@ -402,6 +416,11 @@ public class AnimalRadii : MonoBehaviour
                 AnimalPresent present = prefab.GetComponent<AnimalPresent>();
                 present.init(!lockedPosition, angleTowardsLocked, this);
                 manifestedAnimals.Add(present);
+                if (markedAnimalAmount > 0)
+                {
+                    present.marked = true;
+                    markedAnimalAmount -= 1;
+                }
             }
             manifested = true;
         }

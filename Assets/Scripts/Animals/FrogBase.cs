@@ -6,6 +6,12 @@ using UnityEngine;
 public class FrogBase : AnimalPresent
 {
     #region variables
+    // >>> Quest Parameters <<<
+    [Header("Quest Parameters")]
+    [SerializeField]
+    string questName;
+    [SerializeField]
+    string componentName;
     // >>> Behavior Variables <<<
     [Header("Behavioral Parameters")]
     [SerializeField]
@@ -113,6 +119,24 @@ public class FrogBase : AnimalPresent
     {
         base.Update();
         refactorDirection(faceAngle, gameObject.transform.position, colDetectDistance, colDetectAttemptAngleOffset, colDetectAttempts, colDetectFalloff, collisionLayerMask, colDetectRad);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Player" && currentState == animalState.Stun)
+        {
+            if (!marked)
+            {
+                // Adds increment to quest
+                QuestSys.Quest quest = QuestSys.QuestList[questName];
+                if(quest.getActivationState() && !quest.getCompletionState())
+                {
+                    quest.components[componentName].increment(1);
+                    print("marker increment");
+                }
+                marked = true;
+            }
+        }
     }
     #endregion
 }

@@ -31,6 +31,12 @@ public class AnimalPresent : MonoBehaviour
     // while no other objects of intrest come into view
     #endregion
     #region vars
+    // >>> MISCELLANEOUS <<<
+    // Stores variables related to tools and whatnot
+    [Header("Miscellaneous")]
+
+    public bool marked;
+
     // >>> CACHE PARAMETERS <<<
     // Stores objects to be used throughout lifetime of object
 
@@ -117,8 +123,7 @@ public class AnimalPresent : MonoBehaviour
     }
     [Header("State Variables")]
     // Current state of animal
-    [SerializeField]
-    animalState currentState;
+    public animalState currentState;
     // Whether the object has been initialized yet
     [SerializeField]
 

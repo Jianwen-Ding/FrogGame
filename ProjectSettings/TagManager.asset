@@ -9,6 +9,7 @@ TagManager:
   - Dirt
   - Grass
   - Leaves
+  - Firefly
   layers:
   - Default
   - TransparentFX

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1753387724462212350}
   - component: {fileID: 5200176315815559529}
   m_Layer: 0
-  m_Name: Test AI
+  m_Name: Frog AI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c48f188999c54e5989d3ddee217974e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  markedAnimalAmount: 0
   animalPrefab: {fileID: 2485116015055499387, guid: 28ed60060153640bb87010c90b5175da, type: 3}
   markerPrefab: {fileID: 2879456727950918187, guid: f61105c4f152349aa90fea5b2c93e98d, type: 3}
   playerObject: {fileID: 0}
@@ -105,7 +106,7 @@ MonoBehaviour:
   sleepHour: 12
   sleepMinute: 30
   objectsOfIntrest:
-  - Grass
+  - Firefly
   sleepObjects:
   - Dirt
   timeAtIntrest: 2
