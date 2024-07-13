@@ -11,6 +11,7 @@ TagManager:
   - Leaves
   - Firefly
   - Bait
+  - Bush
   layers:
   - Default
   - TransparentFX

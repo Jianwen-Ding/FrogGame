@@ -102,6 +102,8 @@ public class OdeionPlayer : MonoBehaviour
     public GameObject UtilityItemOne;
     public GameObject UtilityItemTwo;
     public bool isForkussed;
+    public float untilThrowRecharge;
+    public float untilThrowRechargeLeft;
     public float throwForce = 20f;
     public float tEffectDuration;
     public float tMaxEffectDuration = 1f;
@@ -218,9 +220,11 @@ public class OdeionPlayer : MonoBehaviour
         Crouching();
         MyInput();
         ThrowUtility();
-        
+
         //ResetJumpTwo();
-        
+
+        untilThrowRechargeLeft -= Time.deltaTime;
+
         //WallCling();
         
         if (isGrounded && !isDashing)
@@ -287,14 +291,16 @@ public class OdeionPlayer : MonoBehaviour
 
     void ThrowUtility()
     {
-        if(Input.GetKeyDown(UtilityKeyOne) && !Input.GetKey(UtilityKeyTwo))
+        if (untilThrowRechargeLeft <= 0 && Input.GetKeyDown(UtilityKeyOne) && !Input.GetKey(UtilityKeyTwo))
         {
+            untilThrowRechargeLeft = untilThrowRecharge;
             GameObject UtilityItem = Instantiate(UtilityItemOne, playerCam.position, transform.rotation);
             UtilityItem.GetComponent<Rigidbody>().AddForce(playerCam.forward * throwForce, ForceMode.Impulse);
 
         }
-        if(Input.GetKeyDown(UtilityKeyTwo) && !Input.GetKey(UtilityKeyOne))
+        if(untilThrowRechargeLeft  <= 0 && Input.GetKeyDown(UtilityKeyTwo) && !Input.GetKey(UtilityKeyOne))
         {
+            untilThrowRechargeLeft = untilThrowRecharge;
             GameObject UtilityItem = Instantiate(UtilityItemTwo, playerCam.position, transform.rotation);
             UtilityItem.GetComponent<Rigidbody>().AddForce(playerCam.forward * throwForce, ForceMode.Impulse);
 

@@ -11436,6 +11436,8 @@ MonoBehaviour:
   UtilityItemOne: {fileID: 323513185056509923, guid: deb3f56a8cbe84d1d94612649c5dbd6d, type: 3}
   UtilityItemTwo: {fileID: 323513185056509923, guid: deb3f56a8cbe84d1d94612649c5dbd6d, type: 3}
   isForkussed: 0
+  untilThrowRecharge: 2
+  untilThrowRechargeLeft: 0
   throwForce: 20
   tEffectDuration: 0
   tMaxEffectDuration: 0.25
