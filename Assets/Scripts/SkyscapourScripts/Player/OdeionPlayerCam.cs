@@ -39,26 +39,34 @@ public class OdeionPlayerCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if(base.IsOwner)
+        if (DialogueManager2.GetInstance().dialogueIsPlaying)
+        {
+            return;
+        }
+        else
+        {
+            //if(base.IsOwner)
             //FrogBody.GetComponent<Renderer>().enabled = false;
-        //mouse inputs
-        float mouseX = Input.GetAxisRaw("Mouse X") * Time.smoothDeltaTime * sensitivity * 10;
-        float mouseY = Input.GetAxisRaw("Mouse Y") * Time.smoothDeltaTime * sensitivity * 10;
+            //mouse inputs
+            float mouseX = Input.GetAxisRaw("Mouse X") * Time.smoothDeltaTime * sensitivity * 10;
+            float mouseY = Input.GetAxisRaw("Mouse Y") * Time.smoothDeltaTime * sensitivity * 10;
         
 
-        yRotation += mouseX;
+            yRotation += mouseX;
 
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         
-        //rotate camera and player rigidbody
+            //rotate camera and player rigidbody
     
-        camHolder.rotation = Quaternion.Euler(xRotation, yRotation, 0);
-        camRoot.transform.rotation = camHolder.rotation;
+            camHolder.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+            camRoot.transform.rotation = camHolder.rotation;
 
-        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
-        rb.MoveRotation(Quaternion.Euler(0, yRotation, 0));
-        camHolder.transform.position = camRoot.transform.position;
+            orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+            rb.MoveRotation(Quaternion.Euler(0, yRotation, 0));
+            camHolder.transform.position = camRoot.transform.position;
+        }
+        
 
     }
     void LateUpdate()
@@ -68,9 +76,7 @@ public class OdeionPlayerCam : MonoBehaviour
     
     void FixedUpdate()
     {
-     
         
-
     }
     
     public void DoFov(float endValue)

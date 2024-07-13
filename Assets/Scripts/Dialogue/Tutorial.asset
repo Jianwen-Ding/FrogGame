@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ecc5df2aa29d0a47b240a4aee8ac909, type: 3}
+  m_Name: Tutorial
+  m_EditorClassIdentifier: 
+  RootNode:
+    dialogueText: Hey, you there, can you help me? I'm worried sick!
+    responses:
+    - responseText: Are you talking to me?
+      nextNode:
+        dialogueText: Yeah, you look like you could help.
+        responses:
+        - responseText: Continue
+          nextNode:
+            dialogueText: Johnny ran away from me this morning. I opened the door,
+              and out he went. I know he loves this place, but I just can't track
+              him down through all of this foliage.
+            responses:
+            - responseText: Your son is missing? Sounds more like a job for the police.
+                Did you call them?
+              nextNode:
+                dialogueText: "Well, he is my kid, but\u2026 he isn\u2019t a human.
+                  Johnny\u2019s my cat."
+                responses:
+                - responseText: No kidding. Your cat loves being in the forest?
+                  nextNode:
+                    dialogueText: "Johnny just loves it. Runs around wreaking havoc
+                      on the plants and critters. Now that I think of it, though,
+                      it might not be the best for the local ecosystem. The guy\u2019s
+                      a real apex predator, and I read online that house cats can
+                      be menaces to birds. Anyways it would be such a relief if you
+                      could find him for me. I'm sorry though, I can't offer a reward
+                      or anyting... Do you still want to help?"
+                    responses:
+                    - responseText: "Yeah, I love cats. I\u2019ll find him."
+                      nextNode:
+                        dialogueText: Thank you so much, my feline-inclined friend.
+                    - responseText: "I\u2019ll try my best. What does Johnny look
+                        like?"
+                      nextNode:
+                        dialogueText: "Great, thanks! He\u2019s a shade of light
+                          brown, with long fluffy fur and a handsome disposition.
+                          Basically, he looks like a cat."
+                - responseText: Ok, now I understand. I can help.
+                  nextNode:
+                    dialogueText: "It would be such a relief if you could find him
+                      for me. I\u2019m sorry though, I can\u2019t offer a reward
+                      or anything\u2026 Do you still want to help?"
+                    responses:
+                    - responseText: 
+                      nextNode:
+                        dialogueText: 
+                    - responseText: 
+                      nextNode:
+                        dialogueText: 
+    - responseText: What's wrong?
+      nextNode:
+        dialogueText: "Johnny ran away from me this morning. I opened the door, and
+          out he went. I know he loves this place, but I just can\u2019t track him
+          down through all of this foliage."
+        responses:
+        - responseText: Your son is missing? Sounds more like a job for the police.
+            Did you call them?
+          nextNode:
+            dialogueText: "Well, he is my kid, but\u2026 he isn\u2019t a human. Johnny\u2019s
+              my cat."
+            responses:
+            - responseText: No kidding. Your cat loves being in the forest?
+              nextNode:
+                dialogueText: "Johnny just loves it. Runs around wreaking havoc on
+                  the plants and critters. Now that I think of it, though, it might
+                  not be the best for the local ecosystem. The guy\u2019s a real
+                  apex predator, and I read online that house cats can be menaces
+                  to birds. Anyways it would be such a relief if you could find him
+                  for me. I'm sorry though, I can't offer a reward or anyting...
+                  Do you still want to help?"
+                responses:
+                - responseText: "Yeah, I love cats. I\u2019ll find him."
+                  nextNode:
+                    dialogueText: Thank you so much, my feline-inclined friend.
+                    responses:
+                    - responseText: Continue
+                      nextNode:
+                        dialogueText: "By the way, I saw some professional wildlife
+                          folks out there, but they seemed busy and I didn\u2019t
+                          want to bother them. Think they\u2019re doing research
+                          with frogs or snails or something. Beats me!"
+                - responseText: "I\u2019ll try my best. What does Johnny look like?"
+                  nextNode:
+                    dialogueText: "By the way, I saw some professional wildlife folks
+                      out there, but they seemed busy and I didn\u2019t want to bother
+                      them. Think they\u2019re doing research with frogs or snails
+                      or something. Beats me!"
+                    responses:
+                    - responseText: 
+                      nextNode:
+                        dialogueText: 
+                    - responseText: 
+                      nextNode:
+                        dialogueText: 
