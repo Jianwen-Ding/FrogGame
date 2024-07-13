@@ -24,6 +24,7 @@ public class Actor : MonoBehaviour
     // Trigger dialogue for this actor
     public void SpeakTo()
     {
+        Debug.LogError(Text.RootNode);
         DialogueManager.Instance.StartDialogue(Name, Text.RootNode);
     }
 }
