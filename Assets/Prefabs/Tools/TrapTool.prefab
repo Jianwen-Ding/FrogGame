@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe89ba53e465f48c3bc4815c461534d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundDistance: 5
+  soundDistance: 4
 --- !u!1 &3899530203830805168
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd6227a72fc974e97947f4fa4cb5953b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stunTime: 4
+  stunTime: 8
   constTime: 0
   timeUntilDelete: 2
   hasStunned: 0
