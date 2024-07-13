@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Micah Scenes/Jianwen- Tutorial Greybox.unity
     guid: a1c9ef359dcda8744a468280917e79a9
   - enabled: 1
-    path: Assets/Scenes/Jianwen_MainLevel_Greybox.unity
+    path: Assets/Scenes/Jianwen Scenes/Jianwen_MainLevel_Greybox.unity
     guid: c614d94600c6245c6b6295046768b7df
   m_configObjects: {}
