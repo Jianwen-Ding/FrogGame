@@ -219,6 +219,7 @@ public class QuestSys : MonoBehaviour
     // Plays all functions
     public static void onQuestUpdate()
     {
+        saveStateAsPrefs(QuestList);
         for(int i = 0; i < updateFunctions.Count; i++)
         {
             updateFunctions[i]();
@@ -273,6 +274,7 @@ public class QuestSys : MonoBehaviour
             }
         }
     }
+
 
     // What will run on change of scences
     private void changedActiveScene(Scene current, Scene next)

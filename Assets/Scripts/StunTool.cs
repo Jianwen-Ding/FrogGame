@@ -16,36 +16,47 @@ public class StunTool : MonoBehaviour
     bool constTime;
     // Recharge time for stun tool
     [SerializeField]
-    float timeUntilNextStun;
+    float timeUntilDelete;
     [SerializeField]
-    float rechargeTimeLeft = 0;
+    bool hasStunned = false;
+    [SerializeField]
+    float timeLeft = 0;
     #endregion
     private void OnTriggerEnter(Collider other)
     {
-        if(rechargeTimeLeft <= 0)
+        if(hasStunned)
         {
             AnimalPresent animalAttempt = other.GetComponent<AnimalPresent>();
             if(animalAttempt != null)
             {
                 animalAttempt.stunAnimal(stunTime, constTime);
-                rechargeTimeLeft = timeUntilNextStun;
+                hasStunned = true;
+                timeLeft = timeUntilDelete;
             }
         }
     }
     private void OnTriggerStay(Collider other)
     {
-        if (rechargeTimeLeft <= 0)
+        if (!hasStunned)
         {
             AnimalPresent animalAttempt = other.GetComponent<AnimalPresent>();
             if (animalAttempt != null)
             {
                 animalAttempt.stunAnimal(stunTime, constTime);
-                rechargeTimeLeft = timeUntilNextStun;
+                hasStunned = true;
+                timeLeft = timeUntilDelete;
             }
         }
     }
     private void Update()
     {
-        rechargeTimeLeft -= Time.deltaTime;
+        if (hasStunned)
+        {
+            timeLeft -= Time.deltaTime;
+            if(timeLeft <= 0)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+        }
     }
 }

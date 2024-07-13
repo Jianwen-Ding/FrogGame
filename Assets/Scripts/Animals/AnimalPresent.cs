@@ -37,6 +37,12 @@ public class AnimalPresent : MonoBehaviour
 
     public bool marked;
 
+    // >>> SOUND PARAMETER <<<
+    [Header("Sound Parameters")]
+
+    [SerializeField]
+    public AudioClip animalSound;
+
     // >>> CACHE PARAMETERS <<<
     // Stores objects to be used throughout lifetime of object
 
@@ -47,6 +53,8 @@ public class AnimalPresent : MonoBehaviour
     public Rigidbody animalRigid;
     [SerializeField]
     Renderer animalRender;
+    [SerializeField]
+    AudioSource source;
 
 
     // >>> BEHAVIOR PARAMETERS <<<
@@ -244,6 +252,11 @@ public class AnimalPresent : MonoBehaviour
         }
         AnimalPresent animalScript = objectCheck.GetComponent<AnimalPresent>();
         if(animalScript != null && diff.magnitude < animalScript.soundMultiplier * hearDistance)
+        {
+            return true;
+        }
+        animalSoundEmmiter emmiterScript = objectCheck.GetComponent<animalSoundEmmiter>();
+        if(emmiterScript != null && diff.magnitude < emmiterScript.soundDistance * hearDistance)
         {
             return true;
         }

@@ -99,22 +99,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd5f11d6d1ffe40ee8691d2e93061da1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  marked: 0
+  animalSound: {fileID: 0}
   detector: {fileID: 0}
   animalController: {fileID: 0}
-  animalRender: {fileID: 0}
   playerObject: {fileID: 0}
-  preyTags: []
+  animalRigid: {fileID: 0}
+  animalRender: {fileID: 0}
+  source: {fileID: 0}
+  preyTags:
+  - 
   predatorTags:
   - Player
   detectorSize: 5
+  detectionTimePrey: 0
+  detectionTimePred: 0
   fovAngle: 0
-  detectDistance: 0
-  sightLayerMask: 0
+  sightDistance: 0
+  sightLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   hearDistance: 0
   soundMultiplier: 0
+  stunMultiplier: 0
   preManifestMoving: 0
   preManifestDirection: 0
   distanceUntilDeload: 40
+  currentState: 0
+  initialized: 0
+  faceAngle: 0
 --- !u!65 &5069155390327304262
 BoxCollider:
   m_ObjectHideFlags: 0
