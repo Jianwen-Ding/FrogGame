@@ -358,20 +358,20 @@ public class QuestRepresentation : MonoBehaviour
     #endregion
 }
 
-[CustomEditor(typeof(QuestRepresentation))]
-public class QuestEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        var Quest = (QuestRepresentation)target;
+//[CustomEditor(typeof(QuestRepresentation))]
+//public class QuestEditor : Editor
+//{
+//    public override void OnInspectorGUI()
+//    {
+//        var Quest = (QuestRepresentation)target;
 
-        EditorGUI.BeginChangeCheck();
+//        EditorGUI.BeginChangeCheck();
 
-        base.OnInspectorGUI();
+//        base.OnInspectorGUI();
 
-        if (EditorGUI.EndChangeCheck())
-        {
-            QuestRepresentationManager.regenerateRepresentation(Quest);
-        }
-    }
-}
+//        if (EditorGUI.EndChangeCheck())
+//        {
+//            QuestRepresentationManager.regenerateRepresentation(Quest);
+//        }
+//    }
+//}

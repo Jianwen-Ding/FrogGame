@@ -29,7 +29,7 @@ public class OdeionPlayerCam : MonoBehaviour
         CamRecoil.gameObject.SetActive(true);
         WeaponCam.gameObject.SetActive(true);
         //FrogBody3rd.GetComponent<Renderer>().enabled = false;
-        FrogBody3rd.gameObject.SetActive(false);
+        //FrogBody3rd.gameObject.SetActive(false);
         FrogBody3rdWeapon.gameObject.SetActive(false);
             
 
@@ -39,7 +39,7 @@ public class OdeionPlayerCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (false)
+        if (DialogueManager2.GetInstance().dialogueIsPlaying)
         {
             return;
         }

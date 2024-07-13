@@ -119,7 +119,7 @@ public class DialogueManager2 : MonoBehaviour
         foreach (char letter in line.ToCharArray())
         {
             // If the submit button is pressed, finish up displaying the line right away.
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
             {
                 dialogueText.text = line;
                 break;
@@ -210,6 +210,5 @@ public class DialogueManager2 : MonoBehaviour
             Input.GetMouseButtonDown(0);
             ContinueStory();
         }
-        
     }
 }

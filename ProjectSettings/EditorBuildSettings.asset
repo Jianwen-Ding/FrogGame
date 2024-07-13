@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Prefabs/Tutorial_Greybox.unity
     guid: 91266f94902c74d689aff6cae9c47a2e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Micah Scenes/Jianwen- Tutorial Greybox.unity
     guid: a1c9ef359dcda8744a468280917e79a9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Jianwen_MainLevel_Greybox.unity
     guid: c614d94600c6245c6b6295046768b7df
+  - enabled: 1
+    path: Assets/Scenes/Allen/Allen_MainLevel.unity
+    guid: c92d5f80313e7be42aacd66b2604dac0
   m_configObjects: {}
