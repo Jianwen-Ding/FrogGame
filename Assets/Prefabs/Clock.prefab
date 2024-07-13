@@ -45,6 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialTime: 0
-  timePerGameMin: 0.1
+  timePerGameMin: 2
   startHour: 6
   startMinute: 0

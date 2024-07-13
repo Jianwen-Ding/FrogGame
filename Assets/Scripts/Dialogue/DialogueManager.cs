@@ -13,8 +13,8 @@ public class DialogueManager : MonoBehaviour
     public GameObject DialogueParent;                               // Main containter for dialogue UI
     public TextMeshProUGUI DialogueTitleText, DialogueBodyText;     // Text components for title and body
     public GameObject responseButtonPrefab;                         // Prefab for generating response buttons
-    public Transform responseButtonContainer;                       // Container to hold repsonse buttons
-
+    public List<GameObject> responseButtons = new List<GameObject>();                         // Container to hold repsonse buttons
+    public Transform[] ResponseList;                                // The locations where response buttons end up
     private void Awake()
     {
         // Singleton patter to ensure only one instance of DialogueManager
@@ -34,6 +34,9 @@ public class DialogueManager : MonoBehaviour
     // Starts the dialogue with given title and dialogue node
     public void StartDialogue(string title, DialogueNode node)
     {
+        Time.timeScale = 0;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         // Display the dialogue UI
         ShowDialogue();
 
@@ -41,19 +44,37 @@ public class DialogueManager : MonoBehaviour
         DialogueTitleText.text = title;
         DialogueBodyText.text = node.dialogueText;
 
-        foreach (Transform child in responseButtonContainer)
+        // Increments quest if dialogue is set to do so
+        if (node.advancesComponent)
+        {
+            QuestSys.fufillComponentAttempt(node.questLinked, node.componentLinked);
+        }
+
+        foreach (GameObject child in responseButtons)
         {
             Destroy(child.gameObject);
         }
 
         // Create and stup response buttons based on current dialogue node
+        int iter = 0;
         foreach (DialogueResponse response in node.responses)
         {
-            GameObject buttonObject = Instantiate(responseButtonPrefab, responseButtonContainer);
-            buttonObject.GetComponentInChildren<TextMeshProUGUI>().text = response.responseText;
+            // Does not have any effect on press
+            GameObject buttonObject = Instantiate(responseButtonPrefab, ResponseList[iter]);
+            responseButtons.Add(buttonObject);
+            if (response.locked())
+            {
+                buttonObject.GetComponentInChildren<TextMeshProUGUI>().text = " < Complete |" + response.questNeeded + "| To  Unlock>";
+                buttonObject.GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                buttonObject.GetComponentInChildren<TextMeshProUGUI>().text = response.responseText;
 
-            // Setup button to trigger SelectResponse when clicked
-            buttonObject.GetComponent<Button>().onClick.AddListener(() => SelectResponse(response, title));
+                // Setup button to trigger SelectResponse when clicked
+                buttonObject.GetComponent<Button>().onClick.AddListener(() => SelectResponse(response, title));
+            }
+            iter += 1;
         }
     }
 
@@ -74,6 +95,9 @@ public class DialogueManager : MonoBehaviour
 
     public void HideDialogue()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1;
         DialogueParent.SetActive(false);
     }
 

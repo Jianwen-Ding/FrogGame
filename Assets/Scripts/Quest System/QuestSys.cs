@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class QuestSys : MonoBehaviour
 {
-    
+
     #region variables
     // Main quest system
     // Non public variables meant to only be modified specific ways
@@ -64,11 +64,10 @@ public class QuestSys : MonoBehaviour
                 if (incremental)
                 {
                     gatheredAmount += amount;
-                    if(gatheredAmount >= totalAmount)
+                    if (gatheredAmount >= totalAmount)
                     {
                         fufillComponent();
                     }
-                    onQuestUpdate();
                 }
                 else
                 {
@@ -79,8 +78,8 @@ public class QuestSys : MonoBehaviour
             public void fufillComponent()
             {
                 completed = true;
-                onQuestUpdate();
                 attachedQuest.attemptComplete();
+                onQuestUpdate();
             }
 
             // Gathered amount accessed here
@@ -120,9 +119,9 @@ public class QuestSys : MonoBehaviour
         {
             // Checks every component for completion
             bool allComplete = true;
-            foreach(string label in components.Keys)
+            foreach (string label in components.Keys)
             {
-                if (components[label].getCompleted())
+                if (!components[label].getCompleted())
                 {
                     allComplete = false;
                 }
@@ -141,7 +140,7 @@ public class QuestSys : MonoBehaviour
         public void attemptActivate()
         {
             bool allComplete = true;
-            for(int i = 0; i < previousQuests.Count; i++)
+            for (int i = 0; i < previousQuests.Count; i++)
             {
                 if (!previousQuests[i].getCompletionState())
                 {
@@ -164,7 +163,7 @@ public class QuestSys : MonoBehaviour
         }
 
         // Inserts components
-        public void insertComponents(Dictionary<string ,QuestComponent> set)
+        public void insertComponents(Dictionary<string, QuestComponent> set)
         {
             components = set;
         }
@@ -220,7 +219,7 @@ public class QuestSys : MonoBehaviour
     public static void onQuestUpdate()
     {
         saveStateAsPrefs(QuestList);
-        for(int i = 0; i < updateFunctions.Count; i++)
+        for (int i = 0; i < updateFunctions.Count; i++)
         {
             updateFunctions[i]();
         }
@@ -244,7 +243,7 @@ public class QuestSys : MonoBehaviour
         {
             PlayerPrefs.SetInt(key + "completed", questList[key].getCompletionState() ? 1 : 0);
             PlayerPrefs.SetInt(key + "activated", questList[key].getActivationState() ? 1 : 0);
-            foreach(string componentKey in questList[key].components.Keys)
+            foreach (string componentKey in questList[key].components.Keys)
             {
                 PlayerPrefs.SetInt(key + componentKey + "gatheredAmount", questList[key].components[componentKey].getGathered());
                 PlayerPrefs.SetInt(key + componentKey + "completed", questList[key].components[componentKey].getCompleted() ? 1 : 0);
@@ -256,7 +255,7 @@ public class QuestSys : MonoBehaviour
     // Effectively loads the game
     public static void updateQuestStates(Dictionary<string, Quest> baseQuests)
     {
-        if(PlayerPrefs.GetString("SavedState", "no") == "yes")
+        if (PlayerPrefs.GetString("SavedState", "no") == "yes")
         {
             foreach (string key in baseQuests.Keys)
             {
@@ -264,7 +263,7 @@ public class QuestSys : MonoBehaviour
                     PlayerPrefs.GetInt(key + "completed", 0) == 1,
                     PlayerPrefs.GetInt(key + "activated", 0) == 1
                     );
-                foreach(string componentKey in baseQuests[key].components.Keys)
+                foreach (string componentKey in baseQuests[key].components.Keys)
                 {
                     baseQuests[key].components[componentKey].updateState(
                         PlayerPrefs.GetInt(key + componentKey + "gatheredAmount", 0),
@@ -280,6 +279,33 @@ public class QuestSys : MonoBehaviour
     private void changedActiveScene(Scene current, Scene next)
     {
         saveStateAsPrefs(QuestList);
+    }
+
+    // Attempts to fulfill a component of an activated and incomplete quest
+    public static void fufillComponentAttempt(string quest, string component){
+        Quest gottenQuest = QuestList[quest];
+        if(gottenQuest.getActivationState() && !gottenQuest.getCompletionState())
+        {
+            Quest.QuestComponent gottenComponent = gottenQuest.components[component];
+            if (!gottenComponent.getCompleted())
+            {
+                gottenComponent.fufillComponent();
+            }
+        }
+    }
+
+    // Attempts to increment a component of an activated and incomplete quest
+    public static void incrementComponentAttempt(string quest, string component, int incrementAmount)
+    {
+        Quest gottenQuest = QuestList[quest];
+        if (gottenQuest.getActivationState() && !gottenQuest.getCompletionState())
+        {
+            Quest.QuestComponent gottenComponent = gottenQuest.components[component];
+            if (!gottenComponent.getCompleted())
+            {
+                gottenComponent.increment(incrementAmount);
+            }
+        }
     }
 
     // Start is called before the first frame update

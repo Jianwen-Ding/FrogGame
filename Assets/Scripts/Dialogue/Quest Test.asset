@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0ecc5df2aa29d0a47b240a4aee8ac909, type: 3}
-  m_Name: Test
+  m_Name: Quest Test
   m_EditorClassIdentifier: 
   RootNode:
     dialogueText: Hey, you there, can you help me? I'm worried sick!
@@ -21,7 +21,7 @@ MonoBehaviour:
           this morning. I opened the door, and out he went. I know he loves this
           place, but I just can't track him down through all of this foliage.
         responses:
-        - responseText: WOW
+        - responseText: KK
           nextNode:
             dialogueText: 
             responses: []
@@ -30,9 +30,9 @@ MonoBehaviour:
             componentLinked: 
           lockedBehindQuest: 0
           questNeeded: 
-        advancesComponent: 0
-        questLinked: 
-        componentLinked: 
+        advancesComponent: 1
+        questLinked: Count Frogs
+        componentLinked: Talk To Joe about stuff
       lockedBehindQuest: 0
       questNeeded: 
     - responseText: What's wrong?
@@ -40,21 +40,12 @@ MonoBehaviour:
         dialogueText: Johnny ran away from me this morning. I opened the door, and
           out he went. I know he loves this place, but I just can't track him down
           through all of this foliage.
-        responses:
-        - responseText: WOW
-          nextNode:
-            dialogueText: 
-            responses: []
-            advancesComponent: 0
-            questLinked: 
-            componentLinked: 
-          lockedBehindQuest: 0
-          questNeeded: 
+        responses: []
         advancesComponent: 0
         questLinked: 
         componentLinked: 
-      lockedBehindQuest: 0
-      questNeeded: 
+      lockedBehindQuest: 1
+      questNeeded: Count Frogs
     advancesComponent: 0
     questLinked: 
     componentLinked: 

@@ -435,7 +435,7 @@ public class AnimalRadii : MonoBehaviour
             Vector3 foundPos = findSurface(markerRaycastLayerMask, markerRaycastYAdjust, markerRaycastLength);
             Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
             float angleTowardsLocked = customMathf.pointToAngle(diffrence.x, diffrence.z);
-            Instantiate(markerPrefab, foundPos + Vector3.up * markerYDisplace, Quaternion.Euler(0, markerAngleDisplace + angleTowardsLocked, 0));
+            Instantiate(markerPrefab, foundPos + Vector3.up * markerYDisplace, Quaternion.Euler(0, markerAngleDisplace - angleTowardsLocked, 0));
         }
     }
 

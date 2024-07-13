@@ -127,15 +127,15 @@ MonoBehaviour:
   animalsPerRadii: 2
   objectSpawnBase: 0
   markerYDisplace: 1
-  markerAngleDisplace: 0
+  markerAngleDisplace: -90
   markerWindowTime: 5
-  markerWindowChance: 0.25
+  markerWindowChance: 25
   markerRaycastLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
   markerRaycastYAdjust: 40
   markerRaycastLength: 50
-  markerSteepness: 70
+  markerSteepness: 30
   currentState: 0
   lockedPosition: 1
   lockedObject: {fileID: 0}
