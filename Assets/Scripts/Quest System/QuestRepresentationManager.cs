@@ -27,14 +27,14 @@ public class QuestRepresentationManager : MonoBehaviour
             retDict.Add(newRep.questTitle, newRep.generateQuest());
             for(int i = 0; i < newRep.previousQuests.Count; i++)
             {
-                if (!retDict.ContainsKey(newRep.previousQuests[i].questTitle))
+                if (newRep.previousQuests[i] != null && !retDict.ContainsKey(newRep.previousQuests[i].questTitle))
                 {
                     generationIterate(newRep.previousQuests[i]);
                 }
             }
             for (int i = 0; i < newRep.nextQuests.Count; i++)
             {
-                if (!retDict.ContainsKey(newRep.nextQuests[i].questTitle))
+                if (newRep.nextQuests[i]  != null && !retDict.ContainsKey(newRep.nextQuests[i].questTitle))
                 {
                     generationIterate(newRep.nextQuests[i]);
                 }
@@ -80,6 +80,32 @@ public class QuestRepresentationManager : MonoBehaviour
             }
         }
         updateIterate(startingRepresentation);
+    }
+
+    // Visually regenerates all possible representations with dictionary of quests
+    public static void regenerateRepresentation(QuestRepresentation startingQuest)
+    {
+        HashSet<QuestRepresentation> repSet = new HashSet<QuestRepresentation>();
+        void updateIterate(QuestRepresentation representation)
+        {
+            repSet.Add(representation);
+            representation.regenerateVisual();
+            for (int i = 0; i < representation.previousQuests.Count; i++)
+            {
+                if (!repSet.Contains(representation.previousQuests[i]))
+                {
+                    updateIterate(representation.previousQuests[i]);
+                }
+            }
+            for (int i = 0; i < representation.nextQuests.Count; i++)
+            {
+                if (!repSet.Contains(representation.nextQuests[i]))
+                {
+                    updateIterate(representation.nextQuests[i]);
+                }
+            }
+        }
+        updateIterate(startingQuest);
     }
 
     // Updates quests with player prefs

@@ -371,7 +371,7 @@ public class QuestEditor : Editor
 
         if (EditorGUI.EndChangeCheck())
         {
-            Quest.regenerateVisual();
+            QuestRepresentationManager.regenerateRepresentation(Quest);
         }
     }
 }

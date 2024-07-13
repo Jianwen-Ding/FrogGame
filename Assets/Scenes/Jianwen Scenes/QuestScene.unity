@@ -190,17 +190,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1379019255 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5085008878468499762, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
-  m_PrefabInstance: {fileID: 3353538059593492948}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5974a6f37490a481da353cd069085a8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1410989858
 GameObject:
   m_ObjectHideFlags: 0
@@ -479,41 +468,13 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1756222381}
-    - target: {fileID: 3984687538323717935, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
-      propertyPath: previousQuests.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3984687538323717935, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
-      propertyPath: previousQuests.Array.data[0]
-      value: 
-      objectReference: {fileID: 1379019255}
-    - target: {fileID: 4144649672278733918, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
-      propertyPath: questTitle
-      value: Count Frogs
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144649672278733918, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
-      propertyPath: components.Array.data[0]
-      value: Mark Frogs
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144649672278733918, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
-      propertyPath: components.Array.data[1]
-      value: Talk To Joe about stuff
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144649672278733918, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
-      propertyPath: componentTotal.Array.data[0]
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144649672278733918, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
-      propertyPath: gatheredAmount.Array.data[0]
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4144649672278733918, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
-      propertyPath: gatheredAmount.Array.data[1]
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4583470327211905127, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
       propertyPath: m_Name
       value: Representation Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7524988439097078104, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
+      propertyPath: nextQuests.Array.size
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

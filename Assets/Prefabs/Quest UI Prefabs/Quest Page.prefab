@@ -1319,7 +1319,7 @@ MonoBehaviour:
   effectDisplacement: 24
   componentDisplacement: 8.92
   componentTitleXDisplace: 5.51
-  componentCountXDisplace: 29.46
+  componentCountXDisplace: 36.7
   componentCheckmarkXDisplace: 11.5
   distanceFromOriginArrow: 385
   distanceToLengthConstant: 0.05
