@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ecc5df2aa29d0a47b240a4aee8ac909, type: 3}
+  m_Name: Sarah Brief Dialogue
+  m_EditorClassIdentifier: 
+  RootNode:
+    dialogueText: Hello!
+    responses:
+    - responseText: What is my mission for today?
+      nextNode:
+        dialogueText: Tag frogs by throwing bait with E and running up to them while
+          they are stunned.
+        responses:
+        - responseText: Roger that!
+          nextNode:
+            dialogueText: 
+            responses: []
+            advancesComponent: 0
+            questLinked: 
+            componentLinked: 
+          lockedBehindQuest: 0
+          questNeeded: 
+        advancesComponent: 1
+        questLinked: Get Briefed by Sarah
+        componentLinked: Go To Sarah
+      lockedBehindQuest: 0
+      questNeeded: 
+    - responseText: I'm done!
+      nextNode:
+        dialogueText: Hmmm, it seems like frog populations are doing really really
+          bad rn. Even worse than predicted.
+        responses:
+        - responseText: xd
+          nextNode:
+            dialogueText: 
+            responses: []
+            advancesComponent: 0
+            questLinked: 
+            componentLinked: 
+          lockedBehindQuest: 0
+          questNeeded: 
+        advancesComponent: 1
+        questLinked: Report Findings to Sarah
+        componentLinked: Talk to Sarah
+      lockedBehindQuest: 1
+      questNeeded: Failed Marking Frogs
+    - responseText: I marked as much frogs as possible!
+      nextNode:
+        dialogueText: Hmmm, the frog population has declined. It's been following
+          trend for the past year.
+        responses:
+        - responseText: Wow.
+          nextNode:
+            dialogueText: 
+            responses: []
+            advancesComponent: 0
+            questLinked: 
+            componentLinked: 
+          lockedBehindQuest: 0
+          questNeeded: 
+        advancesComponent: 1
+        questLinked: Report Findings to Sarah
+        componentLinked: Talk to Sarah
+      lockedBehindQuest: 1
+      questNeeded: Marked needed Amount
+    advancesComponent: 0
+    questLinked: 
+    componentLinked: 

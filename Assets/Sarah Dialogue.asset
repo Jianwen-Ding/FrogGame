@@ -44,9 +44,9 @@ MonoBehaviour:
       questNeeded: Get Cat
     - responseText: Very cool
       nextNode:
-        dialogueText: Thank you so much. I lost my cat!
+        dialogueText: Ik, plz get cat off tree tho
         responses:
-        - responseText: Where is it!
+        - responseText: Sure!
           nextNode:
             dialogueText: She prolly climbed up a tree!!!
             responses:

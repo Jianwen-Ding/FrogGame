@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5200176315815559529}
   m_Layer: 0
   m_Name: Frog AI
-  m_TagString: Untagged
+  m_TagString: Frog
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,7 +108,7 @@ MonoBehaviour:
   objectsOfIntrest:
   - Firefly
   sleepObjects:
-  - Dirt
+  - Bush
   timeAtIntrest: 2
   radiiSpeed: 5
   radiiSnap: 0.2
@@ -117,7 +117,7 @@ MonoBehaviour:
   radiusPlayerTriggerSize: 50
   radiusAnimalSpawnSize: 50
   appropiateSpawnObjects:
-  - Leaves
+  - Bush
   spawnRaycastLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295

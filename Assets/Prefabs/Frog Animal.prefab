@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6365104450171857916}
   m_Layer: 0
   m_Name: Frog Animal
-  m_TagString: Untagged
+  m_TagString: Frog
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -132,7 +132,7 @@ MonoBehaviour:
   initialized: 0
   faceAngle: 0
   questName: Count Frogs
-  componentName: Mark Frogs
+  componentName: Mark Frogs before 20:00
   speed: 2000
   hopForce: 2000
   transitionHopTime: 1
