@@ -472,10 +472,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Representation Canvas
       objectReference: {fileID: 0}
-    - target: {fileID: 7524988439097078104, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
-      propertyPath: nextQuests.Array.size
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
