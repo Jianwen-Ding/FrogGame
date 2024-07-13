@@ -1,8 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
@@ -10,11 +10,11 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager Instance {get; private set;}
 
     // UI Reference
-    public GameObject DialogueParent;                               // Main containter for dialogue UI
-    public TextMeshProUGUI DialogueTitleText, DialogueBodyText;     // Text components for title and body
-    public GameObject responseButtonPrefab;                         // Prefab for generating response buttons
-    public List<GameObject> responseButtons = new List<GameObject>();                         // Container to hold repsonse buttons
-    public Transform[] ResponseList;                                // The locations where response buttons end up
+    public GameObject DialogueParent;                                       // Main containter for dialogue UI
+    public TextMeshProUGUI DialogueTitleText, DialogueBodyText;             // Text components for title and body
+    public GameObject responseButtonPrefab;                                 // Prefab for generating response buttons
+    public List<GameObject> responseButtons = new List<GameObject>();       // Container to hold repsonse buttons
+    public Transform[] ResponseList;                                        // The locations where response buttons end up
     private void Awake()
     {
         // Singleton patter to ensure only one instance of DialogueManager

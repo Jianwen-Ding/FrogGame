@@ -173,8 +173,6 @@ public class OdeionPlayer : MonoBehaviour
 
     public void Start()
     {
-
-
         Cursor.visible = false; //hide cursor
         Cursor.lockState = CursorLockMode.Locked; //unlock
 
@@ -235,6 +233,10 @@ public class OdeionPlayer : MonoBehaviour
 
     void FixedUpdate() //linked to clock time
     {
+        if (DialogueManager2.GetInstance().dialogueIsPlaying)
+        {
+            return;
+        }
         
         //MyInput();
         Move();
@@ -256,6 +258,7 @@ public class OdeionPlayer : MonoBehaviour
             Cursor.visible = true; 
             Cursor.lockState = CursorLockMode.None; //unlock
         }
+        
         
     }
 
