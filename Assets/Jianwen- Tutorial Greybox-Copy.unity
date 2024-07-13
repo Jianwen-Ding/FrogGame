@@ -35224,7 +35224,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   questLock: Talk To Sarah
-  newScene: Jianwen_MainLevel_Greybox
+  newScene: Jianwen_MainLevel_Greybox_Copy
 --- !u!4 &1311805185
 Transform:
   m_ObjectHideFlags: 0

@@ -358,6 +358,7 @@ public class QuestRepresentation : MonoBehaviour
     #endregion
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(QuestRepresentation))]
 public class QuestEditor : Editor
 {
@@ -375,3 +376,4 @@ public class QuestEditor : Editor
         }
     }
 }
+#endif

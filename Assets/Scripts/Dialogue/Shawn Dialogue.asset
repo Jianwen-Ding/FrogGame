@@ -15,33 +15,15 @@ MonoBehaviour:
   RootNode:
     dialogueText: Hey, you there, can you help me? I'm worried sick!
     responses:
-    - responseText: Sure! What for!
+    - responseText: Sure!
       nextNode:
-        dialogueText: Thank you so much. I lost my cat!
-        responses:
-        - responseText: Where is it!
-          nextNode:
-            dialogueText: She prolly climbed up a tree!!!
-            responses:
-            - responseText: Got It!
-              nextNode:
-                dialogueText: 
-                responses: []
-                advancesComponent: 0
-                questLinked: 
-                componentLinked: 
-              lockedBehindQuest: 0
-              questNeeded: 
-            advancesComponent: 1
-            questLinked: Move Around
-            componentLinked: 'Talk to Shawn '
-          lockedBehindQuest: 0
-          questNeeded: 
+        dialogueText: 
+        responses: []
         advancesComponent: 1
         questLinked: Move Around
-        componentLinked: Press [Space] to Jump
+        componentLinked: 'Talk to Shawn '
       lockedBehindQuest: 0
       questNeeded: 
     advancesComponent: 1
     questLinked: Move Around
-    componentLinked: Press [W][A][S][D] to Move
+    componentLinked: 'Talk to Shawn '

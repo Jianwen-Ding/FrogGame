@@ -59,6 +59,7 @@ public class DialogueManager : MonoBehaviour
         int iter = 0;
         foreach (DialogueResponse response in node.responses)
         {
+            Debug.Log(response);
             // Does not have any effect on press
             GameObject buttonObject = Instantiate(responseButtonPrefab, ResponseList[iter]);
             responseButtons.Add(buttonObject);
