@@ -50,7 +50,7 @@ MonoBehaviour:
           questNeeded: 
         advancesComponent: 1
         questLinked: Report Findings to Sarah
-        componentLinked: Talk to Sarah
+        componentLinked: Report Complete Frog Count
       lockedBehindQuest: 1
       questNeeded: Failed Marking Frogs
     - responseText: I marked as much frogs as possible!
@@ -69,7 +69,7 @@ MonoBehaviour:
           questNeeded: 
         advancesComponent: 1
         questLinked: Report Findings to Sarah
-        componentLinked: Talk to Sarah
+        componentLinked: Report Complete Frog Count
       lockedBehindQuest: 1
       questNeeded: Marked needed Amount
     advancesComponent: 0

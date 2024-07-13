@@ -233,10 +233,10 @@ public class OdeionPlayer : MonoBehaviour
 
     void FixedUpdate() //linked to clock time
     {
-        if (DialogueManager2.GetInstance().dialogueIsPlaying)
-        {
-            return;
-        }
+        //if (DialogueManager2.GetInstance().dialogueIsPlaying)
+        //{
+        //    return;
+        //}
         
         //MyInput();
         Move();

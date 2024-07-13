@@ -367,6 +367,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerOb: {fileID: 0}
-  speakRange: 5
+  speakRange: 10
   Name: Sarah
   Dialogue: {fileID: 11400000, guid: fa2d49e7e58e24816873173f01bb9aa1, type: 2}

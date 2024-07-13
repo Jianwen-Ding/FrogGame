@@ -150,6 +150,14 @@ public class QuestSys : MonoBehaviour
             activated = activated || allComplete;
         }
 
+
+        // Deactivates quest
+        public void attemptDectivate()
+        {
+            activated = false;
+            onQuestUpdate();
+        }
+
         // Returns whether quest has been activated
         public bool getActivationState()
         {
