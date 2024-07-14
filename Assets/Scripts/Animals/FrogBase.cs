@@ -128,12 +128,7 @@ public class FrogBase : AnimalPresent
             if (!marked)
             {
                 // Adds increment to quest
-                QuestSys.Quest quest = QuestSys.QuestList[questName];
-                if(quest.getActivationState() && !quest.getCompletionState())
-                {
-                    quest.components[componentName].increment(1);
-                    print("marker increment");
-                }
+                QuestSys.incrementComponentAttempt(questName, componentName, 1);
                 marked = true;
             }
         }

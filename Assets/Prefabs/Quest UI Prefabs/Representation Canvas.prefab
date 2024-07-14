@@ -7327,11 +7327,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7162961500060655805, guid: c2c1ffaf862624664ac5c729e33d4d63, type: 3}
       propertyPath: components.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7162961500060655805, guid: c2c1ffaf862624664ac5c729e33d4d63, type: 3}
       propertyPath: increments.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7162961500060655805, guid: c2c1ffaf862624664ac5c729e33d4d63, type: 3}
       propertyPath: nextQuests.Array.size
@@ -7343,11 +7343,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7162961500060655805, guid: c2c1ffaf862624664ac5c729e33d4d63, type: 3}
       propertyPath: components.Array.data[0]
-      value: Press [W][A][S][D] to Move
+      value: 'Talk to Shawn '
       objectReference: {fileID: 0}
     - target: {fileID: 7162961500060655805, guid: c2c1ffaf862624664ac5c729e33d4d63, type: 3}
       propertyPath: components.Array.data[1]
-      value: Press [Space] to Jump
+      value: 'Talk to Shawn '
       objectReference: {fileID: 0}
     - target: {fileID: 7162961500060655805, guid: c2c1ffaf862624664ac5c729e33d4d63, type: 3}
       propertyPath: components.Array.data[2]
@@ -7363,11 +7363,11 @@ PrefabInstance:
       objectReference: {fileID: 7219733917117371308}
     - target: {fileID: 7162961500060655805, guid: c2c1ffaf862624664ac5c729e33d4d63, type: 3}
       propertyPath: componentTotal.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7162961500060655805, guid: c2c1ffaf862624664ac5c729e33d4d63, type: 3}
       propertyPath: gatheredAmount.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7162961500060655805, guid: c2c1ffaf862624664ac5c729e33d4d63, type: 3}
       propertyPath: previousQuests.Array.size
@@ -7383,7 +7383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7162961500060655805, guid: c2c1ffaf862624664ac5c729e33d4d63, type: 3}
       propertyPath: componentCompletion.Array.size
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7434569161495622534, guid: c2c1ffaf862624664ac5c729e33d4d63, type: 3}
       propertyPath: m_Name
