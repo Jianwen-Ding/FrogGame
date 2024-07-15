@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 6161380874196481789}
   - component: {fileID: 3883576533022286320}
   - component: {fileID: 393166285599226602}
-  - component: {fileID: 5392554160612852347}
+  - component: {fileID: 3174630269826749295}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -60,7 +60,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.3853038, z: -0, w: 0.9227898}
   m_LocalPosition: {x: -143.94, y: 6.27, z: 79.24}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 337.8, y: 89.95, z: 110}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4635110432721853322}
@@ -74,7 +74,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3537301380854485450}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 7550297643443315247, guid: dc4f68d1dc11348d3b5457fe2c02579e, type: 3}
 --- !u!23 &393166285599226602
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -95,7 +95,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 7877760023189221424, guid: 352cae8e94b23d74a81e0af31f57146c, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -117,8 +117,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &5392554160612852347
-BoxCollider:
+--- !u!64 &3174630269826749295
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -135,9 +135,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7550297643443315247, guid: dc4f68d1dc11348d3b5457fe2c02579e, type: 3}
 --- !u!1 &8419508569042734603
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,7 +167,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.004, y: 0.02, z: 0.01}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6161380874196481789}
@@ -204,5 +205,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b10395b673abae642a1b25fb258cfef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  editorChange: 0
+  questRepOb: {fileID: 4583470327211905127, guid: 169cce61a930e4b5da16d7ae06e755c7, type: 3}
+  questsNeededRoles: []
+  totalQuestList: []
+  totalComponentList: []
   visualCue: {fileID: 0}
-  inkJSON: {fileID: 4900000, guid: 3526bd7412e7bf045bb7372cbf408c15, type: 3}
+  dialogueLockRole: Lock
+  questAdvanceRole: Advance
+  dialoguePriority: 
+  inkJSONs: []

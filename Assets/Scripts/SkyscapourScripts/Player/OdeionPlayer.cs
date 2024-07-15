@@ -204,8 +204,12 @@ public class OdeionPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (DialogueManager2.GetInstance().dialogueIsPlaying)
+        {
+            return;
+        }
         //if (isForkussed)
-            //ForkussionEffect();
+        //ForkussionEffect();
         //ForkussionEnd();
         if (isDamaged)
             DamageEffect();
@@ -233,11 +237,11 @@ public class OdeionPlayer : MonoBehaviour
 
     void FixedUpdate() //linked to clock time
     {
-        //if (DialogueManager2.GetInstance().dialogueIsPlaying)
-        //{
-        //    return;
-        //}
-        
+        if (DialogueManager2.GetInstance().dialogueIsPlaying)
+        {
+            return;
+        }
+
         //MyInput();
         Move();
         

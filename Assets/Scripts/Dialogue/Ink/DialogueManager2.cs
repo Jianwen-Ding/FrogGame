@@ -72,6 +72,8 @@ public class DialogueManager2 : MonoBehaviour
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
@@ -80,6 +82,8 @@ public class DialogueManager2 : MonoBehaviour
 
     public void ExitDialogueMode()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
@@ -119,7 +123,7 @@ public class DialogueManager2 : MonoBehaviour
         foreach (char letter in line.ToCharArray())
         {
             // If the submit button is pressed, finish up displaying the line right away.
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetMouseButton(0))
             {
                 dialogueText.text = line;
                 break;

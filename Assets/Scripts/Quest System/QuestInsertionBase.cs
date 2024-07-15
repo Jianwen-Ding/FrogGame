@@ -13,6 +13,10 @@ public class QuestInsertionBase : MonoBehaviour
     // In order to use, create a script that uses this as base
 
     #region variables
+    // Whether the script is currently adds fields or not
+    // Turn true to turn on GUI schenanigans
+    public bool editorChange;
+
     // Takes quest layout from this representation
     public GameObject questRepOb;
 
@@ -24,32 +28,20 @@ public class QuestInsertionBase : MonoBehaviour
     public string[] totalQuestList;
     public string[] totalComponentList;
     #endregion
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
 
+// FOR EACH CLASS THAT INHERITS, CREATE A CLASS THAT INHERITS THIS
 #if UNITY_EDITOR
-[CustomEditor(typeof(QuestInsertionBase))]
+[CustomEditor(typeof(QuestInsertionBase), true)]
 public class QuestInsertionEditor : Editor
 {
     public override void OnInspectorGUI()
     {
-        QuestInsertionBase insertionPoint = (QuestInsertionBase)target;
-
-        EditorGUI.BeginChangeCheck();
+        var insertionPoint = (QuestInsertionBase)target;
 
         base.OnInspectorGUI();
 
-        if (EditorGUI.EndChangeCheck())
+        if (insertionPoint.editorChange)
         {
             List<string> questTitles = new List<string>();
             questTitles.Add(QuestInsertionBase.emptyConst);
@@ -58,7 +50,7 @@ public class QuestInsertionEditor : Editor
                 questTitles.Add(title);
             }
             // Creates a field on each quest needed
-            for(int i = 0; i < insertionPoint.questsNeededRoles.Length; i++)
+            for (int i = 0; i < insertionPoint.questsNeededRoles.Length; i++)
             {
                 GUIContent label = new GUIContent("Quest: " + insertionPoint.questsNeededRoles[i]);
                 // Index that was previously picked
@@ -74,7 +66,7 @@ public class QuestInsertionEditor : Editor
                 }
                 insertionPoint.totalQuestList[i] = questTitles[EditorGUILayout.Popup(label, fromIndex, questTitles.ToArray())];
                 // Creates a field on every component needed
-                if(insertionPoint.totalQuestList[i] != QuestInsertionBase.emptyConst)
+                if (insertionPoint.totalQuestList[i] != QuestInsertionBase.emptyConst)
                 {
                     GUIContent componentLabel = new GUIContent("Component: " + insertionPoint.questsNeededRoles[i]);
                     List<string> componentTitles = new List<string>();
@@ -91,7 +83,7 @@ public class QuestInsertionEditor : Editor
                     {
                         compIndex = 0;
                     }
-                    insertionPoint.totalComponentList[i] = questTitles[EditorGUILayout.Popup(componentLabel, compIndex, componentTitles.ToArray())];
+                    insertionPoint.totalComponentList[i] = componentTitles[EditorGUILayout.Popup(componentLabel, compIndex, componentTitles.ToArray())];
                 }
                 else
                 {

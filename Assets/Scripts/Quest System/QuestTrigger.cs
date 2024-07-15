@@ -1,14 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class QuestTrigger : MonoBehaviour
+public class QuestTrigger : QuestInsertionBase
 {
     // In Charge of advancing components on player entering trigger
-    [SerializeField]
-    string questAdvance;
-    [SerializeField]
-    string componentAdvance;
     [SerializeField]
     GameObject objectDelete;
     [SerializeField]
@@ -19,18 +16,19 @@ public class QuestTrigger : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            if (QuestSys.QuestList[questAdvance].components[componentAdvance].incremental)
+            if (QuestSys.QuestList[totalQuestList[0]].components[totalComponentList[0]].incremental)
             {
-                QuestSys.incrementComponentAttempt(questAdvance, componentAdvance, incrementAmount);
+                QuestSys.incrementComponentAttempt(totalQuestList[0], totalComponentList[0], incrementAmount);
             }
             else
             {
-                QuestSys.fufillComponentAttempt(questAdvance, componentAdvance);
+                QuestSys.fufillComponentAttempt(totalQuestList[0], totalComponentList[0]);
             }
-            if(QuestSys.QuestList[questAdvance].getActivationState())
+            if(QuestSys.QuestList[totalQuestList[0]].getActivationState())
             {
                 Destroy(objectDelete);
             }
         }
     }
 }
+
