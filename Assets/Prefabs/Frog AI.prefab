@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3603828126360503628}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -101,18 +101,18 @@ MonoBehaviour:
   markerPrefab: {fileID: 2879456727950918187, guid: f61105c4f152349aa90fea5b2c93e98d, type: 3}
   playerObject: {fileID: 0}
   Permanent: 0
-  wakeHour: 5
+  wakeHour: 7
   wakeMinute: 0
-  sleepHour: 20
+  sleepHour: 12
   sleepMinute: 30
   objectsOfIntrest:
   - Firefly
   sleepObjects:
   - Bush
-  timeAtIntrest: 20
+  timeAtIntrest: 2
   radiiSpeed: 5
   radiiSnap: 0.2
-  objectIntrestBase: 1.3
+  objectIntrestBase: 1.1
   objectSleepBase: 2
   radiusPlayerTriggerSize: 50
   radiusAnimalSpawnSize: 50
@@ -124,12 +124,12 @@ MonoBehaviour:
   spawnRaycastYAdjust: 40
   spawnRaycastLength: 50
   spawnYDisplacement: 3
-  animalsPerRadii: 1
+  animalsPerRadii: 2
   objectSpawnBase: 0
   markerYDisplace: 1
   markerAngleDisplace: -90
-  markerWindowTime: 10
-  markerWindowChance: 10
+  markerWindowTime: 5
+  markerWindowChance: 25
   markerRaycastLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295

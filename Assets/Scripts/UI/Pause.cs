@@ -9,10 +9,6 @@ public class Pause : MonoBehaviour
 
     public static bool isPaused = false;
 
-    CursorLockMode cursorModeOnPause;
-
-    bool cursorVisibilityOnPause;
-
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -30,10 +26,6 @@ public class Pause : MonoBehaviour
 
     public void PauseGame()
     {
-        cursorModeOnPause = Cursor.lockState;
-        cursorVisibilityOnPause = Cursor.visible;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
         gameMenu.SetActive(true);
         Time.timeScale = 0.0f;
         isPaused = true;
@@ -41,8 +33,6 @@ public class Pause : MonoBehaviour
 
     public void ResumeGame()
     {
-        Cursor.lockState = cursorModeOnPause;
-        Cursor.visible = cursorVisibilityOnPause;
         gameMenu.SetActive(false);
         Time.timeScale = 1.0f;
         isPaused = false;

@@ -13,41 +13,9 @@ public class QuestRepresentation : MonoBehaviour
     // Will be used by designers to actually edit quests and
     // To be shown to players
 
-    // >>> STORAGE VARIABLES <<<
-    // Variables involved in the storage of the quest
-    [Header("Quest Information Storage")]
-
-    // Title of the quest
-    public string questTitle;
-    // Whether the quest is part of the main story
-    public bool mainLine;
-    // Description of the quest
-    public string questDescription;
-    // What will change on completion of quest
-    public string questCompletionEffect;
-    // Whether components have been fufilled
-    public bool completed;
-    // Whether the quest has been activated or not
-    public bool activated;
-    // Whether the quest has been activated or not
-    public int questPrereqs;
-
-    // Quests that will potentially activate on completion of quest
-    public List<QuestRepresentation> nextQuests;
-    // Quests that need to be activated in order to attempt activation of quest
-    public List<QuestRepresentation> previousQuests;
-
-    // List of component representations
-    public string[] components;
-    public bool[] increments;
-    public int[] gatheredAmount;
-    public int[] componentTotal;
-    public bool[] componentCompletion;
-
-
     // >>> Art Assets <<<
     // Art assets to be set in place by quest representation
-    [Header(">>> IGNORE THIS IF YOU ONLY WANT TO EDIT QUESTS <<<")]
+    [Header("Art Assets")]
 
     [SerializeField]
     Sprite backDropSprite;
@@ -119,6 +87,37 @@ public class QuestRepresentation : MonoBehaviour
     // Arrow prefab
     [SerializeField]
     GameObject arrowTailPrefab;
+
+
+    // >>> STORAGE VARIABLES <<<
+    // Variables involved in the storage of the quest
+    [Header("Quest Information Storage")]
+
+    // Title of the quest
+    public string questTitle;
+    // Whether the quest is part of the main story
+    public bool mainLine;
+    // Description of the quest
+    public string questDescription;
+    // What will change on completion of quest
+    public string questCompletionEffect;
+    // Whether components have been fufilled
+    public bool completed;
+    // Whether the quest has been activated or not
+    public bool activated;
+
+    // Quests that will potentially activate on completion of quest
+    public List<QuestRepresentation> nextQuests;
+    // Quests that need to be activated in order to attempt activation of quest
+    public List<QuestRepresentation> previousQuests;
+
+    // List of component representations
+    public string[] components;
+    public bool[] increments;
+    public int[] gatheredAmount;
+    public int[] componentTotal;
+    public bool[] componentCompletion;
+
 
     // >>> VISUALIZATION PARAMETERS <<<
     // Variables that send the art assets into place
@@ -312,7 +311,7 @@ public class QuestRepresentation : MonoBehaviour
     // along with functions that add in effects later
     public Quest generateQuest()
     {
-        Quest retQuest = new Quest(mainLine, questDescription, questCompletionEffect, completed, activated, questPrereqs);
+        Quest retQuest = new Quest(mainLine, questDescription, questCompletionEffect, completed, activated);
         Dictionary<string, Quest.QuestComponent> compList = new Dictionary<string, Quest.QuestComponent>();
         for(int i = 0; i < components.Length; i++)
         {
@@ -359,9 +358,7 @@ public class QuestRepresentation : MonoBehaviour
     #endregion
 }
 
-#if UNITY_EDITOR
 [CustomEditor(typeof(QuestRepresentation))]
-[CanEditMultipleObjects]
 public class QuestEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -378,4 +375,3 @@ public class QuestEditor : Editor
         }
     }
 }
-#endif
