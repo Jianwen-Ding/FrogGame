@@ -22,6 +22,8 @@ public class QuestSys : MonoBehaviour
         #region vars
         // Whether the quest is part of the main story
         public bool mainLine;
+        // The amount of previous completed before this quest activates
+        public int questPrerequisites;
         // Description of the quest
         public string questDescription;
         // What will change on completion of quest
@@ -137,17 +139,18 @@ public class QuestSys : MonoBehaviour
         }
 
         // Checks if every proceeding quest has been activated or not
+        // Checks if enough quests have been completed for quest activation to trigger
         public void attemptActivate()
         {
-            bool allComplete = true;
+            int amountComplete = 0;
             for (int i = 0; i < previousQuests.Count; i++)
             {
-                if (!previousQuests[i].getCompletionState())
+                if (previousQuests[i].getCompletionState())
                 {
-                    allComplete = false;
+                    amountComplete += 1;
                 }
             }
-            activated = activated || allComplete;
+            activated = amountComplete >= questPrerequisites;
         }
 
 
@@ -184,7 +187,7 @@ public class QuestSys : MonoBehaviour
         #endregion
         #region constructor
         // Full construction
-        public Quest(bool main, string description, string completionEff, bool complete, bool active, List<Quest> next, List<Quest> prev, Dictionary<string, QuestComponent> comps)
+        public Quest(bool main, string description, string completionEff, bool complete, bool active, List<Quest> next, List<Quest> prev, Dictionary<string, QuestComponent> comps, int questPrereq)
         {
             mainLine = main;
             questDescription = description;
@@ -194,9 +197,10 @@ public class QuestSys : MonoBehaviour
             nextQuests = next;
             previousQuests = prev;
             components = comps;
+            questPrerequisites = questPrereq;
         }
         // Leaves out next, previous quests, and components to be added later
-        public Quest(bool main, string description, string completionEff, bool complete, bool active)
+        public Quest(bool main, string description, string completionEff, bool complete, bool active, int questPrereq)
         {
             mainLine = main;
             questDescription = description;
@@ -205,6 +209,7 @@ public class QuestSys : MonoBehaviour
             activated = active;
             nextQuests = new List<Quest>();
             previousQuests = new List<Quest>();
+            questPrerequisites = questPrereq;
         }
         #endregion
     }

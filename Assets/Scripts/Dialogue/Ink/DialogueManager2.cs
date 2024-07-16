@@ -26,7 +26,10 @@ public class DialogueManager2 : MonoBehaviour
     private Coroutine displayLineCoroutine;
     private static DialogueManager2 instance;
 
-    private const string SPEAKER_TAG = "speaker";    
+    private const string SPEAKER_TAG = "speaker";
+
+    public delegate void playOnEnd();
+    private playOnEnd dialogueCloseFunc;
 
     private void Awake()
     {
@@ -77,6 +80,19 @@ public class DialogueManager2 : MonoBehaviour
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
+        dialogueCloseFunc = null;
+        ContinueStory();
+    }
+
+    // Inserts function to play upon the end of the dialogue mode
+    public void EnterDialogueMode(TextAsset inkJSON, playOnEnd func)
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        currentStory = new Story(inkJSON.text);
+        dialogueIsPlaying = true;
+        dialoguePanel.SetActive(true);
+        dialogueCloseFunc = func;
         ContinueStory();
     }
 
@@ -87,6 +103,10 @@ public class DialogueManager2 : MonoBehaviour
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        if(dialogueCloseFunc != null)
+        {
+            dialogueCloseFunc();
+        }
     }
 
     private void ContinueStory()

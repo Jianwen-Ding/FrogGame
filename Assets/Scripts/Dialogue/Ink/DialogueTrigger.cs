@@ -33,7 +33,7 @@ public class DialogueTrigger : QuestInsertionBase
     // Whether quest field has been filled
     // If quest is empty nothing happens
     List<bool> advanceQuestAvalability = new List<bool>();
-    private bool playerInRange;
+    private static bool playerInRange = false;
 
     private void Awake()
     {
@@ -60,11 +60,18 @@ public class DialogueTrigger : QuestInsertionBase
         }
     }
 
+    // Plays on dialogue end
+    public void questAdvance(string quest, string component)
+    {
+        QuestSys.QuestList[quest].components[component].fufillComponent();
+    }
+
+
     private void Update()
     {
         if (playerInRange && !DialogueManager2.GetInstance().dialogueIsPlaying)
         {
-            visualCue.SetActive(true);
+            DebugDisplay.updateDisplay(gameObject.name + " in range", "true");
             // Searches for highest valid priority option
             int highestPrio = -1;
             int highestPrioIndex = -1;
@@ -85,18 +92,28 @@ public class DialogueTrigger : QuestInsertionBase
                     highestPrioIndex = i;
                 }
             }
-            if (Input.GetKeyUp(KeyCode.F) && highestPrioIndex != -1)
+            if(highestPrioIndex != 1)
             {
-                // Fufills quest at index
-                if (advanceQuestAvalability[highestPrioIndex])
+                visualCue.SetActive(true);
+                if (Input.GetKeyUp(KeyCode.F))
                 {
-                    QuestSys.QuestList[advanceQuests[highestPrioIndex]].components[advanceQuestComponents[highestPrioIndex]].fufillComponent();
+                    DialogueManager2.playOnEnd newFunc = null;
+                    // Fufills quest at index
+                    if (advanceQuestAvalability[highestPrioIndex])
+                    {
+                        void plug()
+                        {
+                            questAdvance(advanceQuests[highestPrioIndex], advanceQuestComponents[highestPrioIndex]);
+                        }
+                        newFunc = plug;
+                    }
+                    DialogueManager2.GetInstance().EnterDialogueMode(inkJSONs[highestPrioIndex], newFunc);
                 }
-                DialogueManager2.GetInstance().EnterDialogueMode(inkJSONs[highestPrioIndex]);
             }
         }
         else
         {
+            DebugDisplay.updateDisplay(gameObject.name + " in range", "false");
             visualCue.SetActive(false);
         }
     }

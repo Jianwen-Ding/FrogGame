@@ -3442,7 +3442,7 @@ PrefabInstance:
       objectReference: {fileID: 773244605}
     - target: {fileID: 6048041846060617001, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: editorChange
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6048041846060617001, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: inkJSONs.Array.size
@@ -3470,7 +3470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048041846060617001, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: totalQuestList.Array.data[1]
-      value: '|empty|'
+      value: Move Around
       objectReference: {fileID: 0}
     - target: {fileID: 6048041846060617001, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: totalComponentList.Array.size
@@ -3494,11 +3494,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048041846060617001, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: totalComponentList.Array.data[1]
-      value: '|empty|'
+      value: 'Talk to Shawn '
       objectReference: {fileID: 0}
     - target: {fileID: 6161380874196481789, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6161380874196481789, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7768,6 +7768,24 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 290581018}
   m_Mesh: {fileID: -2848159181025852937, guid: 414d9bc67db7d40cea0c590decf14ea2, type: 3}
+--- !u!1 &292951304 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 892874441167232798, guid: ad753c6815dfc9742bb1930335176978, type: 3}
+  m_PrefabInstance: {fileID: 657939252}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &292951309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292951304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 051c62917cf96c54da749733d34de9ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameMenu: {fileID: 1313924189}
 --- !u!1 &295792553
 GameObject:
   m_ObjectHideFlags: 0
@@ -18290,10 +18308,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8059265295054527124, guid: ad753c6815dfc9742bb1930335176978, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 4386630408780429182, guid: ad753c6815dfc9742bb1930335176978, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 892874441167232798, guid: ad753c6815dfc9742bb1930335176978, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 292951309}
   m_SourcePrefab: {fileID: 100100000, guid: ad753c6815dfc9742bb1930335176978, type: 3}
 --- !u!1 &669203476
 GameObject:
@@ -35437,6 +35463,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1312063272}
   m_Mesh: {fileID: -2848159181025852937, guid: 414d9bc67db7d40cea0c590decf14ea2, type: 3}
+--- !u!1 &1313924189 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8059265295054527124, guid: ad753c6815dfc9742bb1930335176978, type: 3}
+  m_PrefabInstance: {fileID: 657939252}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1314443041 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1754209942573253414, guid: 414d9bc67db7d40cea0c590decf14ea2, type: 3}
@@ -54848,7 +54879,7 @@ PrefabInstance:
       objectReference: {fileID: 773244605}
     - target: {fileID: 6048041846060617001, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: editorChange
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6048041846060617001, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: inkJSONs.Array.size
@@ -54872,11 +54903,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048041846060617001, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: totalQuestList.Array.data[0]
-      value: '|empty|'
+      value: Get Cat
       objectReference: {fileID: 0}
     - target: {fileID: 6048041846060617001, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: totalQuestList.Array.data[1]
-      value: '|empty|'
+      value: Talk To Sarah
       objectReference: {fileID: 0}
     - target: {fileID: 6048041846060617001, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: totalComponentList.Array.size
@@ -54896,15 +54927,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6048041846060617001, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: totalComponentList.Array.data[0]
-      value: '|empty|'
+      value: Fetch Cat Out of Tree
       objectReference: {fileID: 0}
     - target: {fileID: 6048041846060617001, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: totalComponentList.Array.data[1]
-      value: '|empty|'
+      value: Talk To Sarah
       objectReference: {fileID: 0}
     - target: {fileID: 6161380874196481789, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6161380874196481789, guid: 74e83fbe7aa5f7c4b82ae9afe9a22829, type: 3}
       propertyPath: m_LocalPosition.x
@@ -57639,6 +57670,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5982628791113871319, guid: 22aefc431f4ff2b41a71d69b77da4dfe, type: 3}
       propertyPath: m_Name
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5982628791113871319, guid: 22aefc431f4ff2b41a71d69b77da4dfe, type: 3}
+      propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []

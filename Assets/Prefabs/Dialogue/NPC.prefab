@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 6161380874196481789}
   - component: {fileID: 3883576533022286320}
   - component: {fileID: 393166285599226602}
-  - component: {fileID: 3174630269826749295}
+  - component: {fileID: 7408837737732794968}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -59,8 +59,8 @@ Transform:
   m_GameObject: {fileID: 3537301380854485450}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.3853038, z: -0, w: 0.9227898}
-  m_LocalPosition: {x: -143.94, y: 6.27, z: 79.24}
-  m_LocalScale: {x: 337.8, y: 89.95, z: 110}
+  m_LocalPosition: {x: 0, y: 0, z: 79.24}
+  m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4635110432721853322}
@@ -74,7 +74,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3537301380854485450}
-  m_Mesh: {fileID: 7550297643443315247, guid: dc4f68d1dc11348d3b5457fe2c02579e, type: 3}
+  m_Mesh: {fileID: 4068373912626513877, guid: 96e5739a1a2e0411294fa39d6fd0994c, type: 3}
 --- !u!23 &393166285599226602
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -95,7 +95,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 7877760023189221424, guid: 352cae8e94b23d74a81e0af31f57146c, type: 3}
+  - {fileID: 2100000, guid: b196e116d415d4e4a91d18d26021a2f0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -117,7 +117,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3174630269826749295
+--- !u!64 &7408837737732794968
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -138,7 +138,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 7550297643443315247, guid: dc4f68d1dc11348d3b5457fe2c02579e, type: 3}
+  m_Mesh: {fileID: 4068373912626513877, guid: 96e5739a1a2e0411294fa39d6fd0994c, type: 3}
 --- !u!1 &8419508569042734603
 GameObject:
   m_ObjectHideFlags: 0
@@ -191,8 +191,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 5, y: 5, z: 5}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 15.384971, y: 4.9999995, z: 6.5973015}
+  m_Center: {x: 0.52566403, y: 0, z: 0.79865277}
 --- !u!114 &6048041846060617001
 MonoBehaviour:
   m_ObjectHideFlags: 0

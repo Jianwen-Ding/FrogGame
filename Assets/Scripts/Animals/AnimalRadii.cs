@@ -328,9 +328,9 @@ public class AnimalRadii : MonoBehaviour
         {
             print("ERROR- suitable surface not found");
         }
-        DebugDisplay.updateDisplay(" " + gameObject.name + " marker steepness", customMathf.angleBetweenTwoVecs(hit.normal, Vector3.up) + "");
-        Debug.DrawRay(hit.point, hit.normal * 5, Color.yellow, 4);
-        Debug.DrawRay(hit.point, Vector3.up * 5, Color.cyan, 4);
+        //DebugDisplay.updateDisplay(" " + gameObject.name + " marker steepness", customMathf.angleBetweenTwoVecs(hit.normal, Vector3.up) + "");
+        //Debug.DrawRay(hit.point, hit.normal * 5, Color.yellow, 4);
+        //Debug.DrawRay(hit.point, Vector3.up * 5, Color.cyan, 4);
         return customMathf.angleBetweenTwoVecs(hit.normal, Vector3.up);
     }
 
@@ -498,7 +498,7 @@ public class AnimalRadii : MonoBehaviour
                 gameObject.transform.position += movementVec;
 
                 // Occasionally the animal will drop markers
-                DebugDisplay.updateDisplay(" " + gameObject.name + " time until mark", timeUntilMarkChanceLeft + "");
+                // DebugDisplay.updateDisplay(" " + gameObject.name + " time until mark", timeUntilMarkChanceLeft + "");
                 timeUntilMarkChanceLeft -= Time.deltaTime;
                 if (timeUntilMarkChanceLeft < 0)
                 {
@@ -506,7 +506,7 @@ public class AnimalRadii : MonoBehaviour
                     // Generates a number between 1-100
                     // Determines if marker gets spawned
                     float randomInt = Random.Range(0, 100);
-                    DebugDisplay.updateDisplay(" " + gameObject.name + " mark chance pulled", randomInt + "");
+                    // Display.updateDisplay(" " + gameObject.name + " mark chance pulled", randomInt + "");
                     if (randomInt < markerWindowChance)
                     {
                         spawnMarker();
@@ -519,7 +519,7 @@ public class AnimalRadii : MonoBehaviour
 
             // Checks if player is within radii
             Vector3 diff = transform.position - playerObject.gameObject.transform.position;
-            DebugDisplay.updateDisplay("distance from player" ,diff.magnitude + "");
+            // DebugDisplay.updateDisplay("distance from player" ,diff.magnitude + "");
             if (diff.magnitude < radiusPlayerTriggerSize)
             {
                 spawnAnimal();
@@ -533,7 +533,7 @@ public class AnimalRadii : MonoBehaviour
                 manifested = false;
             }
         }
-        DebugDisplay.updateDisplay("has manifested", manifested + "");
+        // DebugDisplay.updateDisplay("has manifested", manifested + "");
     }
     #endregion
 } 
