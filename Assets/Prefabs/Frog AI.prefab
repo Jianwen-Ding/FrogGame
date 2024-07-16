@@ -115,12 +115,12 @@ MonoBehaviour:
   objectIntrestBase: 1.1
   objectSleepBase: 2
   radiusPlayerTriggerSize: 50
-  radiusAnimalSpawnSize: 50
+  radiusAnimalSpawnSize: 70
   appropiateSpawnObjects:
   - Bush
   spawnRaycastLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 119
   spawnRaycastYAdjust: 40
   spawnRaycastLength: 50
   spawnYDisplacement: 3
@@ -132,7 +132,7 @@ MonoBehaviour:
   markerWindowChance: 25
   markerRaycastLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 115
   markerRaycastYAdjust: 40
   markerRaycastLength: 50
   markerSteepness: 30
