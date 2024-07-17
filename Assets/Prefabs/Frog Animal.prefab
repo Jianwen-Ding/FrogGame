@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4545214163792452768}
   - component: {fileID: 7410329142915955742}
   - component: {fileID: 6365104450171857916}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: Frog Animal
   m_TagString: Frog
   m_Icon: {fileID: 0}
@@ -114,15 +114,15 @@ MonoBehaviour:
   - Bait
   predatorTags:
   - Player
-  detectorSize: 2
+  detectorSize: 1
   detectionTimePrey: 5
-  detectionTimePred: 10
+  detectionTimePred: 5
   fovAngle: 70
   sightDistance: 10
   sightLayerMask:
     serializedVersion: 2
     m_Bits: 115
-  hearDistance: 15
+  hearDistance: 10
   soundMultiplier: 1
   stunMultiplier: 1
   preManifestMoving: 0
@@ -133,11 +133,11 @@ MonoBehaviour:
   faceAngle: 0
   questName: Count Frogs
   componentName: Mark Frogs before 20:00
-  speed: 4000
-  hopForce: 1000
-  transitionHopTime: 0.75
-  panicHopTime: 0.75
-  huntHopTime: 0.75
+  speed: 2000
+  hopForce: 2000
+  transitionHopTime: 1
+  panicHopTime: 1
+  huntHopTime: 1
   wanderHopTime: 5
   moveHopTime: 4
   collisionLayerMask:
@@ -500,9 +500,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feacadd7aa4bf4a73bb6af121a730d97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stunMat: {fileID: 2100000, guid: ecff68b349c524370b992e59f874802b, type: 2}
-  huntMat: {fileID: 2100000, guid: 2af0801304a3149719578ea3fae36a23, type: 2}
-  panicMat: {fileID: 2100000, guid: 02251c5b6b9db4d4bafa038ed83f981f, type: 2}
-  markedMat: {fileID: 2100000, guid: 0e4bbb865445c48258e68be490c7897d, type: 2}
+  stunMat: {fileID: 2100000, guid: d9201a4abe4e4e64d990e5f96625ed95, type: 2}
+  huntMat: {fileID: 2100000, guid: 8a298f9d7c45ced4ea9756198d37d9db, type: 2}
+  panicMat: {fileID: 2100000, guid: 0da03df1a1e752940a1a2352da0f5cc8, type: 2}
+  markedMat: {fileID: -4300042437503033927, guid: 05a7fedc26316c6418aae10b9825982a, type: 3}
   distanceAbove: 3
   animalScript: {fileID: 0}
