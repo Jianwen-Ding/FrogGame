@@ -52,6 +52,7 @@ public class FrogBase : AnimalPresent
     {
         Vector3 force = customMathf.angleToPoint(angle, speed);
         force.y = hopForce;
+        animalRigid.velocity = new Vector3(0 , animalRigid.velocity.y, 0);
         animalRigid.MoveRotation(Quaternion.Euler(new Vector3(0, 90 - angle, 0)));
         animalRigid.AddForce(force);
         faceAngle = angle;

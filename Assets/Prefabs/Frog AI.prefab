@@ -49,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3603828126360503628}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -120,7 +120,7 @@ MonoBehaviour:
   - Bush
   spawnRaycastLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 115
   spawnRaycastYAdjust: 40
   spawnRaycastLength: 50
   spawnYDisplacement: 3
@@ -132,7 +132,7 @@ MonoBehaviour:
   markerWindowChance: 25
   markerRaycastLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 115
   markerRaycastYAdjust: 40
   markerRaycastLength: 50
   markerSteepness: 30

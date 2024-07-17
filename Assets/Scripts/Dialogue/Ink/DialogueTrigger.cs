@@ -37,8 +37,8 @@ public class DialogueTrigger : QuestInsertionBase
 
     private void Awake()
     {
+        visualCue = GameObject.FindGameObjectWithTag("Interactable");
         playerInRange = false;
-        visualCue.SetActive(false);
         // Caches the locked quest requirements and quests to advance
         // Also stores if empty or not
         for(int i = 0; i < questsNeededRoles.Length; i++)
@@ -58,6 +58,11 @@ public class DialogueTrigger : QuestInsertionBase
                 advanceQuestAvalability.Add(quest != emptyConst && component != emptyConst);
             }
         }
+    }
+
+    private void Start()
+    {
+        visualCue.SetActive(false);
     }
 
     // Plays on dialogue end

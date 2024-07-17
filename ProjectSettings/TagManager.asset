@@ -13,6 +13,12 @@ TagManager:
   - Bait
   - Bush
   - Frog
+  - Interactable
+  - DialoguePanel
+  - Choices
+  - Dialogue
+  - Speaker
+  - Continue
   layers:
   - Default
   - TransparentFX
