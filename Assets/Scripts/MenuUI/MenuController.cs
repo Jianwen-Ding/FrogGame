@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 using TMPro;
 
@@ -10,15 +11,22 @@ public class MenuController : MonoBehaviour
     [Header("Customization")]
     public Animator cAnim;
     private int customizingHash;
-    private int LoadoutHash;
     [SerializeField] private Toggle marchingHatT = null;
-
-    [Header("Weapon Loadouts")]
     
     [Header("Volume Settings")]
-    [SerializeField] private TMP_Text volumeTextValue = null;
-    [SerializeField] private Slider volumeSlider = null;
-    [SerializeField] private float defaultVolume = 0.5f;
+    [SerializeField] private TMP_Text masterTextValue = null;
+    [SerializeField] private Slider masterSlider = null;
+    [SerializeField] private TMP_Text musicTextValue = null;
+    [SerializeField] private Slider musicSlider = null;
+    [SerializeField] private TMP_Text sfxTextValue = null;
+    [SerializeField] private Slider sfxSlider = null;
+    [SerializeField] private TMP_Text ambienceTextValue = null;
+    [SerializeField] private Slider ambienceSlider = null;
+    [SerializeField] private float defaultMaster = 1.0f;
+    [SerializeField] private float defaultMusic = 1.0f;
+    [SerializeField] private float defaultSFX = 1.0f;
+    [SerializeField] private float defaultAmbience = 1.0f;
+    [SerializeField] private AudioMixer mixer;
 
     [Header("Graphics Settings")]
     [SerializeField] private TMP_Text brightnessTextValue = null;
@@ -36,14 +44,18 @@ public class MenuController : MonoBehaviour
     private Resolution[] resolutions;
     
     [Header("Gameplay Settings")]
-    [SerializeField] private TMP_Text sensTextValue = null;
-    [SerializeField] private Slider sensSlider = null;
-    [SerializeField] private TMP_Text fovTextValue = null;
-    [SerializeField] private Slider fovSlider = null;
-    [SerializeField] private float defaultFOV = 60.0f;
-    public float mainFOV = 60.0f;
-    [SerializeField] private float defaultSens = 20.0f;
-    public float mainSens = 20.0f;
+    [SerializeField] private TMP_Text sensYTextValue = null;
+    [SerializeField] private Slider sensYSlider = null;
+    [SerializeField] private TMP_Text sensXTextValue = null;
+    [SerializeField] private Slider sensXSlider = null;
+    //[SerializeField] private TMP_Text fovTextValue = null;
+    //[SerializeField] private Slider fovSlider = null;
+    //[SerializeField] private float defaultFOV = 60.0f;
+    //public float mainFOV = 60.0f;
+    [SerializeField] private OdeionPlayer P;
+    [SerializeField] private float defaultXSens = 0.5f;
+    [SerializeField] private float defaultYSens = 0.5f;
+    //public float mainSens = 20.0f;
     [SerializeField] private Toggle invertYToggle = null;
 
     [Header("Confirmation")]
@@ -51,15 +63,12 @@ public class MenuController : MonoBehaviour
 
 
     [Header("Levels To Load")]
-    public GameObject LevelFade;
     public string _newMatch;
-    public string _PracticeArea;
     //private string levelToLoad;
 
     private void Start()
     {
         customizingHash = Animator.StringToHash("isCustomizing");
-        LoadoutHash = Animator.StringToHash("isLoadout");
 
         resolutions = Screen.resolutions;
         resolutionDropdown.ClearOptions();
@@ -80,43 +89,65 @@ public class MenuController : MonoBehaviour
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
-    }
+      
+        if (PlayerPrefs.HasKey("masterVolume"))
+        {
+            masterSlider.value = PlayerPrefs.GetFloat("masterVolume");
+            masterTextValue.text = masterSlider.value.ToString("0.0");
+            SetMasterVolume();
+        }
+        if (PlayerPrefs.HasKey("musicVolume"))
+        {
+            musicSlider.value = PlayerPrefs.GetFloat("musicVolume");
+            musicTextValue.text = musicSlider.value.ToString("0.0");
+            SetMusicVolume();
+        }
+        if (PlayerPrefs.HasKey("sfxVolume"))
+        {
+            sfxSlider.value = PlayerPrefs.GetFloat("sfxVolume");
+            sfxTextValue.text = sfxSlider.value.ToString("0.0");
+            SetSFXVolume();
+        }
+        if (PlayerPrefs.HasKey("ambienceVolume"))
+        {
+            ambienceSlider.value = PlayerPrefs.GetFloat("ambienceVolume");
+            ambienceTextValue.text = ambienceSlider.value.ToString("0.0");
+            SetAmbienceVolume();
+        }
+        
+        if (PlayerPrefs.HasKey("masterSenY"))
+        {
+            sensYSlider.value = PlayerPrefs.GetFloat("masterSenY");
+            sensYTextValue.text = sensYSlider.value.ToString("0.0");
+            SetYSensitivity();
+        }
+        if (PlayerPrefs.HasKey("masterSenX"))
+        {
+            sensXSlider.value = PlayerPrefs.GetFloat("masterSenX");
+            sensXTextValue.text = sensXSlider.value.ToString("0.0");
+            SetXSensitivity();
+        }
 
-    IEnumerator JoinMatchFade()
-    {
-        yield return new WaitForSeconds(2f);
-        StartCoroutine(JoinMatchDelay());
+        else
+        {
+            SetYSensitivity();
+            SetXSensitivity();
+            SetMasterVolume();
+            SetMusicVolume();
+            SetSFXVolume();
+            SetAmbienceVolume();
+        }
     }
-
-    IEnumerator JoinMatchDelay()
-    {
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(_newMatch);
-    }
-
-    IEnumerator JoinPracticeFade()
-    {
-        yield return new WaitForSeconds(3f);
-        StartCoroutine(JoinPracticeDelay());
-    }
-
-    IEnumerator JoinPracticeDelay()
-    {
-        yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene(_PracticeArea);
-    }
-
 
     public void JoinMatchDialogYes()
     {
-        LevelFade.SetActive(true);
-        StartCoroutine(JoinMatchFade());
+        StartCoroutine(EnteringGame());
     }
 
-    public void PracticeDialogYes()
+    public IEnumerator EnteringGame()
     {
-        LevelFade.SetActive(true);
-        StartCoroutine(JoinPracticeFade());
+        yield return new WaitForSeconds (6f);
+        SceneManager.LoadScene(_newMatch);
     }
 
     public void Customization()
@@ -127,18 +158,6 @@ public class MenuController : MonoBehaviour
     public void CustomizationReturn()
     {
         cAnim.SetBool(customizingHash, false);
-    }
-
-    public void Loadout()
-    {
-        cAnim.SetBool(LoadoutHash, true);
-        cAnim.SetBool(customizingHash, false);
-    }
-
-    public void LoadoutReturn()
-    {
-        cAnim.SetBool(LoadoutHash, false);
-        cAnim.SetBool(customizingHash, true);
     }
 
     public void ToggleHat()
@@ -154,15 +173,40 @@ public class MenuController : MonoBehaviour
         Application.Quit();
     }
 
-    public void SetVolume(float volume)
+    public void SetMasterVolume()
     {
-        AudioListener.volume = volume;
-        volumeTextValue.text = volume.ToString("0.0");
+        float volume = masterSlider.value;
+        masterTextValue.text = volume.ToString("0.0"); 
+        mixer.SetFloat("master", Mathf.Log10(volume)*20);
+    }
+
+    public void SetMusicVolume()
+    {
+        float volume = musicSlider.value;
+        musicTextValue.text = volume.ToString("0.0"); 
+        mixer.SetFloat("music", Mathf.Log10(volume)*20);
+    }
+
+    public void SetSFXVolume()
+    {
+        float volume = sfxSlider.value;
+        sfxTextValue.text = volume.ToString("0.0"); 
+        mixer.SetFloat("sfx", Mathf.Log10(volume)*20);
+    }
+
+    public void SetAmbienceVolume()
+    {
+        float volume = ambienceSlider.value;
+        ambienceTextValue.text = volume.ToString("0.0"); 
+        mixer.SetFloat("ambience", Mathf.Log10(volume)*20);
     }
 
     public void VolumeApply()
     {
-        PlayerPrefs.SetFloat("masterVolume", AudioListener.volume);
+        PlayerPrefs.SetFloat("masterVolume", masterSlider.value);
+        PlayerPrefs.SetFloat("musicVolume", musicSlider.value);
+        PlayerPrefs.SetFloat("sfxVolume", sfxSlider.value);
+        PlayerPrefs.SetFloat("ambienceVolume", ambienceSlider.value);
         StartCoroutine(ConfirmationBox());
     }
 
@@ -170,21 +214,29 @@ public class MenuController : MonoBehaviour
     {
         if (MenuType == "Audio")
         {
-            AudioListener.volume = defaultVolume;
-            volumeSlider.value = defaultVolume;
-            volumeTextValue.text = defaultVolume.ToString("0.0");
+            mixer.SetFloat("master", defaultMaster);
+            masterTextValue.text = defaultMaster.ToString("0.0");
+            masterSlider.value = defaultMaster;
+            mixer.SetFloat("music", defaultMusic);
+            musicTextValue.text = defaultMusic.ToString("0.0");
+            musicSlider.value = defaultMusic;
+            mixer.SetFloat("sfx", defaultSFX);
+            sfxTextValue.text = defaultSFX.ToString("0.0");
+            sfxSlider.value = defaultSFX;
+            mixer.SetFloat("ambience", defaultAmbience);
+            ambienceTextValue.text = defaultAmbience.ToString("0.0");
+            ambienceSlider.value = defaultAmbience;
             VolumeApply();
         }
 
         if (MenuType == "Gameplay")
         {
-            sensTextValue.text = defaultSens.ToString("0.0");
-            sensSlider.value = defaultSens;
-            mainSens = defaultSens;
-            fovTextValue.text = defaultFOV.ToString("0.0");
-            fovSlider.value = defaultFOV;
-            mainFOV = defaultFOV;
-            invertYToggle.isOn = false;
+            sensYTextValue.text = defaultYSens.ToString("0.0");
+            sensYSlider.value = defaultYSens;
+            sensXTextValue.text = defaultXSens.ToString("0.0");
+            sensXSlider.value = defaultXSens;
+            //P.sensitivityY = defaultYSens;
+            //P.sensitivityX = defaultXSens;
             GameplayApply();
         }
 
@@ -192,14 +244,14 @@ public class MenuController : MonoBehaviour
         {
             brightnessTextValue.text = defaultBrightnesss.ToString("0.0");
             brightnessSlider.value = defaultBrightnesss;
-            fullScreenToggle.isOn = true;
-            isFullScreen = true;
+            fullScreenToggle.isOn = false;
+            isFullScreen = false;
             SetQuality(1);
-            SetResolution(resolutions.Length - 1);
+            SetResolution(8);
             SetQuality(2);
             QualityDropdown.value = 2;
             resolutionDropdown.value = resolutions.Length;
-            GraphicsApply();
+            GameplayApply();
         }
 
     }
@@ -221,17 +273,26 @@ public class MenuController : MonoBehaviour
         qualityLevel = qualityIndex;
     }
 
-    public void SetSensitivity(float sensitivity)
+    public void SetYSensitivity()
     {
-        mainSens = sensitivity;
-        sensTextValue.text = sensitivity.ToString("0.0");
+        float sens = sensYSlider.value;
+        //P.sensitivityY = sens;
+        sensYTextValue.text = sens.ToString("0.0"); 
+
     }
 
-    public void SetFOV(float fov)
+    public void SetXSensitivity()
+    {
+        float sens = sensXSlider.value;
+        //P.sensitivityX = sens;
+        sensXTextValue.text = sens.ToString("0.0"); 
+    }
+
+    /*public void SetFOV(float fov)
     {
         mainFOV = fov;
         fovTextValue.text = fov.ToString("0.0");
-    }
+    }*/
 
     public void SetResolution(int resolutionIndex)
     {
@@ -255,13 +316,8 @@ public class MenuController : MonoBehaviour
 
     public void GameplayApply()
     {
-        if (invertYToggle.isOn)
-            PlayerPrefs.SetInt("masterInvertY", 1);
-        else
-            PlayerPrefs.SetInt("masterInvertY", 0);
-
-        PlayerPrefs.SetFloat("masterSen", mainSens);
-        PlayerPrefs.SetFloat("masterFOV", mainFOV);
+        PlayerPrefs.SetFloat("masterSenY", sensYSlider.value);
+        PlayerPrefs.SetFloat("masterSenX", sensXSlider.value);
         StartCoroutine(ConfirmationBox());
     }
 
