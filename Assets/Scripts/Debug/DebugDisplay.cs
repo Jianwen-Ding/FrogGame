@@ -54,7 +54,7 @@ public class DebugDisplay : MonoBehaviour
         }
         else
         {
-            print("display not initialized yet");
+//            print("display not initialized yet");
         }
     }
 

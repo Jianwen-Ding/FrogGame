@@ -181,8 +181,8 @@ public class AnimalPresent : MonoBehaviour
     // Refactors angle of movement based on collisions with raycasts
     public static float refactorDirection(float orgAngle, Vector3 orgPoint, float checkDistance, float angleOffset, int attempts, float dividePerAttempt, LayerMask mask, float objectRad)
     {
-        DebugDisplay.updateDisplay(" Col Detect ", "No Col Found");
-        Debug.DrawLine(orgPoint, orgPoint + customMathf.angleToPoint(orgAngle, checkDistance), Color.black);
+        // DebugDisplay.updateDisplay(" Col Detect ", "No Col Found");
+        // Debug.DrawLine(orgPoint, orgPoint + customMathf.angleToPoint(orgAngle, checkDistance), Color.black);
         RaycastHit hit;
         if(!Physics.SphereCast(orgPoint, objectRad, customMathf.angleToPoint(orgAngle, checkDistance), out hit, checkDistance, mask))
         {
@@ -191,16 +191,16 @@ public class AnimalPresent : MonoBehaviour
         for (int i = 1; i < attempts; i++)
         {
             float newDist = checkDistance / (dividePerAttempt * attempts);
-            DebugDisplay.updateDisplay(" Col Detect ", "Opening in " + i + " attempts");
+            // Display.updateDisplay(" Col Detect ", "Opening in " + i + " attempts");
             float newAngle = orgAngle + angleOffset * i;
-            Debug.DrawLine(orgPoint, orgPoint + customMathf.angleToPoint(newAngle, newDist), Color.black);
+            // DrawLine(orgPoint, orgPoint + customMathf.angleToPoint(newAngle, newDist), Color.black);
             RaycastHit hitNew;
             if (!Physics.SphereCast(orgPoint, objectRad, customMathf.angleToPoint(newAngle, newDist), out hitNew, newDist, mask))
             {
                 return newAngle;
             }
             float newAngleInverse = orgAngle - angleOffset * i;
-            Debug.DrawLine(orgPoint, orgPoint +  customMathf.angleToPoint(newAngleInverse, newDist), Color.black);
+            // DrawLine(orgPoint, orgPoint +  customMathf.angleToPoint(newAngleInverse, newDist), Color.black);
             RaycastHit hitNewInverse;
             if (!Physics.SphereCast(orgPoint, objectRad, customMathf.angleToPoint(newAngleInverse, newDist), out hitNew, newDist, mask))
             {
@@ -216,17 +216,17 @@ public class AnimalPresent : MonoBehaviour
     {
         // Checks if object is within FOV range before sending raycast
         Vector3 diff = objectCheck.transform.position - gameObject.transform.position;
-        Debug.DrawRay(gameObject.transform.position, diff, Color.cyan);
+        // DrawRay(gameObject.transform.position, diff, Color.cyan);
         if(diff.magnitude < sightDistance)
         {
-            Debug.DrawRay(gameObject.transform.position, customMathf.angleToPoint(faceAngle, 1) * 5, Color.red);
+            // DrawRay(gameObject.transform.position, customMathf.angleToPoint(faceAngle, 1) * 5, Color.red);
             float angle = Mathf.Abs(customMathf.angleBetweenTwoVecs(diff, customMathf.angleToPoint(faceAngle, 1)));
-            DebugDisplay.updateDisplay("Sight angle on " + objectCheck.name, angle + " degrees");
+            // Display.updateDisplay("Sight angle on " + objectCheck.name, angle + " degrees");
             if(angle < fovAngle)
             {
                 RaycastHit[] hits = Physics.RaycastAll(gameObject.transform.position, diff, diff.magnitude, sightLayerMask);
-                DebugDisplay.updateDisplay(objectCheck.name + " raycasted", DebugDisplay.arrayToString(hits, (hit) => hit.transform.gameObject.name));
-                print(DebugDisplay.arrayToString(hits, (hit) => hit.transform.gameObject.name));
+                // Display.updateDisplay(objectCheck.name + " raycasted", DebugDisplay.arrayToString(hits, (hit) => hit.transform.gameObject.name));
+                // print(DebugDisplay.arrayToString(hits, (hit) => hit.transform.gameObject.name));
                 // Checks if only two objects were hit, gameobject and object 
                 if(hits.Length == 1 && (hits[0].transform.gameObject == objectCheck))
                 {
@@ -423,7 +423,7 @@ public class AnimalPresent : MonoBehaviour
             }
             if (!customMathf.contains<GameObject>(predsToRemove, null))
             {
-                DebugDisplay.updateDisplay(gameObject.name + " predators", DebugDisplay.arrayToString(predsToRemove, (ob) => ob.name + " has " + Mathf.Round(predatorsAwareOf[ob]) + " seconds left"));
+                // Display.updateDisplay(gameObject.name + " predators", DebugDisplay.arrayToString(predsToRemove, (ob) => ob.name + " has " + Mathf.Round(predatorsAwareOf[ob]) + " seconds left"));
             }
             for (int i = predsToRemove.Length - 1; i >= 0; i--)
             {
@@ -435,7 +435,7 @@ public class AnimalPresent : MonoBehaviour
             }
             if (!customMathf.contains<GameObject>(preyToRemove, null))
             {
-                DebugDisplay.updateDisplay(gameObject.name + " prey", DebugDisplay.arrayToString(preyToRemove, (ob) => ob.name + " has " + Mathf.Round(preyAwareOf[ob]) + " seconds left"));
+                // Display.updateDisplay(gameObject.name + " prey", DebugDisplay.arrayToString(preyToRemove, (ob) => ob.name + " has " + Mathf.Round(preyAwareOf[ob]) + " seconds left"));
             }
             for (int i = preyToRemove.Length - 1; i >= 0; i--)
             {
@@ -466,7 +466,7 @@ public class AnimalPresent : MonoBehaviour
                 // Updates state
                 updateState();
                 // Controls movement based on state
-                DebugDisplay.updateDisplay(" state of " + gameObject.name, currentState + "");
+                // Display.updateDisplay(" state of " + gameObject.name, currentState + "");
                 if (currentState == animalState.Panic)
                 {
                     panicMovementUpdate();

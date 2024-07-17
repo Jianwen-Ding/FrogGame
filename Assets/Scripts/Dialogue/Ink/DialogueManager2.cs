@@ -26,7 +26,10 @@ public class DialogueManager2 : MonoBehaviour
     private Coroutine displayLineCoroutine;
     private static DialogueManager2 instance;
 
-    private const string SPEAKER_TAG = "speaker";    
+    private const string SPEAKER_TAG = "speaker";
+
+    public delegate void playOnEnd();
+    private playOnEnd dialogueCloseFunc;
 
     private void Awake()
     {
@@ -72,17 +75,38 @@ public class DialogueManager2 : MonoBehaviour
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         currentStory = new Story(inkJSON.text);
         dialogueIsPlaying = true;
         dialoguePanel.SetActive(true);
+        dialogueCloseFunc = null;
+        ContinueStory();
+    }
+
+    // Inserts function to play upon the end of the dialogue mode
+    public void EnterDialogueMode(TextAsset inkJSON, playOnEnd func)
+    {
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        currentStory = new Story(inkJSON.text);
+        dialogueIsPlaying = true;
+        dialoguePanel.SetActive(true);
+        dialogueCloseFunc = func;
         ContinueStory();
     }
 
     public void ExitDialogueMode()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         dialogueIsPlaying = false;
         dialoguePanel.SetActive(false);
         dialogueText.text = "";
+        if(dialogueCloseFunc != null)
+        {
+            dialogueCloseFunc();
+        }
     }
 
     private void ContinueStory()
@@ -119,7 +143,7 @@ public class DialogueManager2 : MonoBehaviour
         foreach (char letter in line.ToCharArray())
         {
             // If the submit button is pressed, finish up displaying the line right away.
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButton(0))
             {
                 dialogueText.text = line;
                 break;
@@ -210,6 +234,5 @@ public class DialogueManager2 : MonoBehaviour
             Input.GetMouseButtonDown(0);
             ContinueStory();
         }
-        
     }
 }

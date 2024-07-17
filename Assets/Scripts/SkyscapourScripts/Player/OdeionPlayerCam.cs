@@ -29,7 +29,7 @@ public class OdeionPlayerCam : MonoBehaviour
         CamRecoil.gameObject.SetActive(true);
         WeaponCam.gameObject.SetActive(true);
         //FrogBody3rd.GetComponent<Renderer>().enabled = false;
-        FrogBody3rd.gameObject.SetActive(false);
+        //FrogBody3rd.gameObject.SetActive(false);
         FrogBody3rdWeapon.gameObject.SetActive(false);
             
 
