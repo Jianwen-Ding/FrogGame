@@ -133,11 +133,11 @@ MonoBehaviour:
   faceAngle: 0
   questName: Count Frogs
   componentName: Mark Frogs before 20:00
-  speed: 2000
-  hopForce: 2000
-  transitionHopTime: 1
-  panicHopTime: 1
-  huntHopTime: 1
+  speed: 5000
+  hopForce: 1000
+  transitionHopTime: 0.75
+  panicHopTime: 0.75
+  huntHopTime: 0.75
   wanderHopTime: 5
   moveHopTime: 4
   collisionLayerMask:
@@ -167,8 +167,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.018493429, y: 0.028556183, z: 0.012344029}
-  m_Center: {x: 0, y: -0.002951512, z: 0.0011720171}
+  m_Size: {x: 0.018493429, y: 0.025250653, z: 0.012344029}
+  m_Center: {x: 0, y: -0.001298742, z: 0.0011720168}
 --- !u!54 &7410329142915955742
 Rigidbody:
   m_ObjectHideFlags: 0

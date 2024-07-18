@@ -33,8 +33,9 @@ public class DialogueTrigger : QuestInsertionBase
     // Whether quest field has been filled
     // If quest is empty nothing happens
     List<bool> advanceQuestAvalability = new List<bool>();
-    private static bool playerInRange = false;
-
+    [SerializeField]
+    private bool playerInRange = false;
+    static List<DialogueTrigger> triggersInRange = new List<DialogueTrigger>();
     private void Awake()
     {
         visualCue = GameObject.FindGameObjectWithTag("Interactable");
@@ -97,14 +98,17 @@ public class DialogueTrigger : QuestInsertionBase
                     highestPrioIndex = i;
                 }
             }
+            DebugDisplay.updateDisplay(gameObject.name + " wow", highestPrioIndex + "");
             if(highestPrioIndex != 1)
             {
+                DebugDisplay.updateDisplay(gameObject.name + " qwe", highestPrioIndex + " suc");
                 visualCue.SetActive(true);
                 if (Input.GetKeyUp(KeyCode.F))
                 {
                     DialogueManager2.playOnEnd newFunc = null;
                     // Fufills quest at index
-                    if (advanceQuestAvalability[highestPrioIndex])
+                    print(highestPrioIndex);
+                    if (highestPrioIndex != 1 && advanceQuestAvalability[highestPrioIndex])
                     {
                         void plug()
                         {
@@ -115,11 +119,18 @@ public class DialogueTrigger : QuestInsertionBase
                     DialogueManager2.GetInstance().EnterDialogueMode(inkJSONs[highestPrioIndex], newFunc);
                 }
             }
+            else
+            {
+                DebugDisplay.updateDisplay(gameObject.name + " qwe", highestPrioIndex + " fail");
+            }
         }
         else
         {
             DebugDisplay.updateDisplay(gameObject.name + " in range", "false");
-            visualCue.SetActive(false);
+            if (triggersInRange.Count == 0 || DialogueManager2.GetInstance().dialogueIsPlaying)
+            {
+                visualCue.SetActive(false);
+            }
         }
     }
 
@@ -128,6 +139,7 @@ public class DialogueTrigger : QuestInsertionBase
         if (collider.gameObject.tag == "Player")
         {
             playerInRange = true;
+            triggersInRange.Add(this);
         }
     }
 
@@ -136,6 +148,7 @@ public class DialogueTrigger : QuestInsertionBase
         if (collider.gameObject.tag == "Player")
         {
             playerInRange = false;
+            triggersInRange.Remove(this);
         }
     }
 }
