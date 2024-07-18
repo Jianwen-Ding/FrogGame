@@ -13,16 +13,24 @@ TagManager:
   - Bait
   - Bush
   - Frog
+  - Interactable
+  - DialoguePanel
+  - Choices
+  - Dialogue
+  - Speaker
+  - Continue
+  - Fox
+  - Den
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Animal
   - Water
   - UI
   - Ground
-  - 
-  - 
+  - Hide
+  - Barrier
   - 
   - 
   - 

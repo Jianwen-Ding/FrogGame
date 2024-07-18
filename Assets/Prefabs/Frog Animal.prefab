@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4545214163792452768}
   - component: {fileID: 7410329142915955742}
   - component: {fileID: 6365104450171857916}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Frog Animal
   m_TagString: Frog
   m_Icon: {fileID: 0}
@@ -101,8 +101,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a041aa4632c624121b4fa8d29da212d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disconnectedFromRadii: 0
   marked: 0
-  animalSound: {fileID: 0}
+  minCryRecharge: 3
+  maxCryRecharge: 6
   detector: {fileID: 0}
   animalController: {fileID: 0}
   playerObject: {fileID: 0}
@@ -114,15 +116,16 @@ MonoBehaviour:
   - Bait
   predatorTags:
   - Player
-  detectorSize: 2
+  - Fox
+  detectorSize: 3
   detectionTimePrey: 5
-  detectionTimePred: 10
-  fovAngle: 70
-  sightDistance: 10
+  detectionTimePred: 5
+  fovAngle: 40
+  sightDistance: 25
   sightLayerMask:
     serializedVersion: 2
-    m_Bits: 115
-  hearDistance: 15
+    m_Bits: 251
+  hearDistance: 10
   soundMultiplier: 1
   stunMultiplier: 1
   preManifestMoving: 0
@@ -131,10 +134,11 @@ MonoBehaviour:
   currentState: 0
   initialized: 0
   faceAngle: 0
+  isMarkable: 1
   questName: Count Frogs
   componentName: Mark Frogs before 20:00
-  speed: 4000
-  hopForce: 1000
+  speed: 5000
+  hopForce: 1500
   transitionHopTime: 0.75
   panicHopTime: 0.75
   huntHopTime: 0.75
@@ -142,7 +146,7 @@ MonoBehaviour:
   moveHopTime: 4
   collisionLayerMask:
     serializedVersion: 2
-    m_Bits: 115
+    m_Bits: 371
   colDetectDistance: 7.5
   colDetectRad: 0.1
   colDetectAttempts: 4
@@ -167,8 +171,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.018493429, y: 0.028556183, z: 0.012344029}
-  m_Center: {x: 0, y: -0.002951512, z: 0.0011720171}
+  m_Size: {x: 0.018493429, y: 0.025250653, z: 0.012344029}
+  m_Center: {x: 0, y: -0.001298742, z: 0.0011720168}
 --- !u!54 &7410329142915955742
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -205,21 +209,21 @@ AudioSource:
   m_GameObject: {fileID: 2485116015055499387}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 673003200223585957, guid: 8ddcf443e1683014884185ce2abfa3eb, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 9bb4dd58c16ce4e20a9f05d4019619aa, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 0
+  MaxDistance: 25
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -416,7 +420,7 @@ GameObject:
   - component: {fileID: 1873177707243999788}
   - component: {fileID: 4350156628928221925}
   - component: {fileID: 6612698932311336533}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

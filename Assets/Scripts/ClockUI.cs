@@ -16,6 +16,6 @@ public class ClockUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        textBox.text = "<b>Time: " + universalClock.mainGameTime.ToString() + "</b><br><br>";
+        textBox.text = "<b>Day: " + universalClock.getDay() + "<br><br>Time: " + universalClock.mainGameTime.ToString() + "</b><br><br>";
     }
 }

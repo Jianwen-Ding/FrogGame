@@ -10,6 +10,10 @@ public class universalClock : MonoBehaviour
     // Instance of the singular clock
     static public universalClock mainClock = null;
 
+    // The amount of days passed in the game
+    public const string daySaveKey = "daySave";
+    static private int day = 0;
+
     // The game clock time
     static public TimeRep mainGameTime;
 
@@ -87,9 +91,31 @@ public class universalClock : MonoBehaviour
         return new TimeRep(hours, minutesLeft);
     }
 
+    // Gets/Sets current day
+    public static void incrementDay()
+    {
+        day += 1;
+        PlayerPrefs.SetInt(daySaveKey, day);
+    }
+
+    public static int getDay()
+    {
+        return day;
+    }
+
     // Start is called before the first frame update
     void Start()
     {
+        // Saves current day
+        if(PlayerPrefs.GetInt(daySaveKey, -1) == -1)
+        {
+            day = 0;
+            PlayerPrefs.SetInt(daySaveKey, 0);
+        }
+        else
+        {
+            day = PlayerPrefs.GetInt(daySaveKey, -1);
+        }
         // Checks if there is only one debug displayer
         if (GameObject.FindObjectsOfType<universalClock>().Length > 1)
         {

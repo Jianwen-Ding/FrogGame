@@ -34,14 +34,23 @@ public class AnimalPresent : MonoBehaviour
     // >>> MISCELLANEOUS <<<
     // Stores variables related to tools and whatnot
     [Header("Miscellaneous")]
-
+    // Whether the animal needs an corresponding animal Radii
+    public bool disconnectedFromRadii;
+    // Whether animal was marked or not
     public bool marked;
 
     // >>> SOUND PARAMETER <<<
     [Header("Sound Parameters")]
+    // Variables that control how frequently the animal makes sounds
+    // minimum time until the animal cry recharges
 
     [SerializeField]
-    public AudioClip animalSound;
+    float minCryRecharge;
+    // max time until the animal cry recharges
+    [SerializeField]
+    float maxCryRecharge;
+    // Amount of time before animal cry recharges
+    float cryRechargeLeft = 0;
 
     // >>> CACHE PARAMETERS <<<
     // Stores objects to be used throughout lifetime of object
@@ -129,6 +138,7 @@ public class AnimalPresent : MonoBehaviour
         Wander,
         Move
     }
+
     [Header("State Variables")]
     // Current state of animal
     public animalState currentState;
@@ -157,6 +167,7 @@ public class AnimalPresent : MonoBehaviour
         preManifestMoving = moving;
         animalController = setController;
         preManifestDirection = previousDirection;
+        source = gameObject.GetComponent<AudioSource>();
         animalRender = gameObject.GetComponent<Renderer>();
         playerObject = GameObject.FindGameObjectWithTag("Player");
         detector = transform.GetChild(0).GetComponent<AnimalDistantDetector>();
@@ -173,8 +184,11 @@ public class AnimalPresent : MonoBehaviour
     // Signals to animal radii that the animal is ready to rejoin the radii
     public virtual void rejoinRadii()
     {
-        animalController.removeManifestedAnimal(this);
-        Destroy(gameObject);
+        if (disconnectedFromRadii)
+        {
+            animalController.removeManifestedAnimal(this);
+            Destroy(gameObject);
+        }
     }
 
     // >>> DETECTION FUNCTIONS <<<
@@ -361,7 +375,10 @@ public class AnimalPresent : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
-        
+        if (disconnectedFromRadii)
+        {
+            init(false, 0, null);
+        }
     }
 
     // Update is called once per frame
@@ -369,6 +386,14 @@ public class AnimalPresent : MonoBehaviour
     {
         if (initialized)
         {
+            // Counts down time until next cry
+            cryRechargeLeft -= Time.deltaTime;
+            if (cryRechargeLeft <= 0)
+            {
+                source.Play();
+                cryRechargeLeft = Random.Range(minCryRecharge, maxCryRecharge);
+            }
+
             // Checks all detected objects if they are seen or heard
             // Refreshes time if detected again
             for (int i = 0; i < detector.predatorWithinField.Count; i++)

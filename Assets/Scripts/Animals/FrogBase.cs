@@ -9,6 +9,8 @@ public class FrogBase : AnimalPresent
     // >>> Quest Parameters <<<
     [Header("Quest Parameters")]
     [SerializeField]
+    bool isMarkable;
+    [SerializeField]
     string questName;
     [SerializeField]
     string componentName;
@@ -52,6 +54,7 @@ public class FrogBase : AnimalPresent
     {
         Vector3 force = customMathf.angleToPoint(angle, speed);
         force.y = hopForce;
+        animalRigid.velocity = new Vector3(0 , animalRigid.velocity.y, 0);
         animalRigid.MoveRotation(Quaternion.Euler(new Vector3(0, 90 - angle, 0)));
         animalRigid.AddForce(force);
         faceAngle = angle;
@@ -123,7 +126,7 @@ public class FrogBase : AnimalPresent
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player" && currentState == animalState.Stun)
+        if (isMarkable && collision.gameObject.tag == "Player" && currentState == animalState.Stun && QuestSys.QuestList[questName].getActivationState())
         {
             if (!marked)
             {
