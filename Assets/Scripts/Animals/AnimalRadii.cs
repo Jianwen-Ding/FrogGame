@@ -187,8 +187,8 @@ public class AnimalRadii : MonoBehaviour
     float timeUntilMarkChanceLeft = 0;
     // Whether animal has began to try to night sleep
     bool nightSleepMove = false;
-    #endregion
 
+    #endregion
     #region functions
     // Start is called before the first frame update
     void Start()

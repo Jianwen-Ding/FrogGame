@@ -50455,6 +50455,62 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: editorChange
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: inkJSONs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: inkJSONs.Array.data[1]
+      value: 
+      objectReference: {fileID: 4900000, guid: 08adfb62a068f412994f4c14cb204549, type: 3}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: totalQuestList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: dialoguePriority.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: questsNeededRoles.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: totalQuestList.Array.data[2]
+      value: Get Cat
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: totalQuestList.Array.data[3]
+      value: '|empty|'
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: totalComponentList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: dialoguePriority.Array.data[1]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: questsNeededRoles.Array.data[2]
+      value: Lock
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: questsNeededRoles.Array.data[3]
+      value: Advance
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: totalComponentList.Array.data[2]
+      value: Fetch Cat Out of Tree
+      objectReference: {fileID: 0}
+    - target: {fileID: 2385418860396133791, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
+      propertyPath: totalComponentList.Array.data[3]
+      value: '|empty|'
+      objectReference: {fileID: 0}
     - target: {fileID: 3768900642976030724, guid: ce1e4915bce1e45ee8d30928d7d64a03, type: 3}
       propertyPath: m_Name
       value: Shawn Base

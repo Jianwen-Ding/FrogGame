@@ -41,9 +41,16 @@ public class AnimalPresent : MonoBehaviour
 
     // >>> SOUND PARAMETER <<<
     [Header("Sound Parameters")]
+    // Variables that control how frequently the animal makes sounds
+    // minimum time until the animal cry recharges
 
     [SerializeField]
-    public AudioClip animalSound;
+    float minCryRecharge;
+    // max time until the animal cry recharges
+    [SerializeField]
+    float maxCryRecharge;
+    // Amount of time before animal cry recharges
+    float cryRechargeLeft = 0;
 
     // >>> CACHE PARAMETERS <<<
     // Stores objects to be used throughout lifetime of object
@@ -131,6 +138,7 @@ public class AnimalPresent : MonoBehaviour
         Wander,
         Move
     }
+
     [Header("State Variables")]
     // Current state of animal
     public animalState currentState;
@@ -159,6 +167,7 @@ public class AnimalPresent : MonoBehaviour
         preManifestMoving = moving;
         animalController = setController;
         preManifestDirection = previousDirection;
+        source = gameObject.GetComponent<AudioSource>();
         animalRender = gameObject.GetComponent<Renderer>();
         playerObject = GameObject.FindGameObjectWithTag("Player");
         detector = transform.GetChild(0).GetComponent<AnimalDistantDetector>();
@@ -377,6 +386,14 @@ public class AnimalPresent : MonoBehaviour
     {
         if (initialized)
         {
+            // Counts down time until next cry
+            cryRechargeLeft -= Time.deltaTime;
+            if (cryRechargeLeft <= 0)
+            {
+                source.Play();
+                cryRechargeLeft = Random.Range(minCryRecharge, maxCryRecharge);
+            }
+
             // Checks all detected objects if they are seen or heard
             // Refreshes time if detected again
             for (int i = 0; i < detector.predatorWithinField.Count; i++)

@@ -205,7 +205,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disconnectedFromRadii: 0
   marked: 0
-  animalSound: {fileID: 0}
+  minCryRecharge: 10
+  maxCryRecharge: 15
   detector: {fileID: 0}
   animalController: {fileID: 0}
   playerObject: {fileID: 0}
