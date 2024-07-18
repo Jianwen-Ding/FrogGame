@@ -99,7 +99,7 @@ public class DialogueTrigger : QuestInsertionBase
                 }
             }
             DebugDisplay.updateDisplay(gameObject.name + " wow", highestPrioIndex + "");
-            if(highestPrioIndex != 1)
+            if(highestPrioIndex != -1)
             {
                 DebugDisplay.updateDisplay(gameObject.name + " qwe", highestPrioIndex + " suc");
                 visualCue.SetActive(true);

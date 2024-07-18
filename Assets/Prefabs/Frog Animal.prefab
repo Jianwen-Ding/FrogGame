@@ -118,11 +118,11 @@ MonoBehaviour:
   detectionTimePrey: 5
   detectionTimePred: 5
   fovAngle: 70
-  sightDistance: 10
+  sightDistance: 25
   sightLayerMask:
     serializedVersion: 2
-    m_Bits: 123
-  hearDistance: 10
+    m_Bits: 251
+  hearDistance: 7
   soundMultiplier: 1
   stunMultiplier: 1
   preManifestMoving: 0
@@ -131,10 +131,11 @@ MonoBehaviour:
   currentState: 0
   initialized: 0
   faceAngle: 0
+  isMarkable: 1
   questName: Count Frogs
   componentName: Mark Frogs before 20:00
   speed: 5000
-  hopForce: 1000
+  hopForce: 1500
   transitionHopTime: 0.75
   panicHopTime: 0.75
   huntHopTime: 0.75
@@ -142,7 +143,7 @@ MonoBehaviour:
   moveHopTime: 4
   collisionLayerMask:
     serializedVersion: 2
-    m_Bits: 115
+    m_Bits: 371
   colDetectDistance: 7.5
   colDetectRad: 0.1
   colDetectAttempts: 4
@@ -205,21 +206,21 @@ AudioSource:
   m_GameObject: {fileID: 2485116015055499387}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 673003200223585957, guid: 8ddcf443e1683014884185ce2abfa3eb, type: 2}
+  m_audioClip: {fileID: 8300000, guid: 9bb4dd58c16ce4e20a9f05d4019619aa, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 0
+  MaxDistance: 50
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0

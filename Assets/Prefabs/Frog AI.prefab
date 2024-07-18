@@ -98,11 +98,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   markedAnimalAmount: 0
   animalPrefab: {fileID: 2485116015055499387, guid: 28ed60060153640bb87010c90b5175da, type: 3}
-  markerPrefab: {fileID: 2879456727950918187, guid: f61105c4f152349aa90fea5b2c93e98d, type: 3}
+  markerPrefab: {fileID: 2879456727950918187, guid: 2f99d7b236fa640d18ff842e6cb481c4, type: 3}
   playerObject: {fileID: 0}
   Permanent: 0
-  wakeHour: 7
-  wakeMinute: 0
+  wakeHour: 6
+  wakeMinute: 5
   sleepHour: 12
   sleepMinute: 30
   objectsOfIntrest:
@@ -136,6 +136,7 @@ MonoBehaviour:
   markerRaycastYAdjust: 40
   markerRaycastLength: 50
   markerSteepness: 30
+  rightMarkLayer: 6
   currentState: 0
   lockedPosition: 1
   lockedObject: {fileID: 0}
