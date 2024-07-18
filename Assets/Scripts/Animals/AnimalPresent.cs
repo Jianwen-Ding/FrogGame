@@ -34,7 +34,9 @@ public class AnimalPresent : MonoBehaviour
     // >>> MISCELLANEOUS <<<
     // Stores variables related to tools and whatnot
     [Header("Miscellaneous")]
-
+    // Whether the animal needs an corresponding animal Radii
+    public bool disconnectedFromRadii;
+    // Whether animal was marked or not
     public bool marked;
 
     // >>> SOUND PARAMETER <<<
@@ -173,8 +175,11 @@ public class AnimalPresent : MonoBehaviour
     // Signals to animal radii that the animal is ready to rejoin the radii
     public virtual void rejoinRadii()
     {
-        animalController.removeManifestedAnimal(this);
-        Destroy(gameObject);
+        if (disconnectedFromRadii)
+        {
+            animalController.removeManifestedAnimal(this);
+            Destroy(gameObject);
+        }
     }
 
     // >>> DETECTION FUNCTIONS <<<
@@ -361,7 +366,10 @@ public class AnimalPresent : MonoBehaviour
     // Start is called before the first frame update
     public virtual void Start()
     {
-        
+        if (disconnectedFromRadii)
+        {
+            init(false, 0, null);
+        }
     }
 
     // Update is called once per frame

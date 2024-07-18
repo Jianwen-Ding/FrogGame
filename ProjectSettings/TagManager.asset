@@ -19,6 +19,8 @@ TagManager:
   - Dialogue
   - Speaker
   - Continue
+  - Fox
+  - Den
   layers:
   - Default
   - TransparentFX

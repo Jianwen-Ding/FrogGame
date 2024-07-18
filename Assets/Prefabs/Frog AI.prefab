@@ -109,10 +109,10 @@ MonoBehaviour:
   - Firefly
   sleepObjects:
   - Bush
-  timeAtIntrest: 2
+  timeAtIntrest: 10
   radiiSpeed: 5
   radiiSnap: 0.2
-  objectIntrestBase: 1.1
+  objectIntrestBase: 1.4
   objectSleepBase: 2
   radiusPlayerTriggerSize: 50
   radiusAnimalSpawnSize: 50
@@ -124,7 +124,7 @@ MonoBehaviour:
   spawnRaycastYAdjust: 40
   spawnRaycastLength: 50
   spawnYDisplacement: 3
-  animalsPerRadii: 2
+  animalsPerRadii: 1
   objectSpawnBase: 0
   markerYDisplace: 1
   markerAngleDisplace: -90

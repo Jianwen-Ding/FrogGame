@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a041aa4632c624121b4fa8d29da212d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  disconnectedFromRadii: 0
   marked: 0
   animalSound: {fileID: 0}
   detector: {fileID: 0}
@@ -114,15 +115,16 @@ MonoBehaviour:
   - Bait
   predatorTags:
   - Player
-  detectorSize: 1
+  - Fox
+  detectorSize: 3
   detectionTimePrey: 5
   detectionTimePred: 5
-  fovAngle: 70
+  fovAngle: 40
   sightDistance: 25
   sightLayerMask:
     serializedVersion: 2
     m_Bits: 251
-  hearDistance: 7
+  hearDistance: 10
   soundMultiplier: 1
   stunMultiplier: 1
   preManifestMoving: 0
@@ -218,7 +220,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 0
-  MaxDistance: 50
+  MaxDistance: 25
   Pan2D: 0
   rolloffMode: 1
   BypassEffects: 0
