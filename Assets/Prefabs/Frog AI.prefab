@@ -103,8 +103,11 @@ MonoBehaviour:
   Permanent: 0
   wakeHour: 6
   wakeMinute: 5
-  sleepHour: 12
+  sleepHour: 20
   sleepMinute: 30
+  wakeUpAgain: 0
+  rewakeHour: 0
+  rewakeMinute: 0
   objectsOfIntrest:
   - Firefly
   sleepObjects:
@@ -128,7 +131,7 @@ MonoBehaviour:
   objectSpawnBase: 0
   markerYDisplace: 1
   markerAngleDisplace: -90
-  markerWindowTime: 5
+  markerWindowTime: 20
   markerWindowChance: 25
   markerRaycastLayerMask:
     serializedVersion: 2

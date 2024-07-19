@@ -74,6 +74,13 @@ public class AnimalRadii : MonoBehaviour
     int sleepHour;
     [SerializeField]
     int sleepMinute;
+    // Does animal wake up again
+    [SerializeField]
+    bool wakeUpAgain;
+    [SerializeField]
+    int rewakeHour;
+    [SerializeField]
+    int rewakeMinute;
     // What tags does the animal graviate towards
     [SerializeField]
     string[] objectsOfIntrest;
@@ -480,7 +487,7 @@ public class AnimalRadii : MonoBehaviour
                 {
                     lockedPosition = false;
                     currentState = state.Moving;
-                    if (universalClock.mainGameTime.greater(sleepHour, sleepMinute))
+                    if (universalClock.mainGameTime.greater(sleepHour, sleepMinute) && (!wakeUpAgain || universalClock.mainGameTime.hours < rewakeHour))
                     {
                         nightSleepMove = true;
                         lockedObject = findSleepingSpot();
@@ -531,8 +538,15 @@ public class AnimalRadii : MonoBehaviour
             }
             else if (currentState == state.NighSleep)
             {
+                // Waits until clock past waking hour
+                if (wakeUpAgain && universalClock.mainGameTime.greater(rewakeHour, rewakeMinute))
+                {
+                    lockedPosition = false;
+                    nightSleepMove = false;
+                    currentState = state.Moving;
+                    lockedObject = findNearbyObjectOfIntrest();
+                }
             }
-
             // Checks if player is within radii
             Vector3 diff = transform.position - playerObject.gameObject.transform.position;
             // DebugDisplay.updateDisplay("distance from player" ,diff.magnitude + "");

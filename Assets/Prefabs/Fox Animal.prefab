@@ -226,7 +226,7 @@ MonoBehaviour:
   sightLayerMask:
     serializedVersion: 2
     m_Bits: 251
-  hearDistance: 7
+  hearDistance: 10
   soundMultiplier: 2
   stunMultiplier: 1
   preManifestMoving: 0
@@ -238,17 +238,17 @@ MonoBehaviour:
   isMarkable: 0
   questName: Count Frogs
   componentName: Mark Frogs before 20:00
-  speed: 4000
-  hopForce: 750
-  transitionHopTime: 0.2
-  panicHopTime: 0.2
-  huntHopTime: 0.4
-  wanderHopTime: 1
-  moveHopTime: 0.5
+  speed: 6000
+  hopForce: 1500
+  transitionHopTime: 0.5
+  panicHopTime: 0.5
+  huntHopTime: 1
+  wanderHopTime: 2
+  moveHopTime: 1
   collisionLayerMask:
     serializedVersion: 2
     m_Bits: 371
-  colDetectDistance: 7.5
+  colDetectDistance: 13
   colDetectRad: 0.1
   colDetectAttempts: 4
   colDetectAttemptAngleOffset: 30
@@ -260,7 +260,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2412233185006719956}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 51dc64226fac346cbaf4d976cea08883, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
