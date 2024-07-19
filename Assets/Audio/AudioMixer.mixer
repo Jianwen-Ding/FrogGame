@@ -6,7 +6,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ambient Noise
+  m_Name: Ambience
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 5a9deb932c8fc6d49b6b7fa4cd848dd7
   m_Children: []
@@ -131,6 +131,7 @@ AudioMixerSnapshotController:
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: 12d0ecb1a2555484f86e18b25348343d
   m_FloatValues:
+    a07f8e92d5fdbc74287366c5cd478db8: 10
     03fe6e6f8c88b194e9bb8efb914d79f1: 0
   m_TransitionOverrides: {}
 --- !u!243 &673003200223585957
