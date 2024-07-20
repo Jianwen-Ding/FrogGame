@@ -130,13 +130,17 @@ public class FrogBase : AnimalPresent
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Player" && currentState == animalState.Stun && QuestSys.QuestList[questName].getActivationState())
+        if (collision.gameObject.tag == "Player" && currentState == animalState.Stun)
         {
-            if (isMarkable && !marked)
+            if (isMarkable && !marked && QuestSys.QuestList[questName].getActivationState())
             {
                 // Adds increment to quest
                 QuestSys.incrementComponentAttempt(questName, componentName, 1);
                 marked = true;
+            }
+            if (!speciesPage.pageList[entryTitle].getTitleState())
+            {
+                notificationSystem.notify(entryTitle + " entry has been updated in speciespedia");
             }
             speciesPage.pageList[entryTitle].activateTitle();
             speciesPage.pageList[entryTitle].activateSound();

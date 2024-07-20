@@ -184,7 +184,7 @@ public class AnimalPresent : MonoBehaviour
     // Signals to animal radii that the animal is ready to rejoin the radii
     public virtual void rejoinRadii()
     {
-        if (disconnectedFromRadii)
+        if (!disconnectedFromRadii)
         {
             animalController.removeManifestedAnimal(this);
             Destroy(gameObject);

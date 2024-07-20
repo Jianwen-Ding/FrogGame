@@ -130,6 +130,7 @@ public class QuestSys : MonoBehaviour
             }
             completed = allComplete || completed;
             if (completed) {
+                notificationSystem.notify("Quest has been completed");
                 // Attempts to activate next quests
                 for (int i = 0; i < nextQuests.Count; i++)
                 {

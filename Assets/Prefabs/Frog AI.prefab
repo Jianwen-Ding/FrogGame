@@ -127,7 +127,7 @@ MonoBehaviour:
   spawnRaycastYAdjust: 40
   spawnRaycastLength: 50
   spawnYDisplacement: 3
-  animalsPerRadii: 1
+  animalsPerRadii: 3
   objectSpawnBase: 0
   markerYDisplace: 1
   markerAngleDisplace: -90

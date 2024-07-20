@@ -42,35 +42,65 @@ public class speciesPage : MonoBehaviour
         pageList.Add(title, this);
     }
 
-    // Activates individual components
+    // >>> GET/SET of page states<<<
+    // Title
+    public bool getTitleState()
+    {
+        return PlayerPrefs.GetInt(title + "titleBox", 0) == 1;
+    }
     public void activateTitle()
     {
         PlayerPrefs.SetInt(title + "titleBox", 1);
     }
 
+    // Image
     public void activateImage()
     {
         PlayerPrefs.SetInt(title + "animalImage", 1);
     }
+    public bool getImageState()
+    {
+        return PlayerPrefs.GetInt(title + "animalImage", 0) == 1;
+    }
 
+    // Footprints
     public void activateFootPrints()
     {
         PlayerPrefs.SetInt(title + "footPrints", 1);
     }
+    public bool getFootPrintsState()
+    {
+        return PlayerPrefs.GetInt(title + "footPrints", 0) == 1;
+    }
 
+    // Sound
     public void activateSound()
     {
         PlayerPrefs.SetInt(title + "sound", 1);
     }
+    public bool getSoundState()
+    {
+        return PlayerPrefs.GetInt(title + "sound", 0) == 1;
+    }
 
+    // Fun facts
     public void activateFunFacts(int i)
     {
         PlayerPrefs.SetInt(title + "funFacts" + i, 1);
     }
+    public bool getFunFactsState(int i)
+    {
+        return PlayerPrefs.GetInt(title + "funFacts" + i, 0) == 1;
+    }
 
+    // Prey Pred
     public void activatePreyPred(int i)
     {
         PlayerPrefs.SetInt(title + "preyPredFacts" + i, 1);
+    }
+    public bool getPreyPredState(int i)
+    {
+        return PlayerPrefs.GetInt(title + "preyPredFacts" + i, 0) == 1;
     }
 
     // Saves state of page as playerprefs
