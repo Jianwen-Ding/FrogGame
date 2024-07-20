@@ -350,11 +350,12 @@ public class AnimalRadii : MonoBehaviour
         RaycastHit hit;
         if (!Physics.Raycast(gameObject.transform.position + Vector3.up * yAdjust, Vector3.down, out hit, raycastLength, givenLayerMask))
         {
-            print("ERROR- suitable surface not found");
+            return -1;
         }
         //DebugDisplay.updateDisplay(" " + gameObject.name + " marker steepness", customMathf.angleBetweenTwoVecs(hit.normal, Vector3.up) + "");
         //Debug.DrawRay(hit.point, hit.normal * 5, Color.yellow, 4);
         //Debug.DrawRay(hit.point, Vector3.up * 5, Color.cyan, 4);
+        
         return hit.transform.gameObject.layer;
     }
     // Spawns animal at position
