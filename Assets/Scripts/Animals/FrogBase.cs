@@ -14,6 +14,10 @@ public class FrogBase : AnimalPresent
     string questName;
     [SerializeField]
     string componentName;
+    // >>> Speciespedia Parameters <<<
+    [Header("Entry Parameters")]
+    [SerializeField]
+    string entryTitle;
     // >>> Behavior Variables <<<
     [Header("Behavioral Parameters")]
     [SerializeField]
@@ -126,14 +130,19 @@ public class FrogBase : AnimalPresent
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (isMarkable && collision.gameObject.tag == "Player" && currentState == animalState.Stun && QuestSys.QuestList[questName].getActivationState())
+        if (collision.gameObject.tag == "Player" && currentState == animalState.Stun && QuestSys.QuestList[questName].getActivationState())
         {
-            if (!marked)
+            if (isMarkable && !marked)
             {
                 // Adds increment to quest
                 QuestSys.incrementComponentAttempt(questName, componentName, 1);
                 marked = true;
             }
+            speciesPage.pageList[entryTitle].activateTitle();
+            speciesPage.pageList[entryTitle].activateSound();
+            speciesPage.pageList[entryTitle].activatePreyPred(0);
+            speciesPage.pageList[entryTitle].activatePreyPred(1);
+            speciesPage.pageList[entryTitle].activateImage();
         }
     }
     #endregion

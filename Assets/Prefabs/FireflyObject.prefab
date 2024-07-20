@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 1926466345592110490}
   - component: {fileID: 1645364392575831577}
   - component: {fileID: 7655980354732383905}
-  m_Layer: 0
+  - component: {fileID: 1564877190704085558}
+  m_Layer: 3
   m_Name: FireflyObject
   m_TagString: Firefly
   m_Icon: {fileID: 0}
@@ -4853,6 +4854,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6.327761, y: 5.199365, z: 3.9340696}
   m_Center: {x: -0.3282043, y: 0.21532221, z: 1.6647565}
+--- !u!114 &1564877190704085558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3814943451014899199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe89ba53e465f48c3bc4815c461534d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundDistance: 0.25
 --- !u!1 &8200933868205356545
 GameObject:
   m_ObjectHideFlags: 0
@@ -4863,7 +4877,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1079895800503934122}
   - component: {fileID: 4806743826872415202}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FireflyLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7764876362210535023}
   - component: {fileID: 6217065042758403928}
   - component: {fileID: 4200920817683933284}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: TrapTool
   m_TagString: Bait
   m_Icon: {fileID: 0}
@@ -104,10 +104,10 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 72
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 951
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe89ba53e465f48c3bc4815c461534d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundDistance: 0.5
+  soundDistance: 1
 --- !u!65 &6217065042758403928
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -173,7 +173,7 @@ GameObject:
   - component: {fileID: 1038259528413066877}
   - component: {fileID: 8402512449782932029}
   - component: {fileID: 5999668582530966442}
-  m_Layer: 2
+  m_Layer: 3
   m_Name: Sphere
   m_TagString: Bait
   m_Icon: {fileID: 0}

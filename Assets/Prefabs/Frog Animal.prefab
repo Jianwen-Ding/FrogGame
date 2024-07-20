@@ -103,8 +103,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disconnectedFromRadii: 0
   marked: 0
-  minCryRecharge: 3
-  maxCryRecharge: 6
+  minCryRecharge: 10
+  maxCryRecharge: 15
   detector: {fileID: 0}
   animalController: {fileID: 0}
   playerObject: {fileID: 0}
@@ -117,7 +117,7 @@ MonoBehaviour:
   predatorTags:
   - Player
   - Fox
-  detectorSize: 3
+  detectorSize: 1
   detectionTimePrey: 5
   detectionTimePred: 5
   fovAngle: 40
@@ -137,6 +137,7 @@ MonoBehaviour:
   isMarkable: 1
   questName: Count Frogs
   componentName: Mark Frogs before 20:00
+  entryTitle: Frog
   speed: 5000
   hopForce: 1500
   transitionHopTime: 0.75
@@ -385,7 +386,7 @@ SphereCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 448
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
