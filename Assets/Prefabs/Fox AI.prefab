@@ -76,7 +76,7 @@ MonoBehaviour:
   objectSleepBase: 2
   avoidsSpawnInSleep: 1
   radiusPlayerTriggerSize: 50
-  radiusAnimalSpawnSize: 50
+  radiusAnimalSpawnSize: 35
   appropiateSpawnObjects:
   - Bush
   spawnRaycastLayerMask:
@@ -86,7 +86,7 @@ MonoBehaviour:
   spawnRaycastLength: 50
   spawnYDisplacement: 3
   animalsPerRadii: 1
-  objectSpawnBase: 0
+  objectSpawnBase: 2
   markerYDisplace: 1
   markerAngleDisplace: -90
   markerWindowTime: 5

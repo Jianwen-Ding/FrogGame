@@ -21,6 +21,7 @@ TagManager:
   - Continue
   - Fox
   - Den
+  - SleepPrompt
   layers:
   - Default
   - TransparentFX

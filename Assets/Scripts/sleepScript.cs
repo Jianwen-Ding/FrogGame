@@ -9,6 +9,11 @@ public class sleepScript : QuestInsertionBase
     int sleepHour;
     [SerializeField]
     int sleepMinute;
+    [SerializeField]
+    GameObject sleepInteractButton;
+    [SerializeField]
+    bool playerInRange;
+
     bool gaveWarning = false;
     public static void sleep()
     {
@@ -16,6 +21,10 @@ public class sleepScript : QuestInsertionBase
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
+    private void Start()
+    {
+        sleepInteractButton = GameObject.FindGameObjectWithTag("SleepPrompt");
+    }
     private void Update()
     {
         if(universalClock.mainGameTime.hours > sleepHour && universalClock.mainGameTime.minutes > sleepMinute)
@@ -24,17 +33,35 @@ public class sleepScript : QuestInsertionBase
         }
         if (!gaveWarning && universalClock.mainGameTime.hours > sleepHour - 1)
         {
-            gaveWarning = true;
             notificationSystem.notify("There is one hour remaining until you fall asleep and the enviroment resets");
+        }
+        if (playerInRange && QuestSys.QuestList[totalQuestList[0]].getCompletionState())
+        {
+            sleepInteractButton.transform.GetChild(0).gameObject.SetActive(true);
+            if (Input.GetKeyUp(KeyCode.F))
+            {
+                sleep();
+            }
+        }
+        else
+        {
+            sleepInteractButton.transform.GetChild(0).gameObject.SetActive(false);
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
         // Entering doorway is locked until a certain quest is completed
-        if (QuestSys.QuestList[totalQuestList[0]].getCompletionState() && collision.transform.tag == "Player")
+        if (other.transform.tag == "Player")
         {
-            sleep();
+            playerInRange = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.transform.tag == "Player")
+        {
+            playerInRange = false;
         }
     }
 }
