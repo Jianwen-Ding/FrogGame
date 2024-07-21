@@ -9,6 +9,7 @@ public class sleepScript : QuestInsertionBase
     int sleepHour;
     [SerializeField]
     int sleepMinute;
+    bool gaveWarning = false;
     public static void sleep()
     {
         universalClock.incrementDay();
@@ -20,6 +21,10 @@ public class sleepScript : QuestInsertionBase
         if(universalClock.mainGameTime.hours > sleepHour && universalClock.mainGameTime.minutes > sleepMinute)
         {
             sleep();
+        }
+        if (!gaveWarning && universalClock.mainGameTime.hours > sleepHour - 1)
+        {
+            notificationSystem.notify("There is one hour remaining until you fall asleep and the enviroment resets");
         }
     }
 

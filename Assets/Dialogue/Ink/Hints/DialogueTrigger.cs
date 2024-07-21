@@ -95,7 +95,7 @@ public class DialogueTrigger : QuestInsertionBase
     // Plays on dialogue end
     public void questAdvance(string quest, string component)
     {
-        QuestSys.QuestList[quest].components[component].fufillComponent();
+        QuestSys.fufillComponentAttempt(quest, component);
     }
 
 

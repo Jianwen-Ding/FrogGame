@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Jianwen - MainMenu 1.unity
+    guid: 455a0189991d1487c903f70ccb04b481
+  - enabled: 1
     path: Assets/Scenes/Jianwen Scenes/Jianwen - TUTORIALLEVEL.unity
     guid: 9134ffeb073ed48108adddd772b96b36
   - enabled: 1
