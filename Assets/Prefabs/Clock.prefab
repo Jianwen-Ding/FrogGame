@@ -44,7 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66fed674bb43c4fdbbcf788f4af24fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  map: {fileID: 2100000, guid: 1cf6f4c6e6e0518419839d3f5448dd99, type: 2}
+  endHour: 18
+  endMinute: 0
   initialTime: 0
-  timePerGameMin: 2
+  timePerGameMin: 0.7
   startHour: 6
   startMinute: 0

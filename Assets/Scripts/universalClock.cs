@@ -1,12 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Boxophobic;
+using UnityEngine.SceneManagement;
 public class universalClock : MonoBehaviour
 {
     // The purpose of this is to provide a universal clock for all behaviors such as wakeup or sleep to prevent
     // Desyncs in time by using Time.timeSinceLevelLoad
 
+    // Skybox material
+    [SerializeField]
+    Material map;
+    [SerializeField]
+    int endHour;
+    [SerializeField]
+    int endMinute;
+
+    int endTotalMinutes;
     // Instance of the singular clock
     static public universalClock mainClock = null;
 
@@ -107,7 +117,7 @@ public class universalClock : MonoBehaviour
     void Start()
     {
         // Saves current day
-        if(PlayerPrefs.GetInt(daySaveKey, -1) == -1)
+        if (PlayerPrefs.GetInt(daySaveKey, -1) == -1)
         {
             day = 0;
             PlayerPrefs.SetInt(daySaveKey, 0);
@@ -125,6 +135,9 @@ public class universalClock : MonoBehaviour
         mainGameTime = new TimeRep(startHour, startMinute);
         initialTime = Time.timeSinceLevelLoad;
         startTotalMinutes = timeToMinutes(startHour, startMinute);
+        endTotalMinutes = timeToMinutes(endHour, endMinute);
+
+        SceneManager.activeSceneChanged += resetState;
     }
 
     // Update is called once per frame
@@ -133,6 +146,25 @@ public class universalClock : MonoBehaviour
         realSeconds = Time.timeSinceLevelLoad - initialTime;
         int minutes = Mathf.FloorToInt(realSeconds / timePerGameMin);
         mainGameTime.setTime(minutes + startTotalMinutes);
+        if(map != null)
+        {
+            if((float)minutes > (float)(endTotalMinutes - startTotalMinutes))
+            {
+                map.SetFloat("_CubemapTransition", 1);
+                map = null;
+            }
+            else
+            {
+                map.SetFloat("_CubemapTransition", (float)minutes / (float)(endTotalMinutes - startTotalMinutes));
+            }
+        }
         DebugDisplay.updateDisplay("clock", mainGameTime + "");
+    }
+    public void resetState(Scene current, Scene next)
+    {
+        if (map != null)
+        {
+            map.SetFloat("_CubemapTransition", 0);
+        }
     }
 }

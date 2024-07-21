@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: dc966089144b4e34db2c28fd5e069819, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 1cf6f4c6e6e0518419839d3f5448dd99, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -27624,7 +27624,6 @@ Transform:
   m_Children:
   - {fileID: 455673723}
   - {fileID: 164934198}
-  - {fileID: 1121733546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &697506957 stripped
@@ -29177,7 +29176,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8667540774675134724, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
       propertyPath: timePerGameMin
-      value: 9
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -45372,76 +45371,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.50000006
   m_Center: {x: 0.78625023, y: 0.38560802, z: -0.9629203}
---- !u!1001 &1121733545
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 695547314}
-    m_Modifications:
-    - target: {fileID: 6071750896783274598, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: m_Name
-      value: Clock
-      objectReference: {fileID: 0}
-    - target: {fileID: 6741601032730414236, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 345.87616
-      objectReference: {fileID: 0}
-    - target: {fileID: 6741601032730414236, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 670.03955
-      objectReference: {fileID: 0}
-    - target: {fileID: 6741601032730414236, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 103.36249
-      objectReference: {fileID: 0}
-    - target: {fileID: 6741601032730414236, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6741601032730414236, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6741601032730414236, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6741601032730414236, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6741601032730414236, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6741601032730414236, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6741601032730414236, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8667540774675134724, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: startHour
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 8667540774675134724, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-      propertyPath: timePerGameMin
-      value: 9
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
---- !u!4 &1121733546 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6741601032730414236, guid: 3f764f45dfd984b06b62c61d845de33a, type: 3}
-  m_PrefabInstance: {fileID: 1121733545}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1122244712
 PrefabInstance:
   m_ObjectHideFlags: 0
