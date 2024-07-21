@@ -2,24 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CountFrogDeadline : MonoBehaviour
+public class CountFrogDeadline : QuestInsertionBase
 {
     // Allows for count frog quest to have a deadline before splitting into two possibilities
     [SerializeField]
     bool completeBranch = false;
     [SerializeField]
     int hourDeadline;
-    [SerializeField]
     string baseQuest;
-    [SerializeField]
     string succeeedQuest;
-    [SerializeField]
     string failQuest;
+    string otherQuest;
+    string otherComponent;
     // Start is called before the first frame update
     void Start()
     {
+        baseQuest = totalQuestList[0];
+        succeeedQuest = totalQuestList[1];
+        failQuest = totalQuestList[2];
+        otherQuest = totalQuestList[3];
+        otherComponent = totalComponentList[3];
         // Self destructs if branch has already been crossed
-        if(QuestSys.QuestList[succeeedQuest].getCompletionState() || QuestSys.QuestList[failQuest].getCompletionState())
+        if (QuestSys.QuestList[succeeedQuest].getCompletionState() || QuestSys.QuestList[failQuest].getCompletionState())
         {
             Destroy(gameObject);
         }
@@ -39,6 +43,7 @@ public class CountFrogDeadline : MonoBehaviour
                 QuestSys.fufillComponentAttempt(succeeedQuest, component);
             }
             QuestSys.QuestList[failQuest].attemptDectivate();
+            QuestSys.fufillComponentAttempt(otherQuest, otherComponent);
         }
     }
 
@@ -59,6 +64,7 @@ public class CountFrogDeadline : MonoBehaviour
                 QuestSys.fufillComponentAttempt(failQuest, component);
             }
             QuestSys.QuestList[succeeedQuest].attemptDectivate();
+            QuestSys.fufillComponentAttempt(otherQuest, otherComponent);
         }
     }
 }

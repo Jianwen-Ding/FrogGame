@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Allen/Jianwen_MainLevel_Greybox_Copy.unity
     guid: 420922f9ac5ec4a8eb45c5552256480b
+  - enabled: 1
+    path: Assets/Scenes/Jianwen Scenes/Jianwen_Credits Scene.unity
+    guid: f66163d39b5ac460cbd064dbd1a48805
   m_configObjects: {}

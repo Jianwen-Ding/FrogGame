@@ -235,9 +235,9 @@ MonoBehaviour:
   currentState: 0
   initialized: 0
   faceAngle: 0
-  isMarkable: 1
-  questName: Mark Fox
-  componentName: Gather intel by marking fox
+  isMarkable: 0
+  questName: 
+  componentName: 
   isCatchable: 1
   catchQuestName: Capture Foxes
   catchComponentName: Capture foxes

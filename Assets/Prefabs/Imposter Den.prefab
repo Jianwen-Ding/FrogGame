@@ -265,6 +265,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 63f737114e947437dbf4d45b9d3d8dcd, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4764129042650468088}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 63f737114e947437dbf4d45b9d3d8dcd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6047306004371803504}
   m_SourcePrefab: {fileID: 100100000, guid: 63f737114e947437dbf4d45b9d3d8dcd, type: 3}
 --- !u!1 &3703932168690867635 stripped
 GameObject:
@@ -323,6 +326,26 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 8e3e54677c40b40c4a7f8d574fe9ad14, type: 3}
   playerInRange: 0
   inited: 0
+--- !u!114 &6047306004371803504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3703932168690867635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945b71862d52a4cd89f868f709800dce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Fox
+  needsPreDiscover: 1
+  initTitle: 0
+  initImage: 0
+  initFootprints: 0
+  initSound: 0
+  initFunFact: 00000001
+  initPredPreyFact: 
 --- !u!4 &4047841073148872457 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 63f737114e947437dbf4d45b9d3d8dcd, type: 3}

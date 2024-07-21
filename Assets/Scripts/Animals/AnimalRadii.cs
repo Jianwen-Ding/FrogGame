@@ -105,6 +105,9 @@ public class AnimalRadii : MonoBehaviour
 
     [Header("Animal Spawn Parameters")]
 
+    // Whether the animal spawns in their sleep
+    [SerializeField]
+    bool avoidsSpawnInSleep;
     // Size of radius that triggers spawn upon entering
     [SerializeField]
     float radiusPlayerTriggerSize;
@@ -216,7 +219,6 @@ public class AnimalRadii : MonoBehaviour
         }
         manifestedAnimals.Remove(animal);
     }
-
 
     // Find sorted list of nearest objects with tag
     public customMathf.SortContainer<GameObject>[] findObjectsWithTag(string[] tagList, float baseModifier, float cutoff)
@@ -413,8 +415,15 @@ public class AnimalRadii : MonoBehaviour
             float angleTowardsLocked = -1;
             if (!lockedPosition)
             {
-                Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
-                angleTowardsLocked = customMathf.pointToAngle(diffrence.x, diffrence.z);
+                if(lockedObject != null)
+                {
+                    Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
+                    angleTowardsLocked = customMathf.pointToAngle(diffrence.x, diffrence.z);
+                }
+                else
+                {
+                    angleTowardsLocked = 0;
+                }
             }
             for (int i = 0; i < animalsPerRadii; i++)
             {
@@ -554,7 +563,7 @@ public class AnimalRadii : MonoBehaviour
             // Checks if player is within radii
             Vector3 diff = transform.position - playerObject.gameObject.transform.position;
             // DebugDisplay.updateDisplay("distance from player" ,diff.magnitude + "");
-            if (diff.magnitude < radiusPlayerTriggerSize)
+            if (diff.magnitude < radiusPlayerTriggerSize && (!avoidsSpawnInSleep || currentState != state.NighSleep))
             {
                 spawnAnimal();
             }

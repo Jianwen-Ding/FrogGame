@@ -74,6 +74,7 @@ MonoBehaviour:
   radiiSnap: 0.2
   objectIntrestBase: 1
   objectSleepBase: 2
+  avoidsSpawnInSleep: 1
   radiusPlayerTriggerSize: 50
   radiusAnimalSpawnSize: 50
   appropiateSpawnObjects:
@@ -84,7 +85,7 @@ MonoBehaviour:
   spawnRaycastYAdjust: 40
   spawnRaycastLength: 50
   spawnYDisplacement: 3
-  animalsPerRadii: 2
+  animalsPerRadii: 1
   objectSpawnBase: 0
   markerYDisplace: 1
   markerAngleDisplace: -90

@@ -135,7 +135,7 @@ public class DialogueTrigger : QuestInsertionBase
                     DialogueManager2.playOnEnd newFunc = null;
                     // Fufills quest at index
                     print(highestPrioIndex);
-                    if (highestPrioIndex != 1 && advanceQuestAvalability[highestPrioIndex])
+                    if (highestPrioIndex != -1 && advanceQuestAvalability[highestPrioIndex])
                     {
                         void plug()
                         {

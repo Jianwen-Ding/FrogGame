@@ -141,8 +141,7 @@ public class FrogBase : AnimalPresent
             if(isCatchable && QuestSys.QuestList[catchQuestName].getActivationState())
             {
                 QuestSys.incrementComponentAttempt(catchQuestName, catchComponentName, 1);
-                // TBD need to add alternative permanent method for removing animal
-                rejoinRadii();
+                remove();
             }
             else
             {

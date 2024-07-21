@@ -512,5 +512,16 @@ public class AnimalPresent : MonoBehaviour
             
         }
     }
+
+    // Only really used by captured animals with one animal per radii
+    // Completely deletes radii and object
+    public void remove()
+    {
+        if (!disconnectedFromRadii)
+        {
+            Destroy(animalController.gameObject);
+            Destroy(gameObject);
+        }
+    }
     #endregion
 }
