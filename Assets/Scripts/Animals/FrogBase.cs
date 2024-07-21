@@ -140,7 +140,7 @@ public class FrogBase : AnimalPresent
             }
             if (!speciesPage.pageList[entryTitle].getTitleState())
             {
-                notificationSystem.notify(entryTitle + " entry has been updated in speciespedia");
+                notificationSystem.notify("<b>"+ entryTitle + "</b> entry has been updated in speciespedia");
             }
             speciesPage.pageList[entryTitle].activateTitle();
             speciesPage.pageList[entryTitle].activateSound();

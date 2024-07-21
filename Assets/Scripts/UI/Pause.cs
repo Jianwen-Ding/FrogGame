@@ -30,19 +30,22 @@ public class Pause : MonoBehaviour
 
     public void PauseGame()
     {
-        cursorModeOnPause = Cursor.lockState;
-        cursorVisibilityOnPause = Cursor.visible;
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-        gameMenu.SetActive(true);
-        Time.timeScale = 0.0f;
-        isPaused = true;
+        if (!DialogueManager2.GetInstance().dialogueIsPlaying)
+        {
+            cursorModeOnPause = Cursor.lockState;
+            cursorVisibilityOnPause = Cursor.visible;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+            gameMenu.SetActive(true);
+            Time.timeScale = 0.0f;
+            isPaused = true;
+        }
     }
 
     public void ResumeGame()
     {
-        Cursor.lockState = cursorModeOnPause;
-        Cursor.visible = cursorVisibilityOnPause;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
         gameMenu.SetActive(false);
         Time.timeScale = 1.0f;
         isPaused = false;

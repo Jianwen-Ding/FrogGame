@@ -51,12 +51,14 @@ public class speciesPage : MonoBehaviour
     public void activateTitle()
     {
         PlayerPrefs.SetInt(title + "titleBox", 1);
+        updateState();
     }
 
     // Image
     public void activateImage()
     {
         PlayerPrefs.SetInt(title + "animalImage", 1);
+        updateState();
     }
     public bool getImageState()
     {
@@ -67,6 +69,7 @@ public class speciesPage : MonoBehaviour
     public void activateFootPrints()
     {
         PlayerPrefs.SetInt(title + "footPrints", 1);
+        updateState();
     }
     public bool getFootPrintsState()
     {
@@ -77,6 +80,7 @@ public class speciesPage : MonoBehaviour
     public void activateSound()
     {
         PlayerPrefs.SetInt(title + "sound", 1);
+        updateState();
     }
     public bool getSoundState()
     {
@@ -87,6 +91,7 @@ public class speciesPage : MonoBehaviour
     public void activateFunFacts(int i)
     {
         PlayerPrefs.SetInt(title + "funFacts" + i, 1);
+        updateState();
     }
     public bool getFunFactsState(int i)
     {
@@ -97,6 +102,7 @@ public class speciesPage : MonoBehaviour
     public void activatePreyPred(int i)
     {
         PlayerPrefs.SetInt(title + "preyPredFacts" + i, 1);
+        updateState();
     }
     public bool getPreyPredState(int i)
     {

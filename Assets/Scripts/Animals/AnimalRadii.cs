@@ -502,38 +502,41 @@ public class AnimalRadii : MonoBehaviour
             }
             else if (currentState == state.Moving)
             {
-                // Moves towards object of intrest until a certain radius away
-                Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
-                if (diffrence.magnitude <= radiiSnap)
+                if(lockedObject != null)
                 {
-                    lockedPosition = true;
-                    if (nightSleepMove)
+                    // Moves towards object of intrest until a certain radius away
+                    Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
+                    if (diffrence.magnitude <= radiiSnap)
                     {
-                        currentState = state.NighSleep;
+                        lockedPosition = true;
+                        if (nightSleepMove)
+                        {
+                            currentState = state.NighSleep;
+                        }
+                        else
+                        {
+                            currentState = state.Locked;
+                            timeUntilMove = timeAtIntrest;
+                        }
+                        gameObject.transform.position = lockedObject.transform.position;
                     }
-                    else
-                    {
-                        currentState = state.Locked;
-                        timeUntilMove = timeAtIntrest;
-                    }
-                    gameObject.transform.position = lockedObject.transform.position;
-                }
-                Vector3 movementVec = Vector3.Normalize(diffrence) * radiiSpeed * Time.deltaTime;
-                gameObject.transform.position += movementVec;
+                    Vector3 movementVec = Vector3.Normalize(diffrence) * radiiSpeed * Time.deltaTime;
+                    gameObject.transform.position += movementVec;
 
-                // Occasionally the animal will drop markers
-                // DebugDisplay.updateDisplay(" " + gameObject.name + " time until mark", timeUntilMarkChanceLeft + "");
-                timeUntilMarkChanceLeft -= Time.deltaTime;
-                if (timeUntilMarkChanceLeft < 0)
-                {
-                    timeUntilMarkChanceLeft = markerWindowTime;
-                    // Generates a number between 1-100
-                    // Determines if marker gets spawned
-                    float randomInt = Random.Range(0, 100);
-                    // Display.updateDisplay(" " + gameObject.name + " mark chance pulled", randomInt + "");
-                    if (randomInt < markerWindowChance)
+                    // Occasionally the animal will drop markers
+                    // DebugDisplay.updateDisplay(" " + gameObject.name + " time until mark", timeUntilMarkChanceLeft + "");
+                    timeUntilMarkChanceLeft -= Time.deltaTime;
+                    if (timeUntilMarkChanceLeft < 0)
                     {
-                        spawnMarker();
+                        timeUntilMarkChanceLeft = markerWindowTime;
+                        // Generates a number between 1-100
+                        // Determines if marker gets spawned
+                        float randomInt = Random.Range(0, 100);
+                        // Display.updateDisplay(" " + gameObject.name + " mark chance pulled", randomInt + "");
+                        if (randomInt < markerWindowChance)
+                        {
+                            spawnMarker();
+                        }
                     }
                 }
             }

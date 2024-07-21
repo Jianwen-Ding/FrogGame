@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1645364392575831577}
   - component: {fileID: 7655980354732383905}
   - component: {fileID: 1564877190704085558}
+  - component: {fileID: 8856851645950961233}
   m_Layer: 3
   m_Name: FireflyObject
   m_TagString: Firefly
@@ -4867,6 +4868,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundDistance: 0.25
+--- !u!114 &8856851645950961233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3814943451014899199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945b71862d52a4cd89f868f709800dce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Fireflies
+  needsPreDiscover: 0
+  initTitle: 1
+  initImage: 1
+  initFootprints: 1
+  initSound: 1
+  initFunFact: 010101
+  initPredPreyFact: 0101
 --- !u!1 &8200933868205356545
 GameObject:
   m_ObjectHideFlags: 0

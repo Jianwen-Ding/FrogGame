@@ -130,7 +130,6 @@ public class QuestSys : MonoBehaviour
             }
             completed = allComplete || completed;
             if (completed) {
-                notificationSystem.notify("Quest has been completed");
                 // Attempts to activate next quests
                 for (int i = 0; i < nextQuests.Count; i++)
                 {
@@ -304,6 +303,14 @@ public class QuestSys : MonoBehaviour
             if (!gottenComponent.getCompleted())
             {
                 gottenComponent.fufillComponent();
+                if (gottenQuest.getCompletionState())
+                {
+                    notificationSystem.notify("quest <b>" + quest + "</b> has been fulfilled");
+                }
+                else
+                {
+                    notificationSystem.notify("component <b>" + component + "</b> has been fulfilled");
+                }
             }
         }
     }
@@ -318,6 +325,18 @@ public class QuestSys : MonoBehaviour
             if (!gottenComponent.getCompleted())
             {
                 gottenComponent.increment(incrementAmount);
+                if (gottenQuest.getCompletionState())
+                {
+                    notificationSystem.notify("quest <b>" + quest + "</b> has been fulfilled");
+                }
+                else if (gottenComponent.getCompleted())
+                {
+                    notificationSystem.notify("component <b>" + component + "</b> has been fufilled");
+                }
+                else
+                {
+                    notificationSystem.notify("component <b>" + component + "</b> has been incremented");
+                }
             }
         }
     }

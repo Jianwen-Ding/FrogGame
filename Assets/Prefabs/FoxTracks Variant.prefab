@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FoxTracks Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3527571884294461952, guid: 2f99d7b236fa640d18ff842e6cb481c4, type: 3}
+      propertyPath: title
+      value: Fox
+      objectReference: {fileID: 0}
     - target: {fileID: 6052094934581550225, guid: 2f99d7b236fa640d18ff842e6cb481c4, type: 3}
       propertyPath: editorChange
       value: 0

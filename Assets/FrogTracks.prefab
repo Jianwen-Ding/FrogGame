@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3194119925952567872}
   - component: {fileID: 1833889217057274560}
   - component: {fileID: 6052094934581550225}
+  - component: {fileID: 3527571884294461952}
   m_Layer: 2
   m_Name: Sphere
   m_TagString: Untagged
@@ -85,6 +86,26 @@ MonoBehaviour:
   - {fileID: 4900000, guid: 0ce45b1771406487c857df73438aa517, type: 3}
   playerInRange: 0
   inited: 0
+--- !u!114 &3527571884294461952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696225230149450888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945b71862d52a4cd89f868f709800dce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  title: Frog
+  needsPreDiscover: 1
+  initTitle: 1
+  initImage: 1
+  initFootprints: 1
+  initSound: 1
+  initFunFact: 
+  initPredPreyFact: 
 --- !u!1 &2879456727950918187
 GameObject:
   m_ObjectHideFlags: 0

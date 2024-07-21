@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Jianwen- Tutorial Greybox-Copy.unity
-    guid: a8d087c883bfe4d699582e4b5e44937a
+    path: Assets/Scenes/Jianwen Scenes/Jianwen - TUTORIALLEVEL.unity
+    guid: 9134ffeb073ed48108adddd772b96b36
   - enabled: 1
     path: Assets/Scenes/Allen/Jianwen_MainLevel_Greybox_Copy.unity
     guid: 420922f9ac5ec4a8eb45c5552256480b

@@ -10,6 +10,9 @@ public class notificationSystem : MonoBehaviour
     public GameObject notifyPrefab;
 
     public static notificationSystem soleSystem;
+
+    public float yAdjust;
+    public List<GameObject> createdObjects = new List<GameObject>();
     #endregion
     #region functions
     // Start is called before the first frame update
@@ -32,6 +35,21 @@ public class notificationSystem : MonoBehaviour
             GameObject newNotification = Instantiate(soleSystem.notifyPrefab, soleSystem.transform.position, Quaternion.identity.normalized);
             newNotification.transform.SetParent(soleSystem.transform);
             newNotification.GetComponent<TextMeshProUGUI>().text = notifyText;
+            soleSystem.createdObjects.Add(newNotification);
+        }
+    }
+
+    private void Update()
+    {
+        for(int i = 0; i < createdObjects.Count; i++)
+        {
+            if (createdObjects[i] == null)
+            {
+                createdObjects.RemoveAt(i);
+            }
+            else{
+                createdObjects[i].transform.position = new Vector3(createdObjects[i].gameObject.transform.position.x, gameObject.transform.position.y - yAdjust * i, createdObjects[i].gameObject.transform.position.z);
+            }
         }
     }
     #endregion

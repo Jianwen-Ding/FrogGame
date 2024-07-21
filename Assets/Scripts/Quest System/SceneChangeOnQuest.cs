@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class SceneChangeOnQuest : MonoBehaviour
+public class SceneChangeOnQuest : QuestInsertionBase
 {
     // In Charge of advancing scene on correct scene completion
-    [SerializeField]
-    string questLock;
     [SerializeField]
     string newScene;
 
@@ -19,7 +17,7 @@ public class SceneChangeOnQuest : MonoBehaviour
 
     public void checkScene()
     {
-        if (QuestSys.QuestList[questLock].getCompletionState())
+        if (QuestSys.QuestList[totalQuestList[0]].getCompletionState())
         {
             SceneManager.LoadScene(newScene);
         }
