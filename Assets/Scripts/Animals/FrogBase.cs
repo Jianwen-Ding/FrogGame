@@ -14,6 +14,12 @@ public class FrogBase : AnimalPresent
     string questName;
     [SerializeField]
     string componentName;
+    [SerializeField]
+    bool isCatchable;
+    [SerializeField]
+    string catchQuestName;
+    [SerializeField]
+    string catchComponentName;
     // >>> Speciespedia Parameters <<<
     [Header("Entry Parameters")]
     [SerializeField]
@@ -132,21 +138,30 @@ public class FrogBase : AnimalPresent
     {
         if (collision.gameObject.tag == "Player" && currentState == animalState.Stun)
         {
-            if (isMarkable && !marked && QuestSys.QuestList[questName].getActivationState())
+            if(isCatchable && QuestSys.QuestList[catchQuestName].getActivationState())
             {
-                // Adds increment to quest
-                QuestSys.incrementComponentAttempt(questName, componentName, 1);
-                marked = true;
+                QuestSys.incrementComponentAttempt(catchQuestName, catchComponentName, 1);
+                // TBD need to add alternative permanent method for removing animal
+                rejoinRadii();
             }
-            if (!speciesPage.pageList[entryTitle].getTitleState())
+            else
             {
-                notificationSystem.notify("<b>"+ entryTitle + "</b> entry has been updated in speciespedia");
+                if (isMarkable && !marked && QuestSys.QuestList[questName].getActivationState())
+                {
+                    // Adds increment to quest
+                    QuestSys.incrementComponentAttempt(questName, componentName, 1);
+                    marked = true;
+                }
+                if (!speciesPage.pageList[entryTitle].getTitleState())
+                {
+                    notificationSystem.notify("<b>" + entryTitle + "</b> entry has been updated in speciespedia");
+                }
+                speciesPage.pageList[entryTitle].activateTitle();
+                speciesPage.pageList[entryTitle].activateSound();
+                speciesPage.pageList[entryTitle].activatePreyPred(0);
+                speciesPage.pageList[entryTitle].activatePreyPred(1);
+                speciesPage.pageList[entryTitle].activateImage();
             }
-            speciesPage.pageList[entryTitle].activateTitle();
-            speciesPage.pageList[entryTitle].activateSound();
-            speciesPage.pageList[entryTitle].activatePreyPred(0);
-            speciesPage.pageList[entryTitle].activatePreyPred(1);
-            speciesPage.pageList[entryTitle].activateImage();
         }
     }
     #endregion

@@ -235,9 +235,12 @@ MonoBehaviour:
   currentState: 0
   initialized: 0
   faceAngle: 0
-  isMarkable: 0
-  questName: Count Frogs
-  componentName: Mark Frogs before 20:00
+  isMarkable: 1
+  questName: Mark Fox
+  componentName: Gather intel by marking fox
+  isCatchable: 1
+  catchQuestName: Capture Foxes
+  catchComponentName: Capture foxes
   entryTitle: Fox
   speed: 6000
   hopForce: 1500
