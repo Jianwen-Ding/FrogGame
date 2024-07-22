@@ -1272,7 +1272,7 @@ GameObject:
   - component: {fileID: 44643205}
   m_Layer: 6
   m_Name: PolyShape
-  m_TagString: Untagged
+  m_TagString: Grass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24649,7 +24649,7 @@ GameObject:
   - component: {fileID: 639710046}
   m_Layer: 6
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Stone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25637,7 +25637,7 @@ GameObject:
   - component: {fileID: 642246037}
   m_Layer: 6
   m_Name: Ground_Segment (2)
-  m_TagString: Untagged
+  m_TagString: Grass
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26000,6 +26000,10 @@ PrefabInstance:
     - target: {fileID: 892874441167232798, guid: ad753c6815dfc9742bb1930335176978, type: 3}
       propertyPath: m_Name
       value: MainCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 892874441167232798, guid: ad753c6815dfc9742bb1930335176978, type: 3}
+      propertyPath: m_TagString
+      value: Grass
       objectReference: {fileID: 0}
     - target: {fileID: 2467305366956648547, guid: ad753c6815dfc9742bb1930335176978, type: 3}
       propertyPath: m_SizeDelta.x
@@ -41157,6 +41161,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 46bfa85bd85c54fdeab3fa075b7da0dc, type: 3}
+      propertyPath: m_TagString
+      value: Wood
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -56258,7 +56266,7 @@ GameObject:
   - component: {fileID: 1412696434}
   m_Layer: 6
   m_Name: Cube (2)
-  m_TagString: Untagged
+  m_TagString: Stone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -68666,7 +68674,7 @@ GameObject:
   - component: {fileID: 1745329642}
   m_Layer: 6
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Stone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87095,6 +87103,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Intro Tent
       objectReference: {fileID: 0}
+    - target: {fileID: 1449553204926722435, guid: 41aa624b3fb2946d8b48da8dd35291f5, type: 3}
+      propertyPath: m_TagString
+      value: Wood
+      objectReference: {fileID: 0}
     - target: {fileID: 1555376049058094194, guid: 41aa624b3fb2946d8b48da8dd35291f5, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -88205,6 +88217,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 543485991}
     m_Modifications:
+    - target: {fileID: 1098955005111333421, guid: 22aefc431f4ff2b41a71d69b77da4dfe, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1098955005111333421, guid: 22aefc431f4ff2b41a71d69b77da4dfe, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1098955005111333421, guid: 22aefc431f4ff2b41a71d69b77da4dfe, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: e175a8b602b52434a8d7deb08436d8eb, type: 3}
+    - target: {fileID: 1098955005111333421, guid: 22aefc431f4ff2b41a71d69b77da4dfe, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: -4375905731741101249, guid: 8ddcf443e1683014884185ce2abfa3eb, type: 2}
     - target: {fileID: 2150809505646767013, guid: 22aefc431f4ff2b41a71d69b77da4dfe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.1
