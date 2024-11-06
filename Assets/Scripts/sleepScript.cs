@@ -33,6 +33,7 @@ public class sleepScript : QuestInsertionBase
         }
         if (!gaveWarning && universalClock.mainGameTime.hours > sleepHour - 1)
         {
+            gaveWarning = true;
             notificationSystem.notify("There is one hour remaining until you fall asleep and the enviroment resets");
         }
         if (playerInRange && QuestSys.QuestList[totalQuestList[0]].getCompletionState())
