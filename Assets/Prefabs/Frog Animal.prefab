@@ -117,6 +117,7 @@ MonoBehaviour:
   predatorTags:
   - Player
   - Fox
+  detectTime: 0.25
   detectorSize: 1
   detectionTimePrey: 5
   detectionTimePred: 5

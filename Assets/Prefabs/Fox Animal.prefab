@@ -218,6 +218,7 @@ MonoBehaviour:
   - Bait
   predatorTags:
   - Player
+  detectTime: 0.25
   detectorSize: 3
   detectionTimePrey: 5
   detectionTimePred: 5
