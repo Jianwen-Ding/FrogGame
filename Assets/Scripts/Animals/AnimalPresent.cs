@@ -76,6 +76,10 @@ public class AnimalPresent : MonoBehaviour
     public string[] predatorTags;
 
     [Header("Detection Parameters")]
+    // How often the animals will actively try to detect things
+    [SerializeField]
+    float detectTime;
+    float detectLeft;
     // Scale of the detector
     [SerializeField]
     float detectorSize;
@@ -171,6 +175,7 @@ public class AnimalPresent : MonoBehaviour
         detector = transform.GetChild(0).GetComponent<AnimalDistantDetector>();
         detector.init(preyTags, predatorTags, detectorSize, this);
         animalRigid = gameObject.GetComponent<Rigidbody>();
+        detectLeft = 0;
 
     }
 
@@ -380,6 +385,47 @@ public class AnimalPresent : MonoBehaviour
         }
     }
 
+    // Checks all detected objects if they are seen or heard
+    // Refreshes time if detected again
+    private void detectOthers()
+    {
+        for (int i = 0; i < detector.predatorWithinField.Count; i++)
+        {
+            if (detector.predatorWithinField[i] != null)
+            {
+                if (withinView(detector.predatorWithinField[i]) || withinHearingRange(detector.predatorWithinField[i]))
+                {
+                    print("" + detector.predatorWithinField[i].name);
+                    if (predatorsAwareOf.ContainsKey(detector.predatorWithinField[i]))
+                    {
+                        predatorsAwareOf[detector.predatorWithinField[i]] = detectionTimePred;
+                    }
+                    else
+                    {
+                        predatorsAwareOf.Add(detector.predatorWithinField[i], detectionTimePred);
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < detector.preyWithinField.Count; i++)
+        {
+            if (detector.preyWithinField[i] != null)
+            {
+                if (withinView(detector.preyWithinField[i]) || withinHearingRange(detector.preyWithinField[i]))
+                {
+                    if (preyAwareOf.ContainsKey(detector.preyWithinField[i]))
+                    {
+                        preyAwareOf[detector.preyWithinField[i]] = detectionTimePrey;
+                    }
+                    else
+                    {
+                        preyAwareOf.Add(detector.preyWithinField[i], detectionTimePrey);
+                    }
+                }
+            }
+        }
+    }
+
     // Update is called once per frame
     public virtual void Update()
     {
@@ -393,43 +439,13 @@ public class AnimalPresent : MonoBehaviour
                 cryRechargeLeft = Random.Range(minCryRecharge, maxCryRecharge);
             }
 
-            // Checks all detected objects if they are seen or heard
-            // Refreshes time if detected again
-            for (int i = 0; i < detector.predatorWithinField.Count; i++)
+            detectLeft -= Time.deltaTime;
+            if(detectLeft < 0)
             {
-                if (detector.predatorWithinField[i] != null)
-                {
-                    if (withinView(detector.predatorWithinField[i]) || withinHearingRange(detector.predatorWithinField[i]))
-                    {
-                        print("" + detector.predatorWithinField[i].name);
-                        if (predatorsAwareOf.ContainsKey(detector.predatorWithinField[i]))
-                        {
-                            predatorsAwareOf[detector.predatorWithinField[i]] = detectionTimePred;
-                        }
-                        else
-                        {
-                            predatorsAwareOf.Add(detector.predatorWithinField[i], detectionTimePred);
-                        }
-                    }
-                }
+                detectLeft = detectTime;
+                detectOthers();
             }
-            for (int i = 0; i < detector.preyWithinField.Count; i++)
-            {
-                if(detector.preyWithinField[i] != null)
-                {
-                    if (withinView(detector.preyWithinField[i]) || withinHearingRange(detector.preyWithinField[i]))
-                    {
-                        if (preyAwareOf.ContainsKey(detector.preyWithinField[i]))
-                        {
-                            preyAwareOf[detector.preyWithinField[i]] = detectionTimePrey;
-                        }
-                        else
-                        {
-                            preyAwareOf.Add(detector.preyWithinField[i], detectionTimePrey);
-                        }
-                    }
-                }
-            }
+
             // Checks if objecs of intrest have not been scanned for a set amount of time
             GameObject[] predsToRemove = new GameObject[predatorsAwareOf.Keys.Count];
             int predIter = 0;
@@ -445,10 +461,10 @@ public class AnimalPresent : MonoBehaviour
                 preyToRemove[preyIter] = prey;
                 preyIter += 1;
             }
-            if (!customMathf.contains<GameObject>(predsToRemove, null))
-            {
-                // Display.updateDisplay(gameObject.name + " predators", DebugDisplay.arrayToString(predsToRemove, (ob) => ob.name + " has " + Mathf.Round(predatorsAwareOf[ob]) + " seconds left"));
-            }
+            //if (!customMathf.contains<GameObject>(predsToRemove, null))
+            //{
+            //    // Display.updateDisplay(gameObject.name + " predators", DebugDisplay.arrayToString(predsToRemove, (ob) => ob.name + " has " + Mathf.Round(predatorsAwareOf[ob]) + " seconds left"));
+            //}
             for (int i = predsToRemove.Length - 1; i >= 0; i--)
             {
                 predatorsAwareOf[predsToRemove[i]] -= Time.deltaTime;
@@ -457,10 +473,10 @@ public class AnimalPresent : MonoBehaviour
                     predatorsAwareOf.Remove(predsToRemove[i]);
                 }
             }
-            if (!customMathf.contains<GameObject>(preyToRemove, null))
-            {
-                // Display.updateDisplay(gameObject.name + " prey", DebugDisplay.arrayToString(preyToRemove, (ob) => ob.name + " has " + Mathf.Round(preyAwareOf[ob]) + " seconds left"));
-            }
+            //if (!customMathf.contains<GameObject>(preyToRemove, null))
+            //{
+            //    // Display.updateDisplay(gameObject.name + " prey", DebugDisplay.arrayToString(preyToRemove, (ob) => ob.name + " has " + Mathf.Round(preyAwareOf[ob]) + " seconds left"));
+            //}
             for (int i = preyToRemove.Length - 1; i >= 0; i--)
             {
                 preyAwareOf[preyToRemove[i]] -= Time.deltaTime;
@@ -475,7 +491,6 @@ public class AnimalPresent : MonoBehaviour
             {
                 rejoinRadii();
             }
-
             // Locks animal into stun for set amount of time
             if(currentState == animalState.Stun)
             {
