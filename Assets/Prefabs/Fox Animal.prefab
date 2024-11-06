@@ -510,6 +510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d2cbe3994144999abb62de7174efd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  col: {fileID: 0}
+  distanceUntilDetect: 30
+  detectTime: 0.5
   preyWithinField: []
   predatorWithinField: []

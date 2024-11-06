@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 //using UnityEditorInternal.VR;
 using UnityEngine;
 
@@ -8,21 +10,26 @@ public class AnimalDistantDetector : MonoBehaviour
     // Detects all relavent objects
     #region vars
     [Header("Cache Variables")]
-    [SerializeField]
-    Collider col;
     AnimalPresent baseAnimal;
 
     [Header("Predator prey Parameters")]
+    [SerializeField]
+    float distanceUntilDetect;
     // To be imported by initialization
     // Tags of animals that this animal considers prey
     string[] preyTags;
     // Tags of animals that this animal considers predator
     string[] predatorTags;
 
+    [SerializeField]
+    float detectTime;
+
     [Header("State Variables")]
     // Whether the object has been initialized or not
     bool initialized = false;
 
+    // Time left
+    float detectLeft = 0;
     // Animals within the field collider
     public List<GameObject> preyWithinField;
     public List<GameObject> predatorWithinField;
@@ -35,7 +42,6 @@ public class AnimalDistantDetector : MonoBehaviour
         preyTags = preySet;
         predatorTags = predSet;
         transform.localScale = new Vector3(size, size, size);
-        col = gameObject.GetComponent<Collider>();
     }
 
     // Adds prey to detected objects
@@ -74,61 +80,73 @@ public class AnimalDistantDetector : MonoBehaviour
         predatorWithinField.RemoveAt(index);
     }
 
-    // Checks entering colliders if they apply as prey or predator
-    // Then adding them if they do
-    private void OnTriggerEnter(Collider other)
+    private void updateAwareAnimals()
     {
-        if (initialized)
+        for (int i = 0; i < predatorTags.Length; i++)
         {
-            GameObject collidedWith = other.gameObject;
-            if (customMathf.contains(preyTags, collidedWith.tag) && !preyWithinField.Contains(collidedWith))
+            GameObject[] intTagPred = GameObject.FindGameObjectsWithTag(predatorTags[i]);
+            for (int z = 0; z < intTagPred.Length; z++)
             {
-                addPrey(collidedWith);
-            }
-            if (customMathf.contains(predatorTags, collidedWith.tag) && !predatorWithinField.Contains(collidedWith))
-            {
-                addPredator(collidedWith);
+                if (customMathf.distanceBetweenPoints(gameObject.transform.position, intTagPred[z].transform.position) > distanceUntilDetect)
+                {
+                    if (baseAnimal.predatorsAwareOf.ContainsKey(intTagPred[z]))
+                    {
+                        baseAnimal.predatorsAwareOf.Remove(intTagPred[z]);
+                    }
+                    if (predatorWithinField.Contains(intTagPred[z]))
+                    {
+                        predatorWithinField.Remove(intTagPred[z]);
+                    }
+                }
+                else
+                {
+                    if (!baseAnimal.predatorsAwareOf.ContainsKey(intTagPred[z]))
+                    {
+                        addPredator(intTagPred[z]);
+                    }
+                }
             }
         }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (initialized)
+        for (int i = 0; i < preyTags.Length; i++)
         {
-            GameObject collidedWith = other.gameObject;
-            if (customMathf.contains(preyTags, collidedWith.tag) && !preyWithinField.Contains(collidedWith))
+            GameObject[] intTagPrey = GameObject.FindGameObjectsWithTag(preyTags[i]);
+            for (int z = 0; z < intTagPrey.Length; z++)
             {
-                addPrey(collidedWith);
-            }
-            if (customMathf.contains(predatorTags, collidedWith.tag) && !predatorWithinField.Contains(collidedWith))
-            {
-                addPredator(collidedWith);
-            }
-        }
-    }
-
-    // Checks whether object does not exist anymore
-    private void OnTriggerExit(Collider other)
-    {
-        if (initialized)
-        {
-            GameObject collidedWith = other.gameObject;
-            if (preyWithinField.Contains(collidedWith))
-            {
-                removePrey(preyWithinField.FindIndex((ob) => ob ==collidedWith));
-            }
-            if (predatorWithinField.Contains(collidedWith))
-            {
-                removePredator(predatorWithinField.FindIndex((ob) => ob == collidedWith));
+                if (customMathf.distanceBetweenPoints(gameObject.transform.position, intTagPrey[z].transform.position) > distanceUntilDetect)
+                {
+                    if (baseAnimal.preyAwareOf.ContainsKey(intTagPrey[z]))
+                    {
+                        baseAnimal.preyAwareOf.Remove(intTagPrey[z]);
+                    }
+                    if (preyWithinField.Contains(intTagPrey[z]))
+                    {
+                        preyWithinField.Remove(intTagPrey[z]);
+                    }
+                }
+                else
+                {
+                    if (!baseAnimal.preyAwareOf.ContainsKey(intTagPrey[z]))
+                    {
+                        addPrey(intTagPrey[z]);
+                    }
+                }
             }
         }
     }
 
     public void Update()
     {
+
         if (initialized)
         {
+            detectLeft -= Time.deltaTime;
+            if(detectLeft < 0)
+            {
+                detectLeft = detectTime;
+                updateAwareAnimals();
+            }
+
+            // Constantly scans for 
             for (int i = 0; i < predatorWithinField.Count; i++)
             {
                 if (predatorWithinField[i] == null)

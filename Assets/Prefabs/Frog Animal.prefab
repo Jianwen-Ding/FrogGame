@@ -310,7 +310,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6291764307924683445}
   - component: {fileID: 7675707074321375058}
-  - component: {fileID: 5607984554518461328}
   - component: {fileID: 3100660183144563327}
   m_Layer: 2
   m_Name: Animal Detection Ring
@@ -376,27 +375,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &5607984554518461328
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3011060327064158127}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 448
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3100660183144563327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -409,7 +387,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d2cbe3994144999abb62de7174efd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  col: {fileID: 0}
+  distanceUntilDetect: 30
+  detectTime: 0.5
   preyWithinField: []
   predatorWithinField: []
 --- !u!1 &3960557788701026239

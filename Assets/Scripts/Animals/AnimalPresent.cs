@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class AnimalPresent : MonoBehaviour
 {
-    // -----ALL OF THE DETECTION PARAMETERS ARE TO BE DONE LATER------
-    // FOR NOW RADIUS IS THE ONLY THING
 
     // This class controls a manifested animal
     // It is spawned in by the AnimalRadii class
@@ -371,6 +369,7 @@ public class AnimalPresent : MonoBehaviour
     {
 
     }
+
     // Checks a
     // Start is called before the first frame update
     public virtual void Start()
@@ -476,6 +475,7 @@ public class AnimalPresent : MonoBehaviour
             {
                 rejoinRadii();
             }
+
             // Locks animal into stun for set amount of time
             if(currentState == animalState.Stun)
             {
