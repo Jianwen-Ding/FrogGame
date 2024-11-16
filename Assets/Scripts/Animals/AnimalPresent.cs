@@ -231,6 +231,13 @@ public class AnimalPresent : MonoBehaviour
     // Uses angle
     public virtual bool withinView(GameObject objectCheck)
     {
+        if (objectCheck.tag == "Player")
+        {
+            if (BushTracker.inBush)
+            {
+                return false;
+            }
+        }
         // Checks if object is within FOV range before sending raycast
         Vector3 diff = objectCheck.transform.position - gameObject.transform.position;
         // DrawRay(gameObject.transform.position, diff, Color.cyan);

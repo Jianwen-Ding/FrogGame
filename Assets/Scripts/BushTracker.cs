@@ -22,6 +22,9 @@ public class BushNode
 
 public class BushTracker : MonoBehaviour
 {
+
+    public static bool inBush;
+
     [SerializeField]
     float distanceScale;
 
@@ -61,10 +64,10 @@ public class BushTracker : MonoBehaviour
                 if (bushNodes[i].nearEnough(gameObject.transform.position))
                 {
                     closeEnough = true;
-                    print("wow");
                     break;
                 }
             }
+            inBush = closeEnough;
         }
     }
 }
