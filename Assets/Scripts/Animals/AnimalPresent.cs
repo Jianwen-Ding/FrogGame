@@ -374,7 +374,6 @@ public class AnimalPresent : MonoBehaviour
     // Movement on move
     public virtual void moveMovementUpdate()
     {
-
     }
     // Movement on transition
     public virtual void transitionMovementUpdate()
