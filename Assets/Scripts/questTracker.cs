@@ -24,7 +24,6 @@ public class questTracker : MonoBehaviour
     int componentSpacing;
     #endregion
     #region functions
-    #endregion
 
     // Creates a string with n spaces
     private string getSpacing(int n)
@@ -81,4 +80,6 @@ public class questTracker : MonoBehaviour
     {
         updateText();
     }
+
+    #endregion
 }
