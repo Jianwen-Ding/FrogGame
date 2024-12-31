@@ -11,7 +11,7 @@ I just spoke with Timmy. You think you know where the fox is? #speaker:Sarah
 === knot1 ===
 Tonight, I need you to camp out and set up a trap for our friend. Timmy will give you a cage-trap and some bait to use, and you’ll have to wait for the fox to come out. #speaker:Sarah
 * [What if he doesn’t go into the cage?]
-    We’ll regroup and try again. But I’ve got a good feeling about this. #speaker:Sarah
+    Don't worry, we’ll regroup and try again. But I’ve got a good feeling about this. #speaker:Sarah
     -> knot2
 * [Sounds good.]
     -> knot2

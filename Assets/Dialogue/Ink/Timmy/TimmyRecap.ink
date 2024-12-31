@@ -20,6 +20,6 @@ Access the speciespedia by pressing [P] and clicking on the different tabs of th
 
 
 === knot2 ===
-Good luck! Come back if you are still confused. #speaker:Timmy
+Good luck! Come back if you're still confused. #speaker:Timmy
 
 -> END

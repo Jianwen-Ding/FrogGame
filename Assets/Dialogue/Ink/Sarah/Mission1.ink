@@ -28,6 +28,6 @@ Recently, our frogs have been hit pretty hard. I know the counts are low, so you
     ** [How should I find them?]
         Try to find out what they eat, how they move, and where they congregate most. You can't stay in one spot either, or else you just end up marking the same frogs over and over.  #speaker:Sarah
         *** [Got it.]
-            Oh, and one last thing. Timmy, this area's ranger wants to speak to yu. You should see him around the area trying to log the local wildlife. #speaker:Sarah
+            Oh, and one last thing. Timmy, this area's ranger wants to speak to you. You should see him out there somewhere trying to log the local wildlife. #speaker:Sarah
 
 -> END
