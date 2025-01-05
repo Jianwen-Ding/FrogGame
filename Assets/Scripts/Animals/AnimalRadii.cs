@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AnimalRadii : MonoBehaviour
 {
@@ -10,27 +11,27 @@ public class AnimalRadii : MonoBehaviour
     #region psuedocode
     // >>>General animal behavior<<<
     // 1 - Activates past wake up time
-    // 2 - Initiates algorithm to find close object of intrest
-    // 3 - Moves towards object of intrest at set speed
-    // 4 - Stay at object of intrest for set time
+    // 2 - Initiates algorithm to find close object of interest
+    // 3 - Moves towards object of interest at set speed
+    // 4 - Stay at object of interest for set time
     // 5 - Checks if the time is past sleep time
-    // 6 - Goes to den if it exists, otherwise pathfinds to preferred object to sleep on.
+    // 6 - Goes to den if it exists, otherwise pathfinder to preferred object to sleep on.
     // 7 - Sleeps at object
 
     // On radius enter
-    // If at object of intrest or asleep, spawn animal directly at object animal is attached to
+    // If at object of interest or asleep, spawn animal directly at object animal is attached to
     // Otherwise, spawn animal in nearest non visible area from the center of radii (maybe in bush or ect)
     // Deactivate radii until animal is out of sight and out of a certain radius.
 
     // Periodically, the animal has a chance to drop a marker
 
 
-    // >>>Object of Intrest Algorithm<<<
-    // Searches for all objects (excluding current object of intrest) with tags of intrest
-    // Finds magnitudes of all tags of intrest
+    // >>>Object of Interest Algorithm<<<
+    // Searches for all objects (excluding current object of interest) with tags of interest
+    // Finds magnitudes of all tags of interest
     // Sorts magnitudes and randomly picks a object based on distance order
 
-    // >>>Surface finding algortihm<<<
+    // >>>Surface finding algorithm<<<
     // Sends raycast down from x-z coordinates from a high place.
     // Ignore certain objects.
 
@@ -38,12 +39,26 @@ public class AnimalRadii : MonoBehaviour
     // Locked in:
     // Sends raycast down at same x-z coords. Spawn animal directly on resulting location
     // Moving:
-    // Searches for nearby appropiate hiding area in radius and spawns animal directly in object
+    // Searches for nearby appropriate hiding area in radius and spawns animal directly in object
     // If none can be found, send raycast down at same x-z coords. Spawns animal directly on resulting location.
     #endregion
+    
     #region vars
-    // >>> MARKER PARAMETERS <<<
+
+    [Header("Identifiers Parameters")]
+    // >>> Identifier Parameters <<<
+    // Sets parameters or aspects of frog AI that persist between scenes
+
+    // ID that corresponds to player prefab information that persists between scenes
+    // Consists of "Animal-[ObjectName]-[Scene Name]-[Starting X axis int]-[Starting Y axis int]-[Starting Z axis int]-[Identical ID Instance]"
+    // Animals with same name that spawn in same area can be mixed up by identifier system
+    [SerializeField]
+    string obID;
+    string baseID;
+
     // Stores amount of marked animals present
+    // Store in "[ID]-marked"
+    // Can only increase
     [SerializeField]
     int markedAnimalAmount = 0;
 
@@ -204,6 +219,33 @@ public class AnimalRadii : MonoBehaviour
     void Start()
     {
         playerObject = GameObject.FindGameObjectWithTag("Player");
+        baseID = "Animal-" + gameObject.name + "-" + gameObject.scene.name +"-"+ (int)transform.position.x + "-" + (int)transform.position.y + "-" + (int)transform.position.z;
+        int identicalInstance = PlayerPrefs.GetInt(baseID + "-iden", 0);
+        PlayerPrefs.SetInt(baseID + "-iden", identicalInstance + 1);
+        obID = baseID + "-" + identicalInstance;
+
+        markedAnimalAmount = PlayerPrefs.GetInt(obID + "-marked",0);
+    }
+    
+    // Rests spawn instances
+    void OnDestroy(){
+        PlayerPrefs.SetInt(baseID + "-iden", 0);
+    }
+
+    // Increments the amount of marked animals
+    public void markIncrement(){
+        PlayerPrefs.SetInt(obID + "-marked",PlayerPrefs.GetInt(obID + "-marked") + 1);
+    }
+
+    // Clears the marks
+    public void clearMark(){
+        markedAnimalAmount = 0;
+        PlayerPrefs.SetInt(obID + "-marked", 0);
+        for(int i = 0; i < manifestedAnimals.Count; i++){
+            if(manifestedAnimals != null){
+                ((AnimalPresent)manifestedAnimals[i]).unmarkAnimal();
+            }
+        }
     }
 
     // Removes a manifested animal
@@ -213,7 +255,7 @@ public class AnimalRadii : MonoBehaviour
         {
             gameObject.transform.position = animal.transform.position;
         }
-        if (animal.marked)
+        if (animal.getMark())
         {
             markedAnimalAmount += 1;
         }
@@ -387,7 +429,6 @@ public class AnimalRadii : MonoBehaviour
                 Vector3 diffrence = lockedObject.transform.position - gameObject.transform.position;
                 angleTowardsLocked = customMathf.pointToAngle(diffrence.x, diffrence.z);
             }
-            print(foundSurface);
             GameObject prefab = Instantiate(animalPrefab, foundSurface, Quaternion.identity.normalized);
             AnimalPresent present = prefab.GetComponent<AnimalPresent>();
             present.init(!lockedPosition, angleTowardsLocked, this);
@@ -395,7 +436,7 @@ public class AnimalRadii : MonoBehaviour
             manifested = true;
             if (markedAnimalAmount > 0)
             {
-                present.marked = true;
+                present.markAnimal(false);
                 markedAnimalAmount -= 1;
             }
         }
@@ -451,7 +492,7 @@ public class AnimalRadii : MonoBehaviour
                 manifestedAnimals.Add(present);
                 if (markedAnimalAmount > 0)
                 {
-                    present.marked = true;
+                    present.markAnimal(false);
                     markedAnimalAmount -= 1;
                 }
             }

@@ -25,7 +25,6 @@ public class entryTrigger : MonoBehaviour
     bool[] initPredPreyFact;
     private void OnTriggerEnter(Collider other)
     {
-        print("wow");
         if (other.tag == "Player" && (!needsPreDiscover || speciesPage.pageList[title].getTitleState()))
         {
             print("tow");

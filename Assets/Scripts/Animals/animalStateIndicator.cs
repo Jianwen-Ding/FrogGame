@@ -48,7 +48,7 @@ public class animalStateIndicator : MonoBehaviour
             Vector3 diff = playerOb.transform.position - gameObject.transform.position;
             gameObject.transform.rotation = Quaternion.Euler(new Vector3(90, 90 - customMathf.pointToAngle(diff.x, diff.z), 0));
             gameObject.transform.position = animalScript.transform.position + Vector3.up * distanceAbove;
-            if (animalScript.marked)
+            if (animalScript.getMark())
             {
                 render.enabled = true;
                 render.material = markedMat;

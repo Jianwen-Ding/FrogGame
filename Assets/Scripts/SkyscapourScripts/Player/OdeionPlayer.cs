@@ -204,6 +204,7 @@ public class OdeionPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (DialogueManager2.GetInstance().dialogueIsPlaying)
         {
             return;
@@ -216,12 +217,21 @@ public class OdeionPlayer : MonoBehaviour
         if (dEffect.weight > 0)
             DamageEnd();
         
-        SpeedController();
-        StateHandler();
-        Jumping();
-        Crouching();
-        MyInput();
-        ThrowUtility();
+        // Speeds up time when pressed
+        if(Input.GetAxis("Rewind") != 0 && Time.timeScale != 0){
+            Time.timeScale = 20;
+        }
+        else{
+            if(Time.timeScale != 0){
+                Time.timeScale = 1;
+            }
+            SpeedController();
+            StateHandler();
+            Jumping();
+            Crouching();
+            MyInput();
+            ThrowUtility();
+        }
 
         //ResetJumpTwo();
 
@@ -663,7 +673,7 @@ public class OdeionPlayer : MonoBehaviour
 
         // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        Debug.Log("Hey" + rb.velocity.y + " ");
+        // Debug.Log("Hey" + rb.velocity.y + " ");
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         
 
@@ -682,8 +692,6 @@ public class OdeionPlayer : MonoBehaviour
         readyToJump = true;
 
         leaveSlope = false;
-
-        Debug.Log("ayo");
     
     }
 

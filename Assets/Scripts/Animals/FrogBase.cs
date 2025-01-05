@@ -145,11 +145,11 @@ public class FrogBase : AnimalPresent
             }
             else
             {
-                if (isMarkable && !marked && QuestSys.QuestList[questName].getActivationState())
+                if (isMarkable && !getMark() && QuestSys.QuestList[questName].getActivationState())
                 {
                     // Adds increment to quest
                     QuestSys.incrementComponentAttempt(questName, componentName, 1);
-                    marked = true;
+                    markAnimal(true);
                 }
                 if (!speciesPage.pageList[entryTitle].getTitleState())
                 {

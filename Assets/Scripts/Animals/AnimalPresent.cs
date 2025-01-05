@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Ink.Parsed;
 using UnityEngine;
 
 public class AnimalPresent : MonoBehaviour
@@ -35,7 +36,8 @@ public class AnimalPresent : MonoBehaviour
     // Whether the animal needs an corresponding animal Radii
     public bool disconnectedFromRadii;
     // Whether animal was marked or not
-    public bool marked;
+    [SerializeField]
+    bool marked;
 
     // >>> SOUND PARAMETER <<<
     [Header("Sound Parameters")]
@@ -160,6 +162,21 @@ public class AnimalPresent : MonoBehaviour
 
     #endregion
     #region functions
+
+    // >>> GET AND SET FUNCTIONS <<<
+    public bool getMark(){
+        return marked;
+    }
+    public void markAnimal(bool incrementsRadii){
+        if(incrementsRadii){
+            animalController.markIncrement();
+        }
+        marked = true;
+    }
+
+    public void unmarkAnimal(){
+        marked = false;
+    }
 
     // >>> INIT AND DELOAD FUNCTIONS <<<
     // Initializes the class
@@ -350,7 +367,7 @@ public class AnimalPresent : MonoBehaviour
     }
 
     // >>> TEMPLATE MOVEMENT FUNCTIONS <<<
-    // Following functions to be used by inherity objects
+    // Following functions to be used by inherited objects
     // Movement on panic
     public virtual void panicMovementUpdate()
     {

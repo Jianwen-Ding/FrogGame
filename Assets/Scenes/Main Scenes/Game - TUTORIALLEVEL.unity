@@ -6310,7 +6310,7 @@ MonoBehaviour:
   - Someone in the back is motioning for you
   totalComponentList:
   - Talk to the Woman by the truck
-  newScene: Jianwen_MainLevel_Greybox_Copy
+  newScene: Game - MainLevel
 --- !u!1001 &165986891
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26142,7 +26142,8 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: 3bbec6f5582b7403ab6496b4d54bd789, type: 3}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 2972337798848662045, guid: ad753c6815dfc9742bb1930335176978, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5944240293093245989, guid: ad753c6815dfc9742bb1930335176978, type: 3}
       insertIndex: -1
@@ -52062,7 +52063,7 @@ LightingSettings:
   m_AlbedoBoost: 1
   m_IndirectOutputScale: 1
   m_UsingShadowmask: 1
-  m_BakeBackend: 2
+  m_BakeBackend: 1
   m_LightmapMaxSize: 1024
   m_BakeResolution: 40
   m_Padding: 2

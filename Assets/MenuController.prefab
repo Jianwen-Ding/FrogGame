@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6889376304377297796}
-  - component: {fileID: 6889376304377297797}
   m_Layer: 0
   m_Name: MenuController
   m_TagString: Untagged
@@ -32,46 +31,3 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6889376304377297797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6889376304377297798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b8df1181cf044e42b4e9256e0600b57, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cAnim: {fileID: 0}
-  marchingHatT: {fileID: 0}
-  masterTextValue: {fileID: 0}
-  masterSlider: {fileID: 0}
-  musicTextValue: {fileID: 0}
-  musicSlider: {fileID: 0}
-  sfxTextValue: {fileID: 0}
-  sfxSlider: {fileID: 0}
-  ambienceTextValue: {fileID: 0}
-  ambienceSlider: {fileID: 0}
-  defaultMaster: 1
-  defaultMusic: 1
-  defaultSFX: 1
-  defaultAmbience: 1
-  mixer: {fileID: 0}
-  brightnessTextValue: {fileID: 0}
-  brightnessSlider: {fileID: 0}
-  defaultBrightnesss: 1
-  fullScreenToggle: {fileID: 0}
-  QualityDropdown: {fileID: 0}
-  resolutionDropdown: {fileID: 0}
-  sensYTextValue: {fileID: 0}
-  sensYSlider: {fileID: 0}
-  sensXTextValue: {fileID: 0}
-  sensXSlider: {fileID: 0}
-  P: {fileID: 0}
-  defaultXSens: 0.5
-  defaultYSens: 0.5
-  invertYToggle: {fileID: 0}
-  confirmationPrompt: {fileID: 0}
-  _newMatch: Jianwen - TUTORIALLEVEL

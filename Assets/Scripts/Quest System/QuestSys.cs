@@ -294,6 +294,10 @@ public class QuestSys : MonoBehaviour
         saveStateAsPrefs(QuestList);
     }
 
+    void OnDestroy(){
+        saveStateAsPrefs(QuestList);
+    }
+
     // Attempts to fulfill a component of an activated and incomplete quest
     public static void fufillComponentAttempt(string quest, string component){
         Quest gottenQuest = QuestList[quest];

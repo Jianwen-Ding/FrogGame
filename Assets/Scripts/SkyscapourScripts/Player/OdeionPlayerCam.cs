@@ -30,10 +30,10 @@ public class OdeionPlayerCam : MonoBehaviour
         WeaponCam.gameObject.SetActive(true);
         //FrogBody3rd.GetComponent<Renderer>().enabled = false;
         //FrogBody3rd.gameObject.SetActive(false);
-        FrogBody3rdWeapon.gameObject.SetActive(false);
+        //FrogBody3rdWeapon.gameObject.SetActive(false);
             
 
-        transform.position = camRoot.transform.position;
+        //transform.position = camRoot.transform.position;
     }
 
     // Update is called once per frame
